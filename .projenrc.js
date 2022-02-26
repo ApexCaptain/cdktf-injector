@@ -1,15 +1,40 @@
-const { cdktf } = require('projen');
+const { cdktf, javascript } = require('projen');
 const project = new cdktf.ConstructLibraryCdktf({
-  author: 'SangHun Lee',
-  authorAddress: 'ayteneve93@gmail.com',
-  cdktfVersion: '^0.8.3',
-  defaultReleaseBranch: 'main',
-  name: 'TerraformInjector',
+  // Basic Info
+  name: 'cdktf-injector',
+  author: 'ApexCaptain',
+  authorName: 'SangHun Lee',
+  authorEmail: 'ayteneve93@gmail.com',
+  authorOrganization: false,
+  description: 'Some description', // 추후에 설명 추가
+  keywords: [],
   repositoryUrl: 'https://github.com/ApexCaptain/TerraformInjector.git',
+  npmAccess: javascript.NpmAccess.PUBLIC,
+  // Dependencies
+  cdktfVersion: '^0.8.3',
+  deps: [],
+  devDeps: [],
+  peerDeps: [],
 
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
+  // ETC
+  scripts: {}, // 여기에 필요한 스크립트 추가
+
+  // Prettier
+  prettier: true,
+  prettierOptions: {
+    settings: {
+      endOfLine: 'auto',
+      singleQuote: true,
+      tabWidth: 2,
+      trailingComma: 'all',
+    },
+  },
+  // Jsii
+  // Publishing
+  defaultReleaseBranch: 'main',
+  publishToPypi: {
+    distName: 'cdktf-injector-py',
+    module: 'cdktf-injector-py',
+  },
 });
 project.synth();

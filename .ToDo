@@ -1,0 +1,27 @@
+Tutorial
+https://dev.to/aws-builders/a-beginner-s-guide-to-create-aws-cdk-construct-library-with-projen-5eh4
+
+Examples
+https://github.com/hayao-k/cdk-ecr-image-scan-notify
+
+Project GitHub
+https://github.com/projen/projen#readme
+
+\*default
+outputs :
+package.json, .gitignore, .npmignore, eslint stuffs, jsii, license... etc
+
+\*Build
+order :
+default -> compile -> post-compile -> docgen -> test -> eslint -> pacakge
+
+\*Compile
+outputs :
+tsconfig.json, lib/
+
+\*Post-Compile
+order : docgen
+
+\*docgen
+outputs :
+API.md

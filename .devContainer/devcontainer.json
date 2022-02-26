@@ -1,0 +1,15 @@
+{
+  "name": "Dev Container - Terraform Injector",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "args": {
+      "NODE_VERSION": "16-buster"
+    }
+  },
+  "extensions": [
+    "dbaeumer.vscode-eslint",
+    "editorconfig.editorconfig",
+    "hoovercj.vscode-power-mode",
+    "esbenp.prettier-vscode"
+  ]
+}
