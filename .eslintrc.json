@@ -56,7 +56,7 @@
       "error",
       {
         "devDependencies": [
-          "**/project/**",
+          "**/tasks/**",
           ".projenrc.ts",
           "projenrc/**/*.ts"
         ],

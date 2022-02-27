@@ -3,7 +3,7 @@
   "build": {
     "dockerfile": "Dockerfile",
     "args": {
-      "NODE_VERSION": "16-buster"
+      "NODE_VERSION": "16"
     }
   },
   "extensions": [

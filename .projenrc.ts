@@ -1,5 +1,8 @@
 import { cdktf, javascript } from 'projen';
-export const project = new cdktf.ConstructLibraryCdktf({
+
+const PROJECT_NAME = 'cdktf-injector';
+
+const project = new cdktf.ConstructLibraryCdktf({
   // ConstructLibraryCdktfOptions
   cdktfVersion: '^0.8.3',
   constructsVersion: '^10.0.12',
@@ -15,9 +18,20 @@ export const project = new cdktf.ConstructLibraryCdktf({
   repositoryUrl: 'https://github.com/ApexCaptain/cdktf-injector.git',
   author: 'ApexCaptain',
   authorAddress: 'ayteneve93@gmail.com',
-  publishToMaven: undefined,
+  publishToMaven: {
+    javaPackage: PROJECT_NAME,
+    mavenArtifactId: PROJECT_NAME,
+    mavenGroupId: PROJECT_NAME,
+  },
+  publishToPypi: {
+    distName: PROJECT_NAME,
+    module: PROJECT_NAME,
+  },
+  publishToGo: {
+    moduleName: PROJECT_NAME,
+  },
   // Basic Info
-  name: 'cdktf-injector',
+  name: PROJECT_NAME,
 
   authorName: 'SangHun Lee',
 
@@ -36,9 +50,7 @@ export const project = new cdktf.ConstructLibraryCdktf({
     filename: '.projenrc.ts',
   },
   // ETC
-  scripts: {
-    preprojen: `echo ${process.cwd()}`,
-  },
+  scripts: {},
   tsconfigDev: {
     include: ['tasks/**/*.ts'],
     compilerOptions: {},
@@ -60,8 +72,5 @@ export const project = new cdktf.ConstructLibraryCdktf({
   // Jsii
   // Publishing
   defaultReleaseBranch: 'main',
-  publishToPypi: {
-    distName: 'cdktf-injector-py',
-    module: 'cdktf-injector-py',
-  },
 });
+project.synth();

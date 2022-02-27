@@ -28,7 +28,7 @@
     ".projenrc.js",
     "src/**/*.ts",
     "test/**/*.ts",
-    "project/**/*.ts",
+    "tasks/**/*.ts",
     ".projenrc.ts",
     "projenrc/**/*.ts"
   ],
