@@ -1,52 +1,49 @@
-import { cdktf, javascript } from 'projen';
+import { javascript, typescript } from 'projen';
 const PROJECT_NAME = 'cdktf-injector';
-const project = new cdktf.ConstructLibraryCdktf({
-  // ConstructLibraryCdktfOptions
-  cdktfVersion: '^0.8.3',
-  constructsVersion: '^10.0.12',
-
-  // ConstructLibraryOptions
-  catalog: {
-    twitter: undefined,
-    announce: false,
+const project = new typescript.TypeScriptProject({
+  // Typescript
+  libdir: 'lib',
+  srcdir: 'src',
+  testdir: 'test',
+  eslint: true,
+  eslintOptions: {
+    tsconfigPath: './tsconfig.dev.json',
+    dirs: ['src'],
+    devdirs: ['test', 'tasks'],
+    fileExtensions: ['.ts'],
+    ignorePatterns: [
+      '*.js',
+      '*.d.ts',
+      'node_modules/',
+      '*.generated.ts',
+      'coverage',
+    ],
+    lintProjenRc: true,
+    prettier: true,
   },
-  // JsiiProjectOptions
-  rootdir: '.',
-  repositoryUrl: 'https://github.com/ApexCaptain/cdktf-injector.git',
-  author: 'ApexCaptain',
-  authorAddress: 'ayteneve93@gmail.com',
   // Basic Info
+
   name: PROJECT_NAME,
-
   authorName: 'SangHun Lee',
-
   authorOrganization: false,
   description: 'Some description', // 추후에 설명 추가
   keywords: [],
-
   npmAccess: javascript.NpmAccess.PUBLIC,
-  // Dependencies
-
   deps: [],
-  devDeps: ['ts-node'],
-  peerDeps: [],
+  devDeps: [],
+  peerDeps: ['cdktf', 'constructs'],
   projenrcTs: true,
   projenrcJsonOptions: {
     filename: '.projenrc.ts',
   },
-
-  // ETC
-
-  scripts: {},
+  scripts: {
+    precompile: 'rm -r -f ./lib',
+  },
   tsconfigDev: {
     include: ['tasks/**/*.ts'],
     compilerOptions: {},
   },
-  eslintOptions: {
-    devdirs: ['tasks'],
-    dirs: [],
-  },
-  // Prettier
+
   prettier: true,
   prettierOptions: {
     settings: {
@@ -56,16 +53,22 @@ const project = new cdktf.ConstructLibraryCdktf({
       trailingComma: javascript.TrailingComma.ALL,
     },
   },
-  // Jsii
-  // Publishing
   defaultReleaseBranch: 'main',
-  releaseToNpm: true,
+  release: false, // 이후 true로 변경
+  releaseToNpm: false,
 });
 
 // Package Ignore (.npmignore)
-project.addPackageIgnore('.devContainer');
-project.addPackageIgnore('.editorconfig');
-project.addPackageIgnore('.gitattributes');
-project.addPackageIgnore('.ToDo');
-
+[
+  '.devContainer',
+  '.editorconfig',
+  '.eslintrc.json',
+  '.gitattributes',
+  '.prettierignore',
+  '.prettierrc.json',
+  '.projenrc.ts',
+  '.ToDo',
+].forEach((eachNpmIgnorePattern) =>
+  project.addPackageIgnore(eachNpmIgnorePattern),
+);
 project.synth();
