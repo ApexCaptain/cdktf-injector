@@ -180,8 +180,7 @@
       "name": "release",
       "description": "Prepare a release from \"main\" branch",
       "env": {
-        "RELEASE": "true",
-        "RELEASE_TAG_PREFIX": "*.*.*"
+        "RELEASE": "true"
       },
       "steps": [
         {

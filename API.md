@@ -138,5 +138,49 @@ public readonly name: string;
 
 ---
 
+## Classes <a name="Classes" id="Classes"></a>
+
+### Tmp <a name="Tmp" id="cdktf-injector.Tmp"></a>
+
+#### Initializers <a name="Initializers" id="cdktf-injector.Tmp.Initializer"></a>
+
+```typescript
+import { Tmp } from 'cdktf-injector'
+
+new Tmp(someValue2: any)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-injector.Tmp.Initializer.parameter.someValue2">someValue2</a></code> | <code>any</code> | *No description.* |
+
+---
+
+##### `someValue2`<sup>Required</sup> <a name="someValue2" id="cdktf-injector.Tmp.Initializer.parameter.someValue2"></a>
+
+- *Type:* any
+
+---
+
+
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-injector.Tmp.property.someValue2">someValue2</a></code> | <code>any</code> | *No description.* |
+
+---
+
+##### `someValue2`<sup>Required</sup> <a name="someValue2" id="cdktf-injector.Tmp.property.someValue2"></a>
+
+```typescript
+public readonly someValue2: any;
+```
+
+- *Type:* any
+
+---
+
 
 

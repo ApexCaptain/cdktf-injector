@@ -59,6 +59,7 @@ const project = new cdktf.ConstructLibraryCdktf({
   // Jsii
   // Publishing
   defaultReleaseBranch: 'main',
+  releaseToNpm: true,
 });
 
 // Package Ignore (.npmignore)
