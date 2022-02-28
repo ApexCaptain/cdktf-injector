@@ -1,7 +1,5 @@
 import { cdktf, javascript } from 'projen';
-
 const PROJECT_NAME = 'cdktf-injector';
-
 const project = new cdktf.ConstructLibraryCdktf({
   // ConstructLibraryCdktfOptions
   cdktfVersion: '^0.8.3',
@@ -12,24 +10,11 @@ const project = new cdktf.ConstructLibraryCdktf({
     twitter: undefined,
     announce: false,
   },
-
   // JsiiProjectOptions
   rootdir: '.',
   repositoryUrl: 'https://github.com/ApexCaptain/cdktf-injector.git',
   author: 'ApexCaptain',
   authorAddress: 'ayteneve93@gmail.com',
-  publishToMaven: {
-    javaPackage: PROJECT_NAME,
-    mavenArtifactId: PROJECT_NAME,
-    mavenGroupId: PROJECT_NAME,
-  },
-  publishToPypi: {
-    distName: PROJECT_NAME,
-    module: PROJECT_NAME,
-  },
-  publishToGo: {
-    moduleName: PROJECT_NAME,
-  },
   // Basic Info
   name: PROJECT_NAME,
 
@@ -49,7 +34,9 @@ const project = new cdktf.ConstructLibraryCdktf({
   projenrcJsonOptions: {
     filename: '.projenrc.ts',
   },
+
   // ETC
+
   scripts: {},
   tsconfigDev: {
     include: ['tasks/**/*.ts'],
@@ -73,4 +60,11 @@ const project = new cdktf.ConstructLibraryCdktf({
   // Publishing
   defaultReleaseBranch: 'main',
 });
+
+// Package Ignore (.npmignore)
+project.addPackageIgnore('.devContainer');
+project.addPackageIgnore('.editorconfig');
+project.addPackageIgnore('.gitattributes');
+project.addPackageIgnore('.ToDo');
+
 project.synth();
