@@ -5,7 +5,7 @@ export interface HelloProps {
 }
 
 export class Tmp<T> {
-  constructor(public someValue: T) {}
+  constructor(public someValue2: T) {}
 }
 
 export class Hello2 extends Construct {
