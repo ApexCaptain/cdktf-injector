@@ -20,9 +20,9 @@ export class TerraformInjectorElementContainerClass<
 {
   // Properties
   // Production
-  name: string;
 
   // Hidden
+  name: string;
   dependencies = new Set<
     TerraformInjectorElementContainerClass<any, any, any>
   >();
@@ -138,7 +138,7 @@ export class TerraformInjectorElementContainerClass<
       } else throw error;
     }
   }
-  initialize(
+  private initialize(
     configAndSharedObject: TerraformInjectorConfigAndSharedObjectType<
       ConfigType,
       SharedType

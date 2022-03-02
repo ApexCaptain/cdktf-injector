@@ -21,16 +21,16 @@ const project = new typescript.TypeScriptProject({
     lintProjenRc: true,
     prettier: true,
   },
-  // Basic Info
-
+  // etc
+  depsUpgrade: false, // 추후 활성화 (토큰 에러)
   name: PROJECT_NAME,
   authorName: 'SangHun Lee',
   authorOrganization: false,
   description: 'Some description', // 추후에 설명 추가
   keywords: [],
   npmAccess: javascript.NpmAccess.PUBLIC,
-  deps: [],
-  devDeps: [],
+  deps: ['term-size@2.2.1'],
+  devDeps: ['@cdktf/provider-aws'],
   peerDeps: ['cdktf', 'constructs'],
   projenrcTs: true,
   projenrcJsonOptions: {

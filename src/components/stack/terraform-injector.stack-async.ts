@@ -1,10 +1,15 @@
-import { TerraformStack } from 'cdktf';
+import { TerraformStack, TerraformBackend, TerraformElement } from 'cdktf';
 import { Construct } from 'constructs';
 import {
   TerraformInjectorFactory,
   TerraformInjectorAsync,
   getCaller,
   TerraformInjectorClass,
+  TerraformInjectorElementContainerAsync,
+  TerraformInjectorBackendClassType,
+  TerraformInjectorConfigureCallbackType,
+  TerraformInjectorConfigureCallbackAsyncType,
+  TerraformInjectorElementClassType,
 } from '../../module';
 
 export class TerraformInjectorStackAsync
@@ -12,9 +17,36 @@ export class TerraformInjectorStackAsync
   implements TerraformInjectorAsync
 {
   private injector;
-  backend;
-  provide;
-  inject;
+  backend: <
+    TerraformBackendType extends TerraformBackend,
+    PropsType,
+    SharedType = {},
+  >(
+    terraformBackendClass: TerraformInjectorBackendClassType<
+      TerraformBackendType,
+      PropsType
+    >,
+    configure:
+      | TerraformInjectorConfigureCallbackType<PropsType, SharedType>
+      | TerraformInjectorConfigureCallbackAsyncType<PropsType, SharedType>,
+    description?: string,
+  ) => TerraformInjectorElementContainerAsync<TerraformBackendType, SharedType>;
+  provide: <
+    TerraformElementType extends TerraformElement,
+    ConfigType,
+    SharedType = {},
+  >(
+    terraformElementClass: TerraformInjectorElementClassType<
+      TerraformElementType,
+      ConfigType
+    >,
+    id: string,
+    configure:
+      | TerraformInjectorConfigureCallbackType<ConfigType, SharedType>
+      | TerraformInjectorConfigureCallbackAsyncType<ConfigType, SharedType>,
+    description?: string,
+  ) => TerraformInjectorElementContainerAsync<TerraformElementType, SharedType>;
+  inject: () => Promise<void>;
   constructor(
     scope: Construct,
     name: string,

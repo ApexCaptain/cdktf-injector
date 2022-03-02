@@ -3,9 +3,6 @@ export interface TerraformInjectorElementContainerAsync<
   TerraformElementType extends TerraformElement,
   SharedType,
 > {
-  // Properties
-  name: string;
-
   // Getters
   get shared(): SharedType;
   get element(): TerraformElementType;

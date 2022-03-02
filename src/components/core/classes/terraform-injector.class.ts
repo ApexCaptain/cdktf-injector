@@ -9,8 +9,6 @@ import {
   TerraformInjectorElementClassType,
   TerraformInjectorBackendClassType,
   TerraformInjectorConflictedElementIdError,
-  TerraformInjectorElementContainerDependencyCycleError,
-  TerraformInjectorElementContainerSelfDependenceError,
   getCaller,
   commitInjection,
 } from '../../../module';
@@ -103,51 +101,12 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
   }
   // Hidden
   inject(): void | Promise<void> {
-    commitInjection(this);
-    /*
-    const elementContainers = Array.from(this.elementMap.values());
-    const cycleContainerDependencyStack = new Array<
-      TerraformInjectorElementContainerClass<any, any, any>
-    >();
-    const cycleContainerDependencyIdSet = new Set<string>();
-    if (this.useAsync) {
-      return new Promise(async (resolve, reject) => {
-        try {
-        } catch (error) {
-          reject(error);
-        }
-        resolve();
-      });
-    } else {
-      for (const eachContainer of elementContainers) {
-        if (eachContainer.isInitialized) continue;
-        cycleContainerDependencyStack.push(eachContainer);
-        cycleContainerDependencyIdSet.add(eachContainer.id);
-        while (cycleContainerDependencyStack.length) {
-          const topContainer = cycleContainerDependencyStack.pop()!;
-          cycleContainerDependencyIdSet.delete(topContainer.id);
-          const newDependencyContainer = topContainer.inject();
-          if (newDependencyContainer) {
-            if (topContainer.id == newDependencyContainer.id) {
-              throw new TerraformInjectorElementContainerSelfDependenceError(
-                `${topContainer.name} is self-dependence. You cannot use its own element when you configure the container.`,
-              );
-            }
-            cycleContainerDependencyStack.push(topContainer);
-            cycleContainerDependencyIdSet.add(topContainer.id);
-            if (cycleContainerDependencyIdSet.has(newDependencyContainer.id)) {
-              throw new TerraformInjectorElementContainerDependencyCycleError(
-                cycleContainerDependencyStack.slice(
-                  cycleContainerDependencyStack.indexOf(newDependencyContainer),
-                ),
-              );
-            }
-            cycleContainerDependencyStack.push(newDependencyContainer);
-            cycleContainerDependencyIdSet.add(newDependencyContainer.id);
-          } else continue;
-        }
-      }
-    }
-    */
+    return commitInjection(this);
+  }
+  get isinjected() {
+    const containers = Array.from(this.elementMap.values());
+    return containers.length == 0
+      ? true
+      : containers.every((eachContainer) => eachContainer.isInitialized);
   }
 }

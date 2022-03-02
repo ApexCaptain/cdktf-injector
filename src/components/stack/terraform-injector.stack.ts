@@ -1,20 +1,48 @@
-import { TerraformStack } from 'cdktf';
+import { TerraformStack, TerraformElement, TerraformBackend } from 'cdktf';
 import { Construct } from 'constructs';
 import {
   TerraformInjectorFactory,
   TerraformInjector,
   TerraformInjectorClass,
   getCaller,
+  TerraformInjectorElementClassType,
+  TerraformInjectorBackendClassType,
+  TerraformInjectorConfigureCallbackType,
+  TerraformInjectorElementContainer,
 } from '../../module';
 
 export class TerraformInjectorStack
   extends TerraformStack
   implements TerraformInjector
 {
-  private injector;
-  backend;
-  provide;
-  inject;
+  private injector: TerraformInjector;
+
+  backend: <
+    TerraformBackendType extends TerraformBackend,
+    PropsType,
+    SharedType = {},
+  >(
+    terraformBackendClass: TerraformInjectorBackendClassType<
+      TerraformBackendType,
+      PropsType
+    >,
+    configure: TerraformInjectorConfigureCallbackType<PropsType, SharedType>,
+    description?: string,
+  ) => TerraformInjectorElementContainer<TerraformBackendType, SharedType>;
+  provide: <
+    TerraformElementType extends TerraformElement,
+    ConfigType,
+    SharedType = {},
+  >(
+    terraformElementClass: TerraformInjectorElementClassType<
+      TerraformElementType,
+      ConfigType
+    >,
+    id: string,
+    configure: TerraformInjectorConfigureCallbackType<ConfigType, SharedType>,
+    description?: string,
+  ) => TerraformInjectorElementContainer<TerraformElementType, SharedType>;
+  inject: () => void;
   constructor(
     scope: Construct,
     name: string,
@@ -23,6 +51,7 @@ export class TerraformInjectorStack
     }> created at (${getCaller(1)})`,
   ) {
     super(scope, name);
+
     this.injector = TerraformInjectorFactory.scopesOn(
       this,
       injectorDescription,

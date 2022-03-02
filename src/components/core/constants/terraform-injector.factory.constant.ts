@@ -15,7 +15,17 @@ const createInjector = (
 ): TerraformInjectorClass => {
   const injector = injectorMap.has(scope)
     ? injectorMap.get(scope)!
-    : new TerraformInjectorClass(scope, useAsync, getCaller(1), description);
+    : injectorMap
+        .set(
+          scope,
+          new TerraformInjectorClass(
+            scope,
+            useAsync,
+            getCaller(1),
+            description,
+          ),
+        )
+        .get(scope)!;
   if (injector.useAsync != useAsync)
     throw new TerraformInjectorConflictedInjectingMethodTypeError(
       `You cannot use both '${TerraformInjectorFactory.scopesOn.name}' and '${TerraformInjectorFactory.scopesOnAsync.name}' for the same scope simultaneously.`,
