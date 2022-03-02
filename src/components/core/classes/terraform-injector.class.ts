@@ -33,6 +33,16 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
 
   // Methods
   // Production
+  toString(): string {
+    return JSON.stringify(
+      {
+        'Scope Path': `${this.scope.node.path}`,
+        'Created at': this.caller,
+      },
+      null,
+      2,
+    );
+  }
   backend<
     TerraformBackendType extends TerraformBackend,
     PropsType,

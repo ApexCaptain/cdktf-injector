@@ -1,4 +1,8 @@
-import { TerraformElement, TerraformOutputConfig } from 'cdktf';
+import {
+  TerraformElement,
+  TerraformOutput,
+  TerraformOutputConfig,
+} from 'cdktf';
 import { Construct } from 'constructs';
 import {
   TerraformInjectorElementClassType,
@@ -71,23 +75,31 @@ export class TerraformInjectorElementContainerClass<
   // Methods
   // Production
   toString(): string {
-    return JSON.stringify({
-      name: this.name,
-      id: this.id,
-      element: this.terraformElementClass.name,
-      scope: this.scope.toString(),
-    });
+    return JSON.stringify(
+      {
+        'Element Type': this.terraformElementClass.name,
+        'Scope Path': `${this.scope.node.path}/${this.id}`,
+        'Created at': this.caller,
+      },
+      null,
+      2,
+    );
   }
 
   addOutput(
-    outputId: string | ((elementId: string) => string | Promise<string>),
+    outputId: string | ((elementId: string) => string),
     outputConfig: (
       element: TerraformElementType,
       shared: SharedType,
-    ) => TerraformOutputConfig | Promise<TerraformOutputConfig>,
+    ) => TerraformOutputConfig,
   ) {
     outputId;
     outputConfig;
+    this.injector.provide(
+      TerraformOutput,
+      typeof outputId === 'string' ? outputId : outputId(this.id),
+      () => outputConfig(this.element, this.shared),
+    );
     return this;
   }
 

@@ -1,10 +1,6 @@
 {
   "dependencies": [
     {
-      "name": "@cdktf/provider-aws",
-      "type": "build"
-    },
-    {
       "name": "@types/jest",
       "type": "build"
     },

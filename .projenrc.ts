@@ -30,7 +30,7 @@ const project = new typescript.TypeScriptProject({
   keywords: [],
   npmAccess: javascript.NpmAccess.PUBLIC,
   deps: ['term-size@2.2.1'],
-  devDeps: ['@cdktf/provider-aws'],
+  devDeps: [],
   peerDeps: ['cdktf', 'constructs'],
   projenrcTs: true,
   projenrcJsonOptions: {

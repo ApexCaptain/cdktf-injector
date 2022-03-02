@@ -293,11 +293,6 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cdktf/provider-aws@^5.0.35":
-  version "5.0.35"
-  resolved "https://registry.yarnpkg.com/@cdktf/provider-aws/-/provider-aws-5.0.35.tgz#edcc897c6ed777d240e08d967b777daa998ee066"
-  integrity sha512-0cM6bNbPbG45UUuRWV8Ol1BKpHT0YnI2TzgQQJ5+x9Y5cQGPeMJpRZNP5jz7WRSgeeKlpik5T5V20WKEnqttXA==
-
 "@eslint/eslintrc@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@eslint/eslintrc/-/eslintrc-1.2.0.tgz#7ce1547a5c46dfe56e1e45c3c9ed18038c721c6a"

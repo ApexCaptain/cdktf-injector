@@ -9,10 +9,10 @@ export interface TerraformInjectorElementContainerAsync<
 
   // Methods
   addOutput(
-    outputId: string | ((elementId: string) => string | Promise<string>),
+    outputId: string | ((elementId: string) => string),
     outputConfig: (
       element: TerraformElementType,
       shared: SharedType,
-    ) => TerraformOutputConfig | Promise<TerraformOutputConfig>,
+    ) => TerraformOutputConfig,
   ): TerraformInjectorElementContainerAsync<TerraformElementType, SharedType>;
 }

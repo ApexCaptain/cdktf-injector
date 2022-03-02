@@ -1,4 +1,3 @@
-import { vpc } from '@cdktf/provider-aws';
 import { App, Testing } from 'cdktf';
 import 'cdktf/lib/testing/adapters/jest';
 Testing.setupJest();
@@ -16,6 +15,7 @@ import {
   TerraformInjectorElementContainerSelfDependenceError,
   TerraformInjectorInvalidScopePathError,
 } from '../src/module';
+import { MockConfig, MockElement } from './util';
 
 describe(`Terraform-Injector`, () => {
   let testingApplication: App;
@@ -81,7 +81,11 @@ describe(`Terraform-Injector`, () => {
 
         describe(`when nested async injector includes element`, () => {
           beforeEach(() => {
-            nestedAsyncInjector.provide(vpc.Vpc, 'fake-vpc', () => ({}));
+            nestedAsyncInjector.provide(
+              MockElement,
+              'mock-resource',
+              () => ({}),
+            );
           });
           describe('when nested async injector is not initialized', () => {
             it(`should throw ${TerraformInjectorConflictedInjectingMethodTypeError.name}`, () => {
@@ -111,27 +115,27 @@ describe(`Terraform-Injector`, () => {
           );
         });
         describe(`when no element has any reference`, () => {
-          let fakeVpcElementContainer: TerraformInjectorElementContainer<
-            vpc.Vpc,
+          let mockElementContainer: TerraformInjectorElementContainer<
+            MockElement,
             {}
           >;
           beforeEach(() => {
-            fakeVpcElementContainer = nestedInjector.provide(
-              vpc.Vpc,
-              'fake-vpc',
+            mockElementContainer = nestedInjector.provide(
+              MockElement,
+              'mock-resource',
               () => ({}),
             );
             rootInjectorStack.inject();
           });
           it(`element should be defined`, () => {
-            expect(fakeVpcElementContainer.element).not.toBeUndefined();
+            expect(mockElementContainer.element).not.toBeUndefined();
           });
         });
         describe(`when element has self-def reference`, () => {
           beforeEach(() => {
             nestedInjector = new (class extends TerraformInjectorStack {
-              fakeVpc = this.provide(vpc.Vpc, 'fake-vpc', () => {
-                this.fakeVpc.element;
+              mockElement = this.provide(MockElement, 'mock-element', () => {
+                this.mockElement.element;
                 return {};
               });
             })(rootInjectorStack, 'nested-injector-with-self-reference');
@@ -146,10 +150,14 @@ describe(`Terraform-Injector`, () => {
           beforeEach(() => {
             const rootInjectorStack2 =
               new (class extends TerraformInjectorStack {
-                fakeVpcElement = this.provide(vpc.Vpc, 'fake-vpc', () => ({}));
+                mockElement = this.provide(
+                  MockElement,
+                  'mock-element',
+                  () => ({}),
+                );
               })(testingApplication, 'root-stack2');
-            nestedInjector.provide(vpc.Vpc, 'fake-vpc', () => {
-              rootInjectorStack2.fakeVpcElement.element;
+            nestedInjector.provide(MockElement, 'mock-element', () => {
+              rootInjectorStack2.mockElement.element;
               return {};
             });
           });
@@ -162,12 +170,12 @@ describe(`Terraform-Injector`, () => {
         describe(`when dependency cycle exists`, () => {
           beforeEach(() => {
             nestedInjector = new (class extends TerraformInjectorStack {
-              fakeVpc1 = this.provide(vpc.Vpc, 'fake-vpc-1', () => {
-                this.fakeVpc2.element;
+              mockElement1 = this.provide(MockElement, 'mock-element-1', () => {
+                this.mockElement2.element;
                 return {};
               });
-              fakeVpc2 = this.provide(vpc.Vpc, 'fake-vpc-2', () => {
-                this.fakeVpc1.element;
+              mockElement2 = this.provide(MockElement, 'mock-element-2', () => {
+                this.mockElement1.element;
                 return {};
               });
             })(rootInjectorStack, 'nested-injector-with-dep-cycle');

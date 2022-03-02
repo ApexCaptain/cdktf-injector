@@ -19,16 +19,16 @@ export class TerraformInjectorElementContainerDependencyCycleError extends Error
       TerraformInjectorElementContainerClass<any, any, any>
     >,
   ) {
-    const originalMessage = 'something went wrong!';
+    const originalMessage = `It seems that ${cycledContainers.length} element are traped in dependency cycle.`;
     const blankLength = 5;
     const maxWidth = termSize().columns - blankLength - 10;
     const arrowBlankLength = 1;
-    const arrowRepeat = 3;
+    const arrowRepeat = 2;
     super(
       [
         originalMessage,
-        TerraformInjectorElementContainerDependencyCycleError.arrows.right.repeat(
-          blankLength + 3,
+        `${TerraformInjectorElementContainerDependencyCycleError.arrows.right} `.repeat(
+          blankLength - (blankLength / 2 == 0 ? 0 : 1),
         ),
         ...cycledContainers
           .map((eachContainer) => {
@@ -43,9 +43,16 @@ export class TerraformInjectorElementContainerDependencyCycleError extends Error
                 eachContainer.name,
                 maxWidth,
               ),
-
               ...TerraformInjectorElementContainerDependencyCycleError.chunkString(
-                `create at ${eachContainer.caller}`,
+                `Element Type : ${eachContainer.terraformElementClass.name}`,
+                maxWidth,
+              ),
+              ...TerraformInjectorElementContainerDependencyCycleError.chunkString(
+                `Scope path : ${eachContainer.scope.node.path}/${eachContainer.id}`,
+                maxWidth,
+              ),
+              ...TerraformInjectorElementContainerDependencyCycleError.chunkString(
+                `Create at ${eachContainer.caller}`,
                 maxWidth,
               ),
               ...TerraformInjectorElementContainerDependencyCycleError.chunkString(
@@ -67,8 +74,8 @@ export class TerraformInjectorElementContainerDependencyCycleError extends Error
                 TerraformInjectorElementContainerDependencyCycleError.arrows.up
               }${' '.repeat(blankLength)}${eachString}`,
           ),
-        TerraformInjectorElementContainerDependencyCycleError.arrows.left.repeat(
-          blankLength + 3,
+        `${TerraformInjectorElementContainerDependencyCycleError.arrows.left} `.repeat(
+          blankLength - (blankLength / 2 == 0 ? 0 : 1),
         ),
       ].join('\n'),
     );
