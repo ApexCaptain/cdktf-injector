@@ -19,7 +19,7 @@ export class TerraformInjectorElementContainerDependencyCycleError extends Error
       TerraformInjectorElementContainerClass<any, any, any>
     >,
   ) {
-    const originalMessage = `It seems that ${cycledContainers.length} element are traped in dependency cycle.`;
+    const originalMessage = `There are ${cycledContainers.length} element are traped in dependency cycle.`;
     const blankLength = 5;
     const maxWidth = termSize().columns - blankLength - 10;
     const arrowBlankLength = 1;
@@ -52,7 +52,7 @@ export class TerraformInjectorElementContainerDependencyCycleError extends Error
                 maxWidth,
               ),
               ...TerraformInjectorElementContainerDependencyCycleError.chunkString(
-                `Create at ${eachContainer.caller}`,
+                `Created at ${eachContainer.caller}`,
                 maxWidth,
               ),
               ...TerraformInjectorElementContainerDependencyCycleError.chunkString(

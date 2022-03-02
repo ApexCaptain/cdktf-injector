@@ -22,7 +22,19 @@ const project = new typescript.TypeScriptProject({
     prettier: true,
   },
   // etc
-  depsUpgrade: false, // 추후 활성화 (토큰 에러)
+  depsUpgrade: true,
+  depsUpgradeOptions: {
+    exclude: ['term-size'],
+    // include
+    workflow: true,
+    workflowOptions: {
+      schedule: javascript.UpgradeDependenciesSchedule.DAILY,
+    },
+    taskName: 'upgrade',
+    pullRequestTitle: 'upgrade dependencies',
+    ignoreProjen: true,
+    signoff: true,
+  },
   name: PROJECT_NAME,
   authorName: 'SangHun Lee',
   authorOrganization: false,

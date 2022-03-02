@@ -11,7 +11,7 @@ export interface TerraformInjector extends TerraformInjectorCommon {
   backend<
     TerraformBackendType extends TerraformBackend,
     PropsType,
-    SharedType = {},
+    SharedType = undefined,
   >(
     terraformBackendClass: TerraformInjectorBackendClassType<
       TerraformBackendType,
@@ -23,7 +23,7 @@ export interface TerraformInjector extends TerraformInjectorCommon {
   provide<
     TerraformElementType extends TerraformElement,
     ConfigType,
-    SharedType = {},
+    SharedType = undefined,
   >(
     terraformElementClass: TerraformInjectorElementClassType<
       TerraformElementType,

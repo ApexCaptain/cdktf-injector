@@ -20,7 +20,7 @@ export class TerraformInjectorStack
   backend: <
     TerraformBackendType extends TerraformBackend,
     PropsType,
-    SharedType = {},
+    SharedType = undefined,
   >(
     terraformBackendClass: TerraformInjectorBackendClassType<
       TerraformBackendType,
@@ -32,7 +32,7 @@ export class TerraformInjectorStack
   provide: <
     TerraformElementType extends TerraformElement,
     ConfigType,
-    SharedType = {},
+    SharedType = undefined,
   >(
     terraformElementClass: TerraformInjectorElementClassType<
       TerraformElementType,

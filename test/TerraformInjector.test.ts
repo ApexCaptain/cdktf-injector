@@ -15,7 +15,7 @@ import {
   TerraformInjectorElementContainerSelfDependenceError,
   TerraformInjectorInvalidScopePathError,
 } from '../src/module';
-import { MockConfig, MockElement } from './util';
+import { MockElement } from './util';
 
 describe(`Terraform-Injector`, () => {
   let testingApplication: App;

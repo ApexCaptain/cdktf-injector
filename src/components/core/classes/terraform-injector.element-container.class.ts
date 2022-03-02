@@ -157,11 +157,10 @@ export class TerraformInjectorElementContainerClass<
     >,
   ) {
     let config: ConfigType;
-    if ('shared' in configAndSharedObject) {
-      this._shared = configAndSharedObject.shared;
-      config = configAndSharedObject.config;
+    if (Array.isArray(configAndSharedObject)) {
+      config = configAndSharedObject[0];
+      this._shared = configAndSharedObject[1];
     } else {
-      this._shared = {} as SharedType;
       config = configAndSharedObject;
     }
     this._element =

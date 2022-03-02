@@ -1,7 +1,2 @@
 export type TerraformInjectorConfigAndSharedObjectType<ConfigType, SharedType> =
-
-    | Exclude<ConfigType, undefined>
-    | {
-        config: Exclude<ConfigType, undefined>;
-        shared: SharedType;
-      };
+  Exclude<ConfigType, undefined> | [Exclude<ConfigType, undefined>, SharedType];
