@@ -133,7 +133,6 @@ if (project.eslint) {
     'di',
     'cdk',
     'typedoc',
-    'rmdir ',
     'fs',
   ].sort();
 
@@ -167,8 +166,8 @@ if (project.eslint) {
 
 // Husky
 const huskyDir = path.join(process.cwd(), '.husky');
-if (fs.existsSync(huskyDir)) fs.rmdirSync(huskyDir, { recursive: true });
+if (fs.existsSync(huskyDir)) fs.rmSync(huskyDir, { recursive: true });
 husky.install(huskyDir);
-husky.set(`${huskyDir}/pre-commit`, 'yarn docgen && git add .');
+husky.set(`${huskyDir}/pre-commit`, 'yarn docgen && git add -A');
 
 project.synth();
