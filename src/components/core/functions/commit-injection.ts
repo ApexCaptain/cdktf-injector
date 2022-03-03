@@ -23,7 +23,7 @@ export const commitInjection = (
 
   if (!parentInjector.useAsync) {
     children.forEach((eachInjector) => {
-      if (eachInjector.useAsync && !eachInjector.isinjected) {
+      if (eachInjector.useAsync && !eachInjector.isInjected) {
         throw new TerraformInjectorConflictedInjectingMethodTypeError(
           `Synchronous injector on ${parentScopePath} cannot commit cascading injection on nested asynchronous injector on ${eachInjector.scope.node.path}. You should call "inject" function of nested one, or wrap the parent with async injector.`,
         );

@@ -73,7 +73,7 @@ export class TerraformInjectorElementContainerClass<
     this.name = `<${terraformElementClass.name} ${id}>`;
     this.terraformElementContainerNonInitializedError =
       new TerraformInjectorElementContainerUninitializedError(
-        `Terraform element ${this.name} is not initialized. You have to call <yout injector>.inject or injectAsync first.`,
+        `Terraform element ${this.name} is not initialized. You have to call <your injector>.inject or injectAsync first.`,
         this,
       );
   }

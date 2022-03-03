@@ -7,7 +7,7 @@ export interface TerraformInjectorElementContainer<
     TerraformElementType,
     SharedType
   > {
-  // Overriden Methods
+  // Overridden Methods
   afterInitElement(
     afterInitCallback: (
       element: TerraformElementType,

@@ -89,7 +89,7 @@ const project = new typescript.TypeScriptProject({
     docgen: 'typedoc --options ./typedoc.json',
     precompile: 'rm -r -f ./lib',
   },
-
+  homepage: 'https://apexcaptain.github.io/cdktf-injector/',
   prettier: true,
   prettierOptions: {
     settings: {
@@ -100,9 +100,10 @@ const project = new typescript.TypeScriptProject({
     },
   },
   defaultReleaseBranch: 'main',
-  release: false, // 이후 true로 변경
+  release: false,
   releaseToNpm: false,
   gitignore: ['auth'],
+  majorVersion: 1,
 });
 
 // Eslint
@@ -141,7 +142,7 @@ if (project.eslint) {
     'gitignore',
   ].sort();
 
-  const srcWords = ['terraform'].sort();
+  const srcWords = ['terraform', 'Getters', 'dep'].sort();
 
   const testWords = [].sort();
 

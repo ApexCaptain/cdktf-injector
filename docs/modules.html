@@ -92,9 +92,18 @@
 					<div class="tsd-signature tsd-kind-icon">Terraform<wbr>Injector<wbr>Factory<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>scopesOn<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>scope<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Construct</span>, description<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="interfaces/TerraformInjector.html" class="tsd-signature-type" data-tsd-kind="Interface">TerraformInjector</a><span class="tsd-signature-symbol">; </span>scopesOnAsync<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>scope<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Construct</span>, description<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="interfaces/TerraformInjectorAsync.html" class="tsd-signature-type" data-tsd-kind="Interface">TerraformInjectorAsync</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/ApexCaptain/cdktf-injector/blob/3d91cb2/src/components/core/constants/terraform-injector.factory.constant.ts#L35">components/core/constants/terraform-injector.factory.constant.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/ApexCaptain/cdktf-injector/blob/66f6f58/src/components/core/constants/terraform-injector.factory.constant.ts#L40">components/core/constants/terraform-injector.factory.constant.ts:40</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<dl class="tsd-comment-tags">
+							<dt>see</dt>
+							<dd><p><a href="https://www.terraform.io/cdktf/concepts/constructs">https://www.terraform.io/cdktf/concepts/constructs</a>
+									Constant object for creating <a href="interfaces/TerraformInjector.html">TerraformInjector</a> or <a href="interfaces/TerraformInjectorAsync.html">TerraformInjectorAsync</a> instance.
+								You can use either one of <code>scopeOn</code> or <code>scopeOnAsync</code> function on a same scope, not both.</p>
+							</dd>
+						</dl>
+					</div>
 					<div class="tsd-type-declaration">
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
@@ -107,13 +116,29 @@
 										</ul>
 										<ul class="tsd-descriptions">
 											<li class="tsd-description">
+												<div class="tsd-comment tsd-typography">
+													<div class="lead">
+														<p>Create or get a <a href="interfaces/TerraformInjector.html">TerraformInjector</a> instance on a certain <a href="https://www.npmjs.com/package/constructs" class="external">Construct</a> scope.</p>
+													</div>
+													<dl class="tsd-comment-tags">
+														<dt>throws</dt>
+														<dd><p>{TerraformInjectorConflictedInjectingMethodTypeError} When you try to load both static/async injector on the same scope.</p>
+														</dd>
+													</dl>
+												</div>
 												<h4 class="tsd-parameters-title">Parameters</h4>
 												<ul class="tsd-parameters">
 													<li>
 														<h5>scope: <span class="tsd-signature-type">Construct</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<p><a href="https://www.npmjs.com/package/constructs" class="external">Construct</a> instance that <a href="interfaces/TerraformInjector.html">TerraformInjector</a> scopes on.</p>
+														</div>
 													</li>
 													<li>
 														<h5><span class="tsd-flag ts-flagOptional">Optional</span> description: <span class="tsd-signature-type">string</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<p>Optional description string for the instance.</p>
+														</div>
 													</li>
 												</ul>
 												<h4 class="tsd-returns-title">Returns <a href="interfaces/TerraformInjector.html" class="tsd-signature-type" data-tsd-kind="Interface">TerraformInjector</a></h4>
@@ -131,13 +156,29 @@
 										</ul>
 										<ul class="tsd-descriptions">
 											<li class="tsd-description">
+												<div class="tsd-comment tsd-typography">
+													<div class="lead">
+														<p>Create or get a <a href="interfaces/TerraformInjectorAsync.html">TerraformInjectorAsync</a> instance on a certain <a href="https://www.npmjs.com/package/constructs" class="external">Construct</a> scope.</p>
+													</div>
+													<dl class="tsd-comment-tags">
+														<dt>throws</dt>
+														<dd><p>{TerraformInjectorConflictedInjectingMethodTypeError} When you try to load both static/async injector on the same scope.</p>
+														</dd>
+													</dl>
+												</div>
 												<h4 class="tsd-parameters-title">Parameters</h4>
 												<ul class="tsd-parameters">
 													<li>
 														<h5>scope: <span class="tsd-signature-type">Construct</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<p><a href="https://www.npmjs.com/package/constructs" class="external">Construct</a> instance that <a href="interfaces/TerraformInjectorAsync.html">TerraformInjectorAsync</a> scopes on.</p>
+														</div>
 													</li>
 													<li>
 														<h5><span class="tsd-flag ts-flagOptional">Optional</span> description: <span class="tsd-signature-type">string</span></h5>
+														<div class="tsd-comment tsd-typography">
+															<p>Optional description string for the instance.</p>
+														</div>
 													</li>
 												</ul>
 												<h4 class="tsd-returns-title">Returns <a href="interfaces/TerraformInjectorAsync.html" class="tsd-signature-type" data-tsd-kind="Interface">TerraformInjectorAsync</a></h4>

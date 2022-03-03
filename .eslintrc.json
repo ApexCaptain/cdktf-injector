@@ -164,6 +164,8 @@
           "testdir",
           "tsconfig",
           "typedoc",
+          "Getters",
+          "dep",
           "terraform",
           "applypatch",
           "cmd",

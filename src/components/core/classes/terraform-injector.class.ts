@@ -91,7 +91,7 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
   ): TerraformInjectorElementContainerAsync<TerraformElementType, SharedType> {
     if (id == 'backend')
       throw new TerraformInjectorConflictedElementIdError(
-        `id : ${id} is not allowed for non-bakend class`,
+        `id : ${id} is not allowed for non-backend class`,
       );
     if (this.elementMap.has(id))
       throw new TerraformInjectorConflictedElementIdError(
@@ -109,11 +109,11 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
     this.elementMap.set(id, elementContainer);
     return elementContainer;
   }
-  // Hidden
   inject(): void | Promise<void> {
     return commitInjection(this);
   }
-  get isinjected() {
+  // Hidden
+  get isInjected() {
     const containers = Array.from(this.elementMap.values());
     return containers.length == 0
       ? true

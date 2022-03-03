@@ -8,7 +8,7 @@ const task = async () => {
       .readFileSync(path.join(process.cwd(), 'auth', 'credential.json'))
       .toString(),
   ).githubToken;
-  const keywords = (
+  const names = (
     JSON.parse(
       fs.readFileSync(path.join(process.cwd(), 'package.json')).toString(),
     ).keywords as Array<string>
@@ -21,9 +21,9 @@ const task = async () => {
   await new Octokit({
     auth,
   }).repos.replaceAllTopics({
+    names,
     owner: 'ApexCaptain',
     repo: 'cdktf-injector',
-    names: keywords,
   });
   process.exit(0);
 };
