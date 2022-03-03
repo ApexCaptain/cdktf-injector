@@ -1,3 +1,6 @@
+import * as fs from 'fs';
+import path from 'path';
+import * as husky from 'husky';
 import { javascript, typescript } from 'projen';
 const PROJECT_NAME = 'cdktf-injector';
 const project = new typescript.TypeScriptProject({
@@ -102,15 +105,6 @@ const project = new typescript.TypeScriptProject({
   releaseToNpm: false,
 });
 
-// Husky
-project.addFields({
-  husky: {
-    hooks: {
-      'pre-commit': 'yarn docgen',
-    },
-  },
-});
-
 // Eslint
 if (project.eslint) {
   const eslint = project.eslint;
@@ -139,6 +133,8 @@ if (project.eslint) {
     'di',
     'cdk',
     'typedoc',
+    'rmdir ',
+    'fs',
   ].sort();
 
   const srcWords = ['terraform'].sort();
@@ -154,6 +150,7 @@ if (project.eslint) {
     ],
   });
 }
+
 // Package Ignore (.npmignore)
 [
   '.devContainer',
@@ -167,4 +164,11 @@ if (project.eslint) {
 ].forEach((eachNpmIgnorePattern) =>
   project.addPackageIgnore(eachNpmIgnorePattern),
 );
+
+// Husky
+const huskyDir = path.join(process.cwd(), '.husky');
+if (fs.existsSync(huskyDir)) fs.rmdirSync(huskyDir, { recursive: true });
+husky.install(huskyDir);
+husky.set(`${huskyDir}/pre-commit`, 'yarn docgen');
+
 project.synth();
