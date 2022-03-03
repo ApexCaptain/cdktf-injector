@@ -7,28 +7,18 @@ class MyStack extends TerraformInjectorStack {
     return {};
   });
   ele2 = this.provide(MockElement, 'ele2', () => {
-    this.ele3.element;
     return {};
-  });
+  })
+    .afterInitElement((element) => {
+      this.ele3.element;
+      this.ele1.element;
+      console.log('ai', element);
+    })
+    .afterDependenciesInjected((element) => {
+      console.log('ad', element);
+    });
+
   ele3 = this.provide(MockElement, 'ele3', () => {
-    this.ele4.element;
-    return {};
-  });
-  ele4 = this.provide(
-    MockElement,
-    'ele4',
-    () => {
-      this.ele5.element;
-      return {};
-    },
-    'someDescription',
-  );
-  ele5 = this.provide(MockElement, 'ele5', () => {
-    this.ele6.element;
-    return {};
-  });
-  ele6 = this.provide(MockElement, 'ele6', () => {
-    this.ele3.element;
     return {};
   });
 }

@@ -8,6 +8,20 @@ export interface TerraformInjectorElementContainer<
     SharedType
   > {
   // Overriden Methods
+  afterInitElement(
+    afterInitCallback: (
+      element: TerraformElementType,
+      shared: SharedType,
+    ) => void,
+  ): TerraformInjectorElementContainer<TerraformElementType, SharedType>;
+
+  afterDependenciesInjected(
+    afterInitCallback: (
+      element: TerraformElementType,
+      shared: SharedType,
+    ) => void,
+  ): TerraformInjectorElementContainer<TerraformElementType, SharedType>;
+
   addOutput(
     outputId: string | ((elementId: string) => string),
     outputConfig: (

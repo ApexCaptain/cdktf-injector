@@ -48,6 +48,10 @@
       "type": "build"
     },
     {
+      "name": "eslint-plugin-spellcheck",
+      "type": "build"
+    },
+    {
       "name": "eslint",
       "version": "^8",
       "type": "build"
@@ -88,7 +92,12 @@
       "type": "build"
     },
     {
+      "name": "typedoc",
+      "type": "build"
+    },
+    {
       "name": "typescript",
+      "version": "4.4",
       "type": "build"
     },
     {

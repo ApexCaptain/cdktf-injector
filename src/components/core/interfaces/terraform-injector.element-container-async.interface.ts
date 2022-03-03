@@ -8,6 +8,20 @@ export interface TerraformInjectorElementContainerAsync<
   get element(): TerraformElementType;
 
   // Methods
+  afterInitElement(
+    afterInitCallback: (
+      element: TerraformElementType,
+      shared: SharedType,
+    ) => void | Promise<void>,
+  ): TerraformInjectorElementContainerAsync<TerraformElementType, SharedType>;
+
+  afterDependenciesInjected(
+    afterInitCallback: (
+      element: TerraformElementType,
+      shared: SharedType,
+    ) => void | Promise<void>,
+  ): TerraformInjectorElementContainerAsync<TerraformElementType, SharedType>;
+
   addOutput(
     outputId: string | ((elementId: string) => string),
     outputConfig: (

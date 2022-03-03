@@ -1,7 +1,7 @@
 import { javascript, typescript } from 'projen';
 const PROJECT_NAME = 'cdktf-injector';
 const project = new typescript.TypeScriptProject({
-  // Typescript
+  /* Typescript */
   libdir: 'lib',
   srcdir: 'src',
   testdir: 'test',
@@ -20,8 +20,32 @@ const project = new typescript.TypeScriptProject({
     ],
     lintProjenRc: true,
     prettier: true,
+    // aliasMap
+    // aliasExtensions
+    tsAlwaysTryTypes: true,
   },
-  // etc
+  typescriptVersion: '4.4',
+
+  // tsconfig
+  tsconfigDev: {
+    include: ['tasks/**/*.ts'],
+    compilerOptions: {},
+  },
+  tsconfigDevFile: 'tsconfig.dev.json',
+  disableTsconfig: false,
+  // sampleCode
+  // entrypointTypes
+  projenrcTs: true,
+  // projenrcTsOptions
+
+  /* Node */
+  // copyrightOwner
+  // copyrightPeriod
+  // projenVersion
+  projenDevDependency: true,
+  buildWorkflow: true,
+
+  /* ETC */
   depsUpgrade: true,
   depsUpgradeOptions: {
     exclude: ['term-size'],
@@ -38,22 +62,31 @@ const project = new typescript.TypeScriptProject({
   name: PROJECT_NAME,
   authorName: 'SangHun Lee',
   authorOrganization: false,
-  description: 'Some description', // 추후에 설명 추가
-  keywords: [],
+  description:
+    'Dependency injector for CDKTF(Cloud Development Kit for Terraform) powered by projen.', // 추후에 설명 추가
+  keywords: [
+    'cdk',
+    'cdktf',
+    'terraform',
+    'di',
+    'dependency injection',
+    'injection',
+    'injector',
+    'dependency',
+  ],
   npmAccess: javascript.NpmAccess.PUBLIC,
   deps: ['term-size@2.2.1'],
-  devDeps: [],
+  devDeps: ['eslint-plugin-spellcheck', 'typedoc'],
   peerDeps: ['cdktf', 'constructs'],
-  projenrcTs: true,
+
   projenrcJsonOptions: {
     filename: '.projenrc.ts',
   },
   scripts: {
+    postbuild: 'yarn docgen',
+    predocgen: 'rm -r -f ./docs',
+    docgen: 'typedoc --options ./typedoc.json',
     precompile: 'rm -r -f ./lib',
-  },
-  tsconfigDev: {
-    include: ['tasks/**/*.ts'],
-    compilerOptions: {},
   },
 
   prettier: true,
@@ -70,6 +103,49 @@ const project = new typescript.TypeScriptProject({
   releaseToNpm: false,
 });
 
+// Eslint
+if (project.eslint) {
+  const eslint = project.eslint;
+  /* Spell checking */
+  eslint.addPlugins('spellcheck');
+  const projenWords = [
+    'javascript',
+    'cdktf',
+    'libdir',
+    'srcdir',
+    'testdir',
+    'tsconfig',
+    'devdirs',
+    'projen',
+    'rc',
+    'projenrc',
+    'signoff',
+    'npmignore',
+    'editorconfig',
+    'gitattributes',
+    'prettierignore',
+    'eslintrc',
+    'prettierrc',
+    'docgen',
+    'entrypoint',
+    'di',
+    'cdk',
+    'typedoc',
+  ].sort();
+
+  const srcWords = ['terraform'].sort();
+
+  const testWords = [].sort();
+
+  eslint.addRules({
+    'spellcheck/spell-checker': [
+      'warn',
+      {
+        skipWords: [...projenWords, ...srcWords, ...testWords],
+      },
+    ],
+  });
+}
 // Package Ignore (.npmignore)
 [
   '.devContainer',

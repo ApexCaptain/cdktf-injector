@@ -7,7 +7,8 @@
   "plugins": [
     "@typescript-eslint",
     "import",
-    "prettier"
+    "prettier",
+    "spellcheck"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -126,6 +127,36 @@
           "field",
           "constructor",
           "method"
+        ]
+      }
+    ],
+    "spellcheck/spell-checker": [
+      "warn",
+      {
+        "skipWords": [
+          "cdk",
+          "cdktf",
+          "devdirs",
+          "di",
+          "docgen",
+          "editorconfig",
+          "entrypoint",
+          "eslintrc",
+          "gitattributes",
+          "javascript",
+          "libdir",
+          "npmignore",
+          "prettierignore",
+          "prettierrc",
+          "projen",
+          "projenrc",
+          "rc",
+          "signoff",
+          "srcdir",
+          "testdir",
+          "tsconfig",
+          "typedoc",
+          "terraform"
         ]
       }
     ]

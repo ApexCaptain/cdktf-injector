@@ -73,6 +73,12 @@ export const commitInjection = (
             }
           }
         }
+        for (const eachContainer of elementContainerSet)
+          for (const eachAfterDependencyInjectedCallback of eachContainer.afterDependenciesInjectedCallbackArray)
+            await eachAfterDependencyInjectedCallback(
+              eachContainer.element,
+              eachContainer.shared,
+            );
         resolve();
       } catch (error) {
         reject(error);
@@ -106,4 +112,10 @@ export const commitInjection = (
       }
     }
   }
+  for (const eachContainer of elementContainerSet)
+    for (const eachAfterDependencyInjectedCallback of eachContainer.afterDependenciesInjectedCallbackArray)
+      void eachAfterDependencyInjectedCallback(
+        eachContainer.element,
+        eachContainer.shared,
+      );
 };

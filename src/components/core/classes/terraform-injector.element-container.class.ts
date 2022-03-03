@@ -34,6 +34,12 @@ export class TerraformInjectorElementContainerClass<
   retryCount = 1;
   isInitialized = false;
   terraformElementContainerNonInitializedError: TerraformInjectorElementContainerUninitializedError;
+  afterInitElementCallbackArray = new Array<
+    (element: TerraformElementType, shared: SharedType) => void | Promise<void>
+  >();
+  afterDependenciesInjectedCallbackArray = new Array<
+    (element: TerraformElementType, shared: SharedType) => void | Promise<void>
+  >();
 
   // Getters
   _shared!: SharedType;
@@ -86,6 +92,28 @@ export class TerraformInjectorElementContainerClass<
     );
   }
 
+  afterInitElement(
+    afterInitCallback: (
+      element: TerraformElementType,
+      shared: SharedType,
+    ) => void | Promise<void>,
+  ) {
+    this.afterInitElementCallbackArray.push(afterInitCallback);
+    return this;
+  }
+
+  afterDependenciesInjected(
+    afterDependenciesInjectedCallback: (
+      element: TerraformElementType,
+      shared: SharedType,
+    ) => void | Promise<void>,
+  ) {
+    this.afterDependenciesInjectedCallbackArray.push(
+      afterDependenciesInjectedCallback,
+    );
+    return this;
+  }
+
   addOutput(
     outputId: string | ((elementId: string) => string),
     outputConfig: (
@@ -93,8 +121,6 @@ export class TerraformInjectorElementContainerClass<
       shared: SharedType,
     ) => TerraformOutputConfig,
   ) {
-    outputId;
-    outputConfig;
     this.injector.provide(
       TerraformOutput,
       typeof outputId === 'string' ? outputId : outputId(this.id),
@@ -106,14 +132,18 @@ export class TerraformInjectorElementContainerClass<
   // Hidden
   inject(): TerraformInjectorElementContainerClass<any, any, any> | void {
     try {
-      this.initialize(
-        (
-          this.configure as TerraformInjectorConfigureCallbackType<
-            ConfigType,
-            SharedType
-          >
-        )(),
-      );
+      if (!this.isInitialized)
+        this.initialize(
+          (
+            this.configure as TerraformInjectorConfigureCallbackType<
+              ConfigType,
+              SharedType
+            >
+          )(),
+        );
+      for (const eachAfterInitCallback of this.afterInitElementCallbackArray) {
+        void eachAfterInitCallback(this.element, this.shared);
+      }
     } catch (error) {
       if (
         error instanceof TerraformInjectorElementContainerUninitializedError
@@ -131,14 +161,18 @@ export class TerraformInjectorElementContainerClass<
     any
   > | void> {
     try {
-      this.initialize(
-        await (
-          this.configure as TerraformInjectorConfigureCallbackAsyncType<
-            ConfigType,
-            SharedType
-          >
-        )(),
-      );
+      if (!this.isInitialized)
+        this.initialize(
+          await (
+            this.configure as TerraformInjectorConfigureCallbackAsyncType<
+              ConfigType,
+              SharedType
+            >
+          )(),
+        );
+      for (const eachAfterInitCallback of this.afterInitElementCallbackArray) {
+        await eachAfterInitCallback(this.element, this.shared);
+      }
     } catch (error) {
       if (
         error instanceof TerraformInjectorElementContainerUninitializedError
