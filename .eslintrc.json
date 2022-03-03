@@ -58,6 +58,8 @@
         "devDependencies": [
           "**/test/**",
           "**/tasks/**",
+          "**/project/**",
+          "**/@octokit/rest/**",
           ".projenrc.ts",
           "projenrc/**/*.ts"
         ],
@@ -147,18 +149,24 @@
           "javascript",
           "libdir",
           "npmignore",
+          "octokit",
           "prettierignore",
           "prettierrc",
           "projen",
           "projenrc",
           "rc",
-          "rmdir ",
+          "repo",
+          "repos",
+          "rmdir",
           "signoff",
           "srcdir",
           "testdir",
           "tsconfig",
           "typedoc",
-          "terraform"
+          "terraform",
+          "applypatch",
+          "cmd",
+          "msg"
         ]
       }
     ]

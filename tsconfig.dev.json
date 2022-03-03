@@ -29,6 +29,7 @@
     "src/**/*.ts",
     "test/**/*.ts",
     "tasks/**/*.ts",
+    "project/**/*.ts",
     ".projenrc.ts",
     "projenrc/**/*.ts"
   ],

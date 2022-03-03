@@ -1,7 +1,5 @@
-import * as fs from 'fs';
-import path from 'path';
-import * as husky from 'husky';
 import { javascript, typescript } from 'projen';
+import { HuskyProjectSetter } from './project';
 const PROJECT_NAME = 'cdktf-injector';
 const project = new typescript.TypeScriptProject({
   /* Typescript */
@@ -12,7 +10,7 @@ const project = new typescript.TypeScriptProject({
   eslintOptions: {
     tsconfigPath: './tsconfig.dev.json',
     dirs: ['src'],
-    devdirs: ['test', 'tasks'],
+    devdirs: ['test', 'tasks', 'project', '@octokit/rest'],
     fileExtensions: ['.ts'],
     ignorePatterns: [
       '*.js',
@@ -31,7 +29,7 @@ const project = new typescript.TypeScriptProject({
 
   // tsconfig
   tsconfigDev: {
-    include: ['tasks/**/*.ts'],
+    include: ['tasks/**/*.ts', 'project/**/*.ts'],
     compilerOptions: {},
   },
   tsconfigDevFile: 'tsconfig.dev.json',
@@ -79,13 +77,14 @@ const project = new typescript.TypeScriptProject({
   ],
   npmAccess: javascript.NpmAccess.PUBLIC,
   deps: ['term-size@2.2.1'],
-  devDeps: ['eslint-plugin-spellcheck', 'typedoc', 'husky'],
+  devDeps: ['eslint-plugin-spellcheck', 'typedoc', 'husky', '@octokit/rest'],
   peerDeps: ['cdktf', 'constructs'],
 
   projenrcJsonOptions: {
     filename: '.projenrc.ts',
   },
   scripts: {
+    preprojen: 'rm -r -f ./.husky',
     predocgen: 'rm -r -f ./docs',
     docgen: 'typedoc --options ./typedoc.json',
     precompile: 'rm -r -f ./lib',
@@ -134,6 +133,10 @@ if (project.eslint) {
     'cdk',
     'typedoc',
     'fs',
+    'rmdir',
+    'octokit',
+    'repo',
+    'repos',
   ].sort();
 
   const srcWords = ['terraform'].sort();
@@ -144,7 +147,12 @@ if (project.eslint) {
     'spellcheck/spell-checker': [
       'warn',
       {
-        skipWords: [...projenWords, ...srcWords, ...testWords],
+        skipWords: [
+          ...projenWords,
+          ...srcWords,
+          ...testWords,
+          ...HuskyProjectSetter.dictionary,
+        ],
       },
     ],
   });
@@ -165,9 +173,9 @@ if (project.eslint) {
 );
 
 // Husky
-const huskyDir = path.join(process.cwd(), '.husky');
-if (fs.existsSync(huskyDir)) fs.rmSync(huskyDir, { recursive: true });
-husky.install(huskyDir);
-husky.set(`${huskyDir}/pre-commit`, 'yarn docgen && git add -A');
+HuskyProjectSetter.addHook('pre-commit', 'yarn docgen && git add -A').addHook(
+  'pre-push',
+  'yarn ts-node ./tasks/DeployKeywordsAsRepoTopics.task',
+);
 
 project.synth();
