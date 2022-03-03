@@ -102,6 +102,7 @@ const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: 'main',
   release: false, // 이후 true로 변경
   releaseToNpm: false,
+  gitignore: ['auth'],
 });
 
 // Eslint
@@ -137,6 +138,7 @@ if (project.eslint) {
     'octokit',
     'repo',
     'repos',
+    'gitignore',
   ].sort();
 
   const srcWords = ['terraform'].sort();

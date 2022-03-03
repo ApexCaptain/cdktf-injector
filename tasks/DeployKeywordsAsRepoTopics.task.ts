@@ -3,14 +3,24 @@ import path from 'path';
 import { Octokit } from '@octokit/rest';
 
 const task = async () => {
+  const auth = JSON.parse(
+    fs
+      .readFileSync(path.join(process.cwd(), 'auth', 'credential.json'))
+      .toString(),
+  ).githubToken;
   const keywords = (
     JSON.parse(
       fs.readFileSync(path.join(process.cwd(), 'package.json')).toString(),
     ).keywords as Array<string>
   ).map((eachKeyword) =>
-    eachKeyword.includes(' ') ? eachKeyword.split(' ').join('-') : eachKeyword,
+    (eachKeyword.includes(' ')
+      ? eachKeyword.split(' ').join('-')
+      : eachKeyword
+    ).toLocaleLowerCase(),
   );
-  await new Octokit().repos.replaceAllTopics({
+  await new Octokit({
+    auth,
+  }).repos.replaceAllTopics({
     owner: 'ApexCaptain',
     repo: 'cdktf-injector',
     names: keywords,

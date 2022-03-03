@@ -146,6 +146,7 @@
           "eslintrc",
           "fs",
           "gitattributes",
+          "gitignore",
           "javascript",
           "libdir",
           "npmignore",
