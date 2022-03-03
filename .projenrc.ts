@@ -76,14 +76,13 @@ const project = new typescript.TypeScriptProject({
   ],
   npmAccess: javascript.NpmAccess.PUBLIC,
   deps: ['term-size@2.2.1'],
-  devDeps: ['eslint-plugin-spellcheck', 'typedoc'],
+  devDeps: ['eslint-plugin-spellcheck', 'typedoc', 'husky'],
   peerDeps: ['cdktf', 'constructs'],
 
   projenrcJsonOptions: {
     filename: '.projenrc.ts',
   },
   scripts: {
-    postbuild: 'yarn docgen',
     predocgen: 'rm -r -f ./docs',
     docgen: 'typedoc --options ./typedoc.json',
     precompile: 'rm -r -f ./lib',
@@ -101,6 +100,15 @@ const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: 'main',
   release: false, // 이후 true로 변경
   releaseToNpm: false,
+});
+
+// Husky
+project.addFields({
+  husky: {
+    hooks: {
+      'pre-commit': 'yarn docgen',
+    },
+  },
 });
 
 // Eslint
