@@ -14,7 +14,7 @@ If you are not familiar with [cdktf] and [terraform] yet or haven't heard of the
 
 - [Terraform][terraform] - You need to install [terraform] in your development pc and it should be accessible on path. If you're using `devcontainer` you can paste following commands to your `Dockerfile`.
 
-  ```dockerfile
+  ```docker
   ...
 
   # Pass terraform version as an argument
