@@ -168,8 +168,10 @@
           "dep",
           "terraform",
           "applypatch",
+          "msg",
           "cmd",
-          "msg"
+          "unlink",
+          "readdir"
         ]
       }
     ]

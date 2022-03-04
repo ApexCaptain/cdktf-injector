@@ -143,14 +143,6 @@
         }
       ]
     },
-    "preprojen": {
-      "name": "preprojen",
-      "steps": [
-        {
-          "exec": "rm -r -f ./.husky"
-        }
-      ]
-    },
     "test": {
       "name": "test",
       "description": "Run tests",

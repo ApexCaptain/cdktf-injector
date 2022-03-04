@@ -15,7 +15,6 @@
     "pre-compile": "npx projen pre-compile",
     "precompile": "npx projen precompile",
     "predocgen": "npx projen predocgen",
-    "preprojen": "npx projen preprojen",
     "test": "npx projen test",
     "test:update": "npx projen test:update",
     "test:watch": "npx projen test:watch",

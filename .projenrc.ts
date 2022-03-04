@@ -1,5 +1,5 @@
 import { javascript, typescript } from 'projen';
-import { HuskyProjectSetter } from './project';
+import { huskyAuxiliary } from './project';
 const PROJECT_NAME = 'cdktf-injector';
 const project = new typescript.TypeScriptProject({
   /* Typescript */
@@ -84,7 +84,6 @@ const project = new typescript.TypeScriptProject({
     filename: '.projenrc.ts',
   },
   scripts: {
-    preprojen: 'rm -r -f ./.husky',
     predocgen: 'rm -r -f ./docs',
     docgen: 'typedoc --options ./typedoc.json',
     precompile: 'rm -r -f ./lib',
@@ -154,7 +153,7 @@ if (project.eslint) {
           ...projenWords,
           ...srcWords,
           ...testWords,
-          ...HuskyProjectSetter.dictionary,
+          ...huskyAuxiliary.dictionary,
         ],
       },
     ],
@@ -175,10 +174,11 @@ if (project.eslint) {
   project.addPackageIgnore(eachNpmIgnorePattern),
 );
 
-// Husky
-HuskyProjectSetter.addHook('pre-commit', 'yarn docgen && git add -A').addHook(
-  'pre-push',
-  'yarn ts-node ./tasks/DeployKeywordsAsRepoTopics.task',
-);
-
 project.synth();
+/* Auxiliary */
+void (async () => {
+  await huskyAuxiliary
+    .addHook('pre-commit', 'yarn docgen && git add -A')
+    .addHook('pre-push', 'yarn ts-node ./tasks/DeployKeywordsAsRepoTopics.task')
+    .build();
+})();

@@ -1,1 +1,1 @@
-export * from './husky.project';
+export { huskyAuxiliary } from './module';
