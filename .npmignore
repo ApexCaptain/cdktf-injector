@@ -18,6 +18,7 @@ dist
 /.projenrc.js
 tsconfig.tsbuildinfo
 /.eslintrc.json
+auth
 .devContainer
 .editorconfig
 .eslintrc.json

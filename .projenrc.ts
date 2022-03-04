@@ -101,7 +101,7 @@ const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: 'main',
   release: false,
   releaseToNpm: false,
-  gitignore: ['auth'],
+  gitignore: ['auth/'],
   majorVersion: 1,
 });
 
@@ -162,6 +162,7 @@ if (project.eslint) {
 
 // Package Ignore (.npmignore)
 [
+  'auth',
   '.devContainer',
   '.editorconfig',
   '.eslintrc.json',
