@@ -4,7 +4,7 @@
     "dockerfile": "Dockerfile",
     "args": {
       "NODE_VERSION": "16",
-      "TERRAFORM_VERSION": "1.1.6"
+      "TERRAFORM_VERSION": "1.1.7"
     }
   },
   "extensions": [

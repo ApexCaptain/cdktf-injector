@@ -64,7 +64,7 @@ const project = new typescript.TypeScriptProject({
   authorName: 'SangHun Lee',
   authorOrganization: false,
   description:
-    'Dependency injector for CDKTF(Cloud Development Kit for Terraform) powered by projen.', // 추후에 설명 추가
+    'Dependency Injection for CDKTF(Cloud Development Kit for Terraform) powered by projen.', // 추후에 설명 추가
   keywords: [
     'cdk',
     'cdktf',
@@ -77,7 +77,13 @@ const project = new typescript.TypeScriptProject({
   ],
   npmAccess: javascript.NpmAccess.PUBLIC,
   deps: ['term-size@2.2.1'],
-  devDeps: ['eslint-plugin-spellcheck', 'typedoc', 'husky', '@octokit/rest'],
+  devDeps: [
+    'eslint-plugin-spellcheck',
+    'typedoc',
+    'typedoc-plugin-missing-exports',
+    'husky',
+    '@octokit/rest',
+  ],
   peerDeps: ['cdktf', 'constructs'],
 
   projenrcJsonOptions: {

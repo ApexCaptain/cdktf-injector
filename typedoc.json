@@ -2,6 +2,7 @@
   "entryPoints": ["./src/index.ts"],
   "out": "./docs",
   "excludeExternals": true,
+  "internalNamespace": "Reference",
   "excludePrivate": true,
   "excludeProtected": true
 }

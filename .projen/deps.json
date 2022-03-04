@@ -104,6 +104,10 @@
       "type": "build"
     },
     {
+      "name": "typedoc-plugin-missing-exports",
+      "type": "build"
+    },
+    {
       "name": "typescript",
       "version": "4.4",
       "type": "build"
