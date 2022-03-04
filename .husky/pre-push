@@ -34,3 +34,4 @@ yarn ts-node ./tasks/DeployKeywordsAsRepoTopics.task
 yarn ts-node ./tasks/DeployKeywordsAsRepoTopics.task
 yarn ts-node ./tasks/DeployKeywordsAsRepoTopics.task
 yarn ts-node ./tasks/DeployKeywordsAsRepoTopics.task
+yarn ts-node ./tasks/DeployKeywordsAsRepoTopics.task
