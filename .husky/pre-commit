@@ -29,3 +29,4 @@ yarn docgen && git add -A
 yarn docgen && git add -A
 yarn docgen && git add -A
 yarn docgen && git add -A
+yarn docgen && git add -A
