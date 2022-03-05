@@ -1424,9 +1424,9 @@ camelcase@^6.2.0:
   integrity sha512-Gmy6FhYlCY7uOElZUSbxo2UCDH8owEk996gkbrpsgGtrJLM3J7jGxl9Ic7Qwwj4ivOE5AWZWRMecDdF7hqGjFA==
 
 caniuse-lite@^1.0.30001312:
-  version "1.0.30001312"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001312.tgz#e11eba4b87e24d22697dae05455d5aea28550d5f"
-  integrity sha512-Wiz1Psk2MEK0pX3rUzWaunLTZzqS2JYZFzNKqAiJGiuxIjRPLgV6+VDPOg6lQOUxmDwhTlh198JsTTi8Hzw6aQ==
+  version "1.0.30001313"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001313.tgz#a380b079db91621e1b7120895874e2fd62ed2e2f"
+  integrity sha512-rI1UN0koZUiKINjysQDuRi2VeSCce3bYJNmDcj3PIKREiAmjakugBul1QSkg/fPrlULYl6oWfGg3PbgOSY9X4Q==
 
 case@^1.6.3:
   version "1.6.3"
@@ -1609,10 +1609,10 @@ console-control-strings@^1.1.0:
   resolved "https://registry.yarnpkg.com/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
   integrity sha1-PXz0Rk22RG6mRL9LOVB/mFEAjo4=
 
-constructs@10.0.78:
-  version "10.0.78"
-  resolved "https://registry.yarnpkg.com/constructs/-/constructs-10.0.78.tgz#2ae717d0ce86e04e2360d4722cfa097c740b4ab0"
-  integrity sha512-i1dZaygBiliDs17hzcuU9VW4QQnJV7rjzCl66nZcTIjxmoZ+tVzf2wV4+aQOo0MxPAikL9eY34tZ/w8XOTKakA==
+constructs@10.0.79:
+  version "10.0.79"
+  resolved "https://registry.yarnpkg.com/constructs/-/constructs-10.0.79.tgz#a389c15b6d6ac06f5a43679d32be80b10272806f"
+  integrity sha512-7HQzd4m8W7IQBryzuuHgBbYaPK/gKXOeSFYZad/ax1HVtN5hcTQccVtPMdeR04rzSsicnymr2llANYpK70CsHA==
 
 conventional-changelog-config-spec@^2.1.0:
   version "2.1.0"
