@@ -102,7 +102,7 @@ output "instance-ip" {
 
 As you can see, there are 4 [terraform] resources declared up above and their relationships are as follow.
 
-<img src="assets/hcl-dep.png" width="50%">
+<img src="https://github.com/ApexCaptain/cdktf-injector/blob/main/assets/hcl-dep.png?raw=true" width="50%">
 
 - `instance-ip` depends on `my-ec2-instance`
 - `my-ec2-instance` depends on `my-subnet`
@@ -163,7 +163,7 @@ In [cdktf], every resource is a class instance. Thoese are pretty straight forwa
 
 However unlike `hcl`, it is a sequencial language. You cannot create instance refering to another one that is not defined yet.
 
-<img src="assets/cdktf-err.png" width="50%">
+<img src="https://github.com/ApexCaptain/cdktf-injector/blob/main/assets/cdktf-err.png?raw=true" width="50%">
 
 When you attempt to declare `subnet` before `vpc`, it'll say "Hey, you cannot use `vpc` before it's been initialized!"
 

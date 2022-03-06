@@ -83,7 +83,7 @@
 <pre><code class="language-hcl"><span class="hl-2">resource</span><span class="hl-4"> &quot;aws_vpc&quot; &quot;my-vpc&quot;</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-5">cidr_block</span><span class="hl-0"> = </span><span class="hl-4">&quot;10.1.0.0/16&quot;</span><br/><span class="hl-0">}</span><br/><br/><span class="hl-2">resource</span><span class="hl-4"> &quot;aws_subnet&quot; &quot;my-subnet&quot;</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-5">vpc_id</span><span class="hl-0"> = aws_vpc</span><span class="hl-6">.</span><span class="hl-0">my-vpc</span><span class="hl-6">.</span><span class="hl-0">id</span><br/><span class="hl-0">    </span><span class="hl-5">cidr_block</span><span class="hl-0"> = </span><span class="hl-4">&quot;10.1.1.0/24&quot;</span><br/><span class="hl-0">}</span><br/><br/><span class="hl-2">resource</span><span class="hl-4"> &quot;aws_instance&quot; &quot;my-ec2-instance&quot;</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-5">subnet_id</span><span class="hl-0"> = aws_subnet</span><span class="hl-6">.</span><span class="hl-0">my-subnet</span><span class="hl-6">.</span><span class="hl-0">id</span><br/><span class="hl-0">    </span><span class="hl-5">ami</span><span class="hl-0"> = </span><span class="hl-4">&quot;ami-2757f631&quot;</span><br/><span class="hl-0">    </span><span class="hl-5">instance_type</span><span class="hl-0"> = </span><span class="hl-4">&quot;t2.micro&quot;</span><br/><span class="hl-0">}</span><br/><br/><span class="hl-2">output</span><span class="hl-4"> &quot;instance-ip&quot;</span><span class="hl-0"> {</span><br/><span class="hl-0">    </span><span class="hl-5">value</span><span class="hl-0"> = aws_instance</span><span class="hl-6">.</span><span class="hl-0">my-ec2-instance</span><span class="hl-6">.</span><span class="hl-0">public_ip</span><br/><span class="hl-0">}</span>
 </code></pre>
 <p>As you can see, there are 4 <a href="https://www.terraform.io/">terraform</a> resources declared up above and their relationships are as follow.</p>
-<img src="assets/hcl-dep.png" width="50%">
+<img src="https://github.com/ApexCaptain/cdktf-injector/blob/main/assets/hcl-dep.png?raw=true" width="50%">
 
 <ul>
 <li><code>instance-ip</code> depends on <code>my-ec2-instance</code></li>
@@ -105,7 +105,7 @@
 </code></pre>
 <p>In <a href="https://www.terraform.io/cdktf">cdktf</a>, every resource is a class instance. Thoese are pretty straight forward. Constructing resources using <code>new</code> keyword, passing id string and its config, you can build real world infrastructure.</p>
 <p>However unlike <code>hcl</code>, it is a sequencial language. You cannot create instance refering to another one that is not defined yet.</p>
-<img src="assets/cdktf-err.png" width="50%">
+<img src="https://github.com/ApexCaptain/cdktf-injector/blob/main/assets/cdktf-err.png?raw=true" width="50%">
 
 <p>When you attempt to declare <code>subnet</code> before <code>vpc</code>, it&#39;ll say &quot;Hey, you cannot use <code>vpc</code> before it&#39;s been initialized!&quot;</p>
 <p>And that&#39;s where the <code>cdktf-injector</code> comes in.</p>
