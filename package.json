@@ -12,6 +12,7 @@
     "package": "npx projen package",
     "post-compile": "npx projen post-compile",
     "post-upgrade": "npx projen post-upgrade",
+    "postprojen": "npx projen postprojen",
     "pre-compile": "npx projen pre-compile",
     "precompile": "npx projen precompile",
     "predocgen": "npx projen predocgen",

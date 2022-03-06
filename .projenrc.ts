@@ -94,6 +94,7 @@ const project = new typescript.TypeScriptProject({
     predocgen: 'rm -r -f ./docs',
     docgen: 'typedoc --options ./typedoc.json',
     precompile: 'rm -r -f ./lib',
+    postprojen: 'chmod +x .husky/*',
   },
   homepage: 'https://apexcaptain.github.io/cdktf-injector/',
   prettier: true,

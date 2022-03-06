@@ -89,6 +89,28 @@ output "instance-ip" {
 }
 ```
 
+As you can see, there are 4 [terraform] elements declared up above and their relationship(or, aka : dependency graph) is as follow.
+
+![hcl-dep](assets/hcl-dep.png)
+
+- `instance-ip` depends on `my-ec2-instance`
+- `my-ec2-instance` depends on `my-subnet`
+- And `my-subnet` depends on `my-vpc`
+
+In general, if you used to normal programming languages, the first thing you come up with might be...
+
+"Ok, `A` depends on `B`, so I'm gonna declare `B` over `A`."
+
+In `hcl` however, you don't have to. Declaration order is not important. [Terraform] will take care of it instead of you. All you need to do is to make sure that every element is configured correctly.
+
+This is a **good thing**. Imagine if you have to declare each and every element in the right order. There could be hundreds or maybe thousands of different stuffs that depend on one another.
+
+Still, `hcl` is a confusing, not very programmable language, and its intellisence is incredibly slow.
+
+[cdktf] could be an alternative for you. [cdktf] in a nut shell, is a tool used to generate `hcl` code with any one of your familiar programming languages such as `TypeSript`, `Python`, `Java`, `C#` or etc.
+
+Let's take a look example below.
+
 ### Using [cdktf] in TypeScript
 
 ```typescript
@@ -125,6 +147,14 @@ const app = new App();
 new MyStack(app, 'my-stack');
 app.synth();
 ```
+
+In [cdktf], every element / resource is a class instance. Thoese are pretty straight forward. Constructing resources using `new` keyword, passing id string and its config, you can configure real world infrastructure.
+
+However unlike `hcl`, it is a sequencial language. you cannot create instance refering to other that is not defined yet.
+
+![cdktf-err](assets/cdktf-err.png)
+
+As you can see, when you attempt to declare `subnet` before `vpc`, it'll show you an error saying "Hey, you cannot use `vpc` before it's being initialized!"
 
 ### Using [cdktf] with `cdktf-injector`
 

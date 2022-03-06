@@ -123,6 +123,14 @@
       "name": "post-upgrade",
       "description": "Runs after upgrading dependencies"
     },
+    "postprojen": {
+      "name": "postprojen",
+      "steps": [
+        {
+          "exec": "chmod +x .husky/*"
+        }
+      ]
+    },
     "pre-compile": {
       "name": "pre-compile",
       "description": "Prepare the project for compilation"
