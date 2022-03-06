@@ -107,8 +107,8 @@ const project = new typescript.TypeScriptProject({
     },
   },
   defaultReleaseBranch: 'main',
-  release: false,
-  releaseToNpm: false,
+  release: true,
+  releaseToNpm: true,
   gitignore: ['auth/'],
   majorVersion: 1,
 });

@@ -55,7 +55,7 @@ export const commitInjection = (
             if (!newDepContainer) continue;
             if (topContainer == newDepContainer)
               throw new TerraformInjectorElementContainerSelfDependenceError(
-                `${topContainer.name} is self-dependence. You cannot use its own element when you configure the container.`,
+                `${topContainer.name} is self-dependent. You cannot use its own element when you configure the container.`,
               );
             if (!elementContainerSet.has(newDepContainer))
               throw new TerraformInjectorInvalidScopePathError(
@@ -95,7 +95,7 @@ export const commitInjection = (
       if (!newDepContainer) continue;
       if (topContainer == newDepContainer)
         throw new TerraformInjectorElementContainerSelfDependenceError(
-          `${topContainer.name} is self-dependence. You cannot use its own element when you configure the container.`,
+          `${topContainer.name} is self-dependent. You cannot use its own element when you configure the container.`,
         );
       if (!elementContainerSet.has(newDepContainer))
         throw new TerraformInjectorInvalidScopePathError(
