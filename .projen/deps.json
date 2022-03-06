@@ -1,6 +1,10 @@
 {
   "dependencies": [
     {
+      "name": "@cdktf/provider-aws",
+      "type": "build"
+    },
+    {
       "name": "@octokit/rest",
       "type": "build"
     },

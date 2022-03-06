@@ -83,6 +83,7 @@ const project = new typescript.TypeScriptProject({
     'typedoc-plugin-missing-exports',
     'husky',
     '@octokit/rest',
+    '@cdktf/provider-aws', // tmp
   ],
   peerDeps: ['cdktf', 'constructs'],
 

@@ -28,6 +28,7 @@
     "organization": false
   },
   "devDependencies": {
+    "@cdktf/provider-aws": "^5.0.39",
     "@octokit/rest": "^18.12.0",
     "@types/jest": "^27.4.1",
     "@types/node": "^12",
