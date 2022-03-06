@@ -68,13 +68,7 @@ In case you are not a big fan of [AWS], I'll make a list of what elements are us
 
 ### Using [terraform] only ([Hashicorp Configuration Language][hcl])
 
-```json
-{
-  "some": "value"
-}
-```
-
-```json
+```hcl
 resource "aws_vpc" "my-vpc" {
     cidr_block = "10.1.0.0/16"
 }
