@@ -8,11 +8,11 @@
 
 `cdktf-injector` is a dependency injection library for [CDKTF][cdktf] ([AWS Cloud Development Kit][cdk] for [Terraform]).
 
-If you are not familiar with [cdktf] and [terraform] yet or haven't heard of them before, this library may not be that so useful for you. That's totally cool, but I really recommend you to have a look what these ([cdktf] and [terraform]) are or at least what's the concept of [IaC]. Those are really amazing.
+If you are not familiar with [cdktf] and [terraform] yet or haven't heard of them before, this library may not be that so useful. That's totally cool, but I recommend you to have a look what they ([cdktf] and [terraform]) are or at least what's the concept of [IaC]. Those are really amazing.
 
 **There are two prerequisite for cdktf-injector**
 
-- [Terraform][terraform] - You need to install [terraform] in your development pc and it should be accessible on path. If you're using `devcontainer` you can paste following commands to your `Dockerfile`.
+- [Terraform][terraform] - You need to install [terraform] on your dev env and it should be accessible on cli path. If you're using `devcontainer` you may paste following commands to your `Dockerfile`.
 
   ```docker
   ...
@@ -49,7 +49,7 @@ npm install cdktf-injector --save
 yarn add cdktf-injector
 ```
 
-> **Note** : [cdktf] supports multiple languages, such as `TypeScript`, `Python`, `Java`, `C#` and `Go`. Howerver according to [Typescript restriction of jsii](https://aws.github.io/jsii/user-guides/lib-author/typescript-restrictions/), which is I originally wannted to use to power my lib and what [cdktf] depends on, it does not allow using `Parameterized Types(aka: Generics)`. And as far as I know, there is no other decent way to implement dependency injection without using generic or decorator. In brief, `cdktf-injector` is currently availiable only in [Node.js](https://nodejs.org/ko/) env. I'm looking forward to making this lib supports multiple languages soon.
+> **Note** : [cdktf] supports multiple languages, such as `TypeScript`, `Python`, `Java`, `C#` and `Go`. Howerver according to [Typescript restriction of jsii](https://aws.github.io/jsii/user-guides/lib-author/typescript-restrictions/), which is I originally wanted to use to power my lib and what [cdktf] depends on, it does not allow using `Parameterized Types(aka: Generics)`. And as far as I know, there is no other decent way to implement dependency injection without using generic or decorator. In brief, `cdktf-injector` is currently availiable only in [Node.js](https://nodejs.org/ko/) env. I'm looking forward to making this lib supports multiple languages soon.
 
 ## Necessity
 
@@ -67,6 +67,12 @@ In case you are not a big fan of [AWS], I'll make a list of what elements are us
   > And this is an **Public IP address of your computer**.
 
 ### Using [terraform] only ([Hashicorp Configuration Language][hcl])
+
+```json
+{
+  "some": "value"
+}
+```
 
 ```json
 resource "aws_vpc" "my-vpc" {
