@@ -111,6 +111,7 @@ const project = new typescript.TypeScriptProject({
   releaseToNpm: true,
   gitignore: ['auth/'],
   majorVersion: 1,
+  repository: 'https://github.com/ApexCaptain/cdktf-injector',
 });
 
 // Eslint

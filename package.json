@@ -1,6 +1,10 @@
 {
   "name": "cdktf-injector",
   "description": "Dependency Injection for CDKTF(Cloud Development Kit for Terraform) powered by projen.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ApexCaptain/cdktf-injector"
+  },
   "scripts": {
     "build": "npx projen build",
     "bump": "npx projen bump",
