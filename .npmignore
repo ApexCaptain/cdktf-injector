@@ -20,8 +20,13 @@ dist
 /.projenrc.js
 tsconfig.tsbuildinfo
 /.eslintrc.json
-auth
 .devContainer
+.husky
+assets
+auth
+docs
+project
+tasks
 .editorconfig
 .eslintrc.json
 .gitattributes

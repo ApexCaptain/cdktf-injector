@@ -170,8 +170,13 @@ if (project.eslint) {
 
 // Package Ignore (.npmignore)
 [
-  'auth',
   '.devContainer',
+  '.husky',
+  'assets',
+  'auth',
+  'docs',
+  'project',
+  'tasks',
   '.editorconfig',
   '.eslintrc.json',
   '.gitattributes',
