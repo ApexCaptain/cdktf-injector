@@ -59,7 +59,6 @@
           "**/test/**",
           "**/tasks/**",
           "**/project/**",
-          "**/@octokit/rest/**",
           ".projenrc.ts",
           "projenrc/**/*.ts"
         ],

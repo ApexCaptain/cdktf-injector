@@ -22,7 +22,6 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
     TerraformInjectorElementContainerClass<any, any, any>
   >();
   // Getters
-
   // Constructor
   constructor(
     public scope: Construct,
@@ -30,7 +29,13 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
     public caller: string,
     public description?: string,
   ) {}
-
+  defaultConfigure: (
+    id: string,
+    className: string,
+    description?: string,
+  ) => {
+    [x: string]: any;
+  } = () => ({});
   // Methods
   // Production
   toString(): string {
@@ -109,6 +114,17 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
     this.elementMap.set(id, elementContainer);
     return elementContainer;
   }
+
+  setDefaultConfigure(
+    defaultConfigure: (
+      id: string,
+      className: string,
+      description?: string,
+    ) => { [x: string]: any },
+  ): void {
+    this.defaultConfigure = defaultConfigure;
+  }
+
   inject(): void | Promise<void> {
     return commitInjection(this);
   }

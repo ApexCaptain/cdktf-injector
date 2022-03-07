@@ -34,3 +34,4 @@ tasks
 .prettierrc.json
 .projenrc.ts
 .ToDo
+typedoc.json

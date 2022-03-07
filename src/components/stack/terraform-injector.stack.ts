@@ -74,6 +74,14 @@ export class TerraformInjectorStack
     description?: string,
   ) => TerraformInjectorElementContainer<TerraformElementType, SharedType>;
 
+  setDefaultConfigure: (
+    defaultConfigure: (
+      id: string,
+      className: string,
+      description?: string,
+    ) => { [x: string]: any },
+  ) => void;
+
   /**
    * Commit dependency injection for all the elements below the scope level.
    */
@@ -95,6 +103,9 @@ export class TerraformInjectorStack
     (this.injector as TerraformInjectorClass).caller = getCaller(1);
     this.backend = this.injector.backend.bind(this.injector);
     this.provide = this.injector.provide.bind(this.injector);
+    this.setDefaultConfigure = this.injector.setDefaultConfigure.bind(
+      this.injector,
+    );
     this.inject = this.injector.inject.bind(this.injector);
   }
 }

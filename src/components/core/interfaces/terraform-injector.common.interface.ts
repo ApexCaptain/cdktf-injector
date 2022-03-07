@@ -72,4 +72,14 @@ export interface TerraformInjectorCommon {
       | TerraformInjectorConfigureCallbackAsyncType<ConfigType, SharedType>,
     description?: string,
   ): TerraformInjectorElementContainerAsync<TerraformElementType, SharedType>;
+
+  setDefaultConfigure(
+    defaultConfigure: (
+      id: string,
+      className: string,
+      description?: string,
+    ) => {
+      [x: string]: any;
+    },
+  ): void;
 }

@@ -13,6 +13,10 @@
       "type": "build"
     },
     {
+      "name": "@types/lodash",
+      "type": "build"
+    },
+    {
       "name": "@types/node",
       "version": "^12",
       "type": "build"
@@ -128,6 +132,10 @@
     {
       "name": "constructs",
       "type": "peer"
+    },
+    {
+      "name": "lodash",
+      "type": "runtime"
     },
     {
       "name": "term-size",

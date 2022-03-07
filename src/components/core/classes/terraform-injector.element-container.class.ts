@@ -4,6 +4,7 @@ import {
   TerraformOutputConfig,
 } from 'cdktf';
 import { Construct } from 'constructs';
+import * as _ from 'lodash';
 import {
   TerraformInjectorElementClassType,
   TerraformInjectorBackendClassType,
@@ -194,9 +195,16 @@ export class TerraformInjectorElementContainerClass<
     if (Array.isArray(configAndSharedObject)) {
       config = configAndSharedObject[0];
       this._shared = configAndSharedObject[1];
-    } else {
-      config = configAndSharedObject;
-    }
+    } else config = configAndSharedObject;
+    config = _.merge(
+      this.injector.defaultConfigure(
+        this.id,
+        this.terraformElementClass.name,
+        this.description,
+      ),
+      config,
+    );
+
     this._element =
       this.id == 'backend'
         ? new (this.terraformElementClass as TerraformInjectorBackendClassType<
