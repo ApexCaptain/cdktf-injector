@@ -66,7 +66,7 @@ yarn add cdktf-injector
 
 - ### [Necessity](markdown/necessity.md)
 - ### [Examples](markdown/examples.md)
-- ### [Cross-Stack References](mardkwon/cross-stack-references.md)
+- ### [Cross-Stack References](markdown/cross-stack-references.md)
 - ### [Dependency Issues](markdown/dependency-issues.md)
 - ### [API](https://apexcaptain.github.io/cdktf-injector/)
 
