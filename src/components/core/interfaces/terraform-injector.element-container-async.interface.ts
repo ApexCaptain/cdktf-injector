@@ -66,6 +66,6 @@ export interface TerraformInjectorElementContainerAsync<
     outputConfig: (
       element: TerraformElementType,
       shared: SharedType,
-    ) => TerraformOutputConfig,
+    ) => TerraformOutputConfig | Promise<TerraformOutputConfig>,
   ): TerraformInjectorElementContainerAsync<TerraformElementType, SharedType>;
 }

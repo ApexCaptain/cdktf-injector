@@ -191,3 +191,11 @@ describe(`Terraform-Injector`, () => {
     describe('asynchronous root injector', () => {});
   });
 });
+
+new TerraformInjectorStackAsync('' as any, '').provide(
+  MockElement,
+  '',
+  async () => {
+    return {};
+  },
+);
