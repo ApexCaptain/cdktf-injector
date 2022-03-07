@@ -196,14 +196,15 @@ export class TerraformInjectorElementContainerClass<
       config = configAndSharedObject[0];
       this._shared = configAndSharedObject[1];
     } else config = configAndSharedObject;
-    config = _.merge(
-      this.injector.defaultConfigure(
-        this.id,
-        this.terraformElementClass.name,
-        this.description,
-      ),
-      config,
-    );
+    if (this.id != 'backend')
+      config = _.merge(
+        this.injector.defaultConfigure(
+          this.id,
+          this.terraformElementClass.name,
+          this.description,
+        ),
+        config,
+      );
 
     this._element =
       this.id == 'backend'
