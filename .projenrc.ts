@@ -76,14 +76,13 @@ const project = new typescript.TypeScriptProject({
     'dependency',
   ],
   npmAccess: javascript.NpmAccess.PUBLIC,
-  deps: ['term-size@2.2.1', 'lodash'],
+  deps: ['term-size@2.2.1', 'deepmerge'],
   devDeps: [
     'eslint-plugin-spellcheck',
     'typedoc',
     'typedoc-plugin-missing-exports',
     'husky',
     '@octokit/rest',
-    '@types/lodash',
     '@cdktf/provider-aws', // tmp
   ],
   peerDeps: ['cdktf', 'constructs'],
@@ -149,6 +148,7 @@ if (project.eslint) {
     'repo',
     'repos',
     'gitignore',
+    'deepmerge',
   ].sort();
 
   const srcWords = ['terraform', 'Getters', 'dep'].sort();
