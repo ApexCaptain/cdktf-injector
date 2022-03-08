@@ -66,6 +66,7 @@ export interface TerraformInjector extends TerraformInjectorCommon {
     >,
     id: string,
     configure: TerraformInjectorConfigureCallbackType<ConfigType, SharedType>,
+    useDefaultConfig?: boolean,
     description?: string,
   ): TerraformInjectorElementContainer<TerraformElementType, SharedType>;
 

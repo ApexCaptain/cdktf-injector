@@ -166,6 +166,7 @@
           "Getters",
           "dep",
           "terraform",
+          "tf",
           "applypatch",
           "msg",
           "cmd",

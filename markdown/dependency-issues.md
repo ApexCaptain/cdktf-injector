@@ -33,7 +33,7 @@ In this case, `res1` depends on `res1`, since it uses `this.res1.element` in its
 
 This is not a possible structure of course. It's `self-dependent`.
 
-I'll throw an error saying...
+It'll throw an error saying...
 
 ```
 Error: <MockElement res1> is self-dependent. You cannot use its own element when you configure the container.
@@ -83,7 +83,7 @@ Commiting injection later, `cdktf-injector` will require element of `res3` to in
 
 But, because `res3` depends on `res4` and `res4` depends `res5`, it's another impossible structure.
 
-I'll throw an error saying...
+It'll throw an error saying...
 
 ```
 Error: There are 3 elements trapped in dependency cycle.

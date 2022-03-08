@@ -20,6 +20,20 @@ export class TerraformInjectorStackAsync
   implements TerraformInjectorAsync
 {
   private injector;
+  constructor(
+    scope: Construct,
+    name: string,
+    injectorDescription: string = `Async-Injector of <${
+      TerraformInjectorStackAsync.name
+    }> created at (${getCaller(1)})`,
+  ) {
+    super(scope, name);
+    this.injector = TerraformInjectorFactory.scopesOnAsync(
+      this,
+      injectorDescription,
+    );
+    (this.injector as TerraformInjectorClass).caller = getCaller(1);
+  }
   /**
    * Set backend of the injector. You cannot provide multiple backend elements to the injector and only one backend
    * could be provided for one stack each.
@@ -32,10 +46,10 @@ export class TerraformInjectorStackAsync
    *
    * @param description Optional description string.
    */
-  backend: <
+  backend<
     TerraformBackendType extends TerraformBackend,
     PropsType,
-    SharedType = {},
+    SharedType = undefined,
   >(
     terraformBackendClass: TerraformInjectorBackendClassType<
       TerraformBackendType,
@@ -45,7 +59,9 @@ export class TerraformInjectorStackAsync
       | TerraformInjectorConfigureCallbackType<PropsType, SharedType>
       | TerraformInjectorConfigureCallbackAsyncType<PropsType, SharedType>,
     description?: string,
-  ) => TerraformInjectorElementContainerAsync<TerraformBackendType, SharedType>;
+  ): TerraformInjectorElementContainerAsync<TerraformBackendType, SharedType> {
+    return this.injector.backend(terraformBackendClass, configure, description);
+  }
 
   /**
    * Provide an element to the injector.
@@ -60,10 +76,10 @@ export class TerraformInjectorStackAsync
    *
    * @param description Optional description string.
    */
-  provide: <
+  provide<
     TerraformElementType extends TerraformElement,
     ConfigType,
-    SharedType = {},
+    SharedType = undefined,
   >(
     terraformElementClass: TerraformInjectorElementClassType<
       TerraformElementType,
@@ -73,40 +89,31 @@ export class TerraformInjectorStackAsync
     configure:
       | TerraformInjectorConfigureCallbackType<ConfigType, SharedType>
       | TerraformInjectorConfigureCallbackAsyncType<ConfigType, SharedType>,
+    useDefaultConfig: boolean = true,
     description?: string,
-  ) => TerraformInjectorElementContainerAsync<TerraformElementType, SharedType>;
+  ): TerraformInjectorElementContainerAsync<TerraformElementType, SharedType> {
+    return this.injector.provide(
+      terraformElementClass,
+      id,
+      configure,
+      useDefaultConfig,
+      description,
+    );
+  }
 
-  setDefaultConfigure: (
+  setDefaultConfigure(
     defaultConfigure: (
       id: string,
       className: string,
       description?: string,
     ) => { [x: string]: any },
-  ) => void;
-
+  ): void {
+    this.injector.setDefaultConfigure(defaultConfigure);
+  }
   /**
    * Commit dependency injection for all the elements below the scope level.
    */
-  inject: () => Promise<void>;
-
-  constructor(
-    scope: Construct,
-    name: string,
-    injectorDescription: string = `Async-Injector of <${
-      TerraformInjectorStackAsync.name
-    }> created at (${getCaller(1)})`,
-  ) {
-    super(scope, name);
-    this.injector = TerraformInjectorFactory.scopesOnAsync(
-      this,
-      injectorDescription,
-    );
-    (this.injector as TerraformInjectorClass).caller = getCaller(1);
-    this.backend = this.injector.backend.bind(this.injector);
-    this.provide = this.injector.provide.bind(this.injector);
-    this.setDefaultConfigure = this.injector.setDefaultConfigure.bind(
-      this.injector,
-    );
-    this.inject = this.injector.inject.bind(this.injector);
+  inject(): Promise<void> {
+    return this.injector.inject();
   }
 }

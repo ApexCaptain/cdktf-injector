@@ -74,6 +74,7 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
       configure,
       this,
       getCaller(),
+      false,
       description,
     );
     this.elementMap.set(id, backendContainer);
@@ -92,6 +93,7 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
     configure:
       | TerraformInjectorConfigureCallbackType<ConfigType, SharedType>
       | TerraformInjectorConfigureCallbackAsyncType<ConfigType, SharedType>,
+    useDefaultConfig: boolean = true,
     description?: string,
   ): TerraformInjectorElementContainerAsync<TerraformElementType, SharedType> {
     if (id == 'backend')
@@ -109,6 +111,7 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
       configure,
       this,
       getCaller(),
+      useDefaultConfig,
       description,
     );
     this.elementMap.set(id, elementContainer);

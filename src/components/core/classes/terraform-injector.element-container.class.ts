@@ -69,6 +69,7 @@ export class TerraformInjectorElementContainerClass<
       | TerraformInjectorConfigureCallbackAsyncType<ConfigType, SharedType>,
     public injector: TerraformInjectorClass,
     public caller: string,
+    public useDefaultConfig: boolean,
     public description?: string,
   ) {
     this.name = `<${terraformElementClass.name} ${id}>`;
@@ -196,7 +197,7 @@ export class TerraformInjectorElementContainerClass<
       config = configAndSharedObject[0];
       this._shared = configAndSharedObject[1];
     } else config = configAndSharedObject;
-    if (this.id != 'backend')
+    if (this.useDefaultConfig)
       config = _.merge(
         this.injector.defaultConfigure(
           this.id,

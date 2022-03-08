@@ -153,7 +153,7 @@ if (project.eslint) {
 
   const srcWords = ['terraform', 'Getters', 'dep'].sort();
 
-  const testWords = [].sort();
+  const testWords = ['tf'].sort();
 
   eslint.addRules({
     'spellcheck/spell-checker': [

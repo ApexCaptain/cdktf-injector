@@ -21,6 +21,20 @@ export class TerraformInjectorStack
   implements TerraformInjector
 {
   private injector: TerraformInjector;
+  constructor(
+    scope: Construct,
+    name: string,
+    injectorDescription: string = `Injector of <${
+      TerraformInjectorStack.name
+    }> created at (${getCaller(1)})`,
+  ) {
+    super(scope, name);
+    this.injector = TerraformInjectorFactory.scopesOn(
+      this,
+      injectorDescription,
+    );
+    (this.injector as TerraformInjectorClass).caller = getCaller(1);
+  }
 
   /**
    * Set backend of the injector. You cannot provide multiple backend elements to the injector and only one backend
@@ -34,7 +48,7 @@ export class TerraformInjectorStack
    *
    * @param description Optional description string.
    */
-  backend: <
+  backend<
     TerraformBackendType extends TerraformBackend,
     PropsType,
     SharedType = undefined,
@@ -45,7 +59,9 @@ export class TerraformInjectorStack
     >,
     configure: TerraformInjectorConfigureCallbackType<PropsType, SharedType>,
     description?: string,
-  ) => TerraformInjectorElementContainer<TerraformBackendType, SharedType>;
+  ): TerraformInjectorElementContainer<TerraformBackendType, SharedType> {
+    return this.injector.backend(terraformBackendClass, configure, description);
+  }
 
   /**
    * Provide an element to the injector.
@@ -60,7 +76,7 @@ export class TerraformInjectorStack
    *
    * @param description Optional description string.
    */
-  provide: <
+  provide<
     TerraformElementType extends TerraformElement,
     ConfigType,
     SharedType = undefined,
@@ -71,41 +87,32 @@ export class TerraformInjectorStack
     >,
     id: string,
     configure: TerraformInjectorConfigureCallbackType<ConfigType, SharedType>,
+    useDefaultConfig?: boolean,
     description?: string,
-  ) => TerraformInjectorElementContainer<TerraformElementType, SharedType>;
+  ): TerraformInjectorElementContainer<TerraformElementType, SharedType> {
+    return this.injector.provide(
+      terraformElementClass,
+      id,
+      configure,
+      useDefaultConfig,
+      description,
+    );
+  }
 
-  setDefaultConfigure: (
+  setDefaultConfigure(
     defaultConfigure: (
       id: string,
       className: string,
       description?: string,
     ) => { [x: string]: any },
-  ) => void;
+  ): void {
+    this.injector.setDefaultConfigure(defaultConfigure);
+  }
 
   /**
    * Commit dependency injection for all the elements below the scope level.
    */
-  inject: () => void;
-
-  constructor(
-    scope: Construct,
-    name: string,
-    injectorDescription: string = `Injector of <${
-      TerraformInjectorStack.name
-    }> created at (${getCaller(1)})`,
-  ) {
-    super(scope, name);
-
-    this.injector = TerraformInjectorFactory.scopesOn(
-      this,
-      injectorDescription,
-    );
-    (this.injector as TerraformInjectorClass).caller = getCaller(1);
-    this.backend = this.injector.backend.bind(this.injector);
-    this.provide = this.injector.provide.bind(this.injector);
-    this.setDefaultConfigure = this.injector.setDefaultConfigure.bind(
-      this.injector,
-    );
-    this.inject = this.injector.inject.bind(this.injector);
+  inject(): void {
+    return this.injector.inject();
   }
 }

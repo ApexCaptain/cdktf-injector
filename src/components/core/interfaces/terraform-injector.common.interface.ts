@@ -70,6 +70,7 @@ export interface TerraformInjectorCommon {
     configure:
       | TerraformInjectorConfigureCallbackType<ConfigType, SharedType>
       | TerraformInjectorConfigureCallbackAsyncType<ConfigType, SharedType>,
+    useDefaultConfig?: boolean,
     description?: string,
   ): TerraformInjectorElementContainerAsync<TerraformElementType, SharedType>;
 
