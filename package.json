@@ -36,14 +36,14 @@
     "organization": false
   },
   "devDependencies": {
-    "@cdktf/provider-aws": "^5.0.41",
+    "@cdktf/provider-aws": "^5.0.42",
     "@octokit/rest": "^18.12.0",
     "@types/jest": "^27.4.1",
     "@types/node": "^12",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "cdktf": "0.9.4",
-    "constructs": "10.0.82",
+    "constructs": "10.0.83",
     "eslint": "^8",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-node": "^0.3.6",
@@ -67,7 +67,7 @@
   },
   "peerDependencies": {
     "cdktf": "^0.9.4",
-    "constructs": "^10.0.82"
+    "constructs": "^10.0.83"
   },
   "dependencies": {
     "deepmerge": "^4.2.2",
