@@ -2,6 +2,8 @@ import { TerraformInjectorConfigAndSharedObjectType } from '../../../module';
 export type TerraformInjectorConfigureCallbackAsyncType<
   ConfigType,
   SharedType,
-> = () => Promise<
+> = (
+  id: string,
+) => Promise<
   TerraformInjectorConfigAndSharedObjectType<ConfigType, SharedType>
 >;

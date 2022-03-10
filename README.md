@@ -64,10 +64,10 @@ yarn add cdktf-injector
 
 ## Documentation
 
-- ### [Necessity](markdown/necessity.md)
-- ### [Examples](markdown/examples.md)
-- ### [Cross-Stack References](markdown/cross-stack-references.md)
-- ### [Dependency Issues](markdown/dependency-issues.md)
+- ### [Necessity](https://github.com/ApexCaptain/cdktf-injector/blob/main/markdown/necessity.md)
+- ### [Examples](https://github.com/ApexCaptain/cdktf-injector/blob/main/markdown/examples.md)
+- ### [Cross-Stack References](https://github.com/ApexCaptain/cdktf-injector/blob/main/markdown/cross-stack-references.md)
+- ### [Dependency Issues](https://github.com/ApexCaptain/cdktf-injector/blob/main/markdown/dependency-issues.md)
 - ### [API](https://apexcaptain.github.io/cdktf-injector/)
 
 <!-- External Links -->

@@ -142,7 +142,7 @@ export class TerraformInjectorElementContainerClass<
               ConfigType,
               SharedType
             >
-          )(),
+          )(this.id),
         );
       for (const eachAfterInitCallback of this.afterInitElementCallbackArray) {
         void eachAfterInitCallback(this.element, this.shared);
@@ -171,7 +171,7 @@ export class TerraformInjectorElementContainerClass<
               ConfigType,
               SharedType
             >
-          )(),
+          )(this.id),
         );
       for (const eachAfterInitCallback of this.afterInitElementCallbackArray) {
         await eachAfterInitCallback(this.element, this.shared);
