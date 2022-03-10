@@ -35,12 +35,20 @@ export class TerraformInjectorElementContainerClass<
   dependents = new Set<TerraformInjectorElementContainerClass<any, any, any>>();
   isInitialized = false;
   terraformElementContainerNonInitializedError: TerraformInjectorElementContainerUninitializedError;
-  afterInitElementCallbackArray = new Array<
-    (element: TerraformElementType, shared: SharedType) => void | Promise<void>
-  >();
-  afterDependenciesInjectedCallbackArray = new Array<
-    (element: TerraformElementType, shared: SharedType) => void | Promise<void>
-  >();
+  afterInitElementCallbackContainerArray = new Array<{
+    isCalled: boolean;
+    callback: (
+      element: TerraformElementType,
+      shared: SharedType,
+    ) => void | Promise<void>;
+  }>();
+  afterDependenciesInjectedCallbackContainerArray = new Array<{
+    isCalled: boolean;
+    callback: (
+      element: TerraformElementType,
+      shared: SharedType,
+    ) => void | Promise<void>;
+  }>();
 
   // Getters
   _shared!: SharedType;
@@ -100,7 +108,10 @@ export class TerraformInjectorElementContainerClass<
       shared: SharedType,
     ) => void | Promise<void>,
   ) {
-    this.afterInitElementCallbackArray.push(afterInitCallback);
+    this.afterInitElementCallbackContainerArray.push({
+      isCalled: false,
+      callback: afterInitCallback,
+    });
     return this;
   }
 
@@ -110,9 +121,10 @@ export class TerraformInjectorElementContainerClass<
       shared: SharedType,
     ) => void | Promise<void>,
   ) {
-    this.afterDependenciesInjectedCallbackArray.push(
-      afterDependenciesInjectedCallback,
-    );
+    this.afterDependenciesInjectedCallbackContainerArray.push({
+      isCalled: false,
+      callback: afterDependenciesInjectedCallback,
+    });
     return this;
   }
 
@@ -143,8 +155,15 @@ export class TerraformInjectorElementContainerClass<
             >
           )(this.id),
         );
-      for (const eachAfterInitCallback of this.afterInitElementCallbackArray) {
-        void eachAfterInitCallback(this.element, this.shared);
+      for (const eachAfterInitCallbackContainer of this
+        .afterInitElementCallbackContainerArray) {
+        if (!eachAfterInitCallbackContainer.isCalled) {
+          void eachAfterInitCallbackContainer.callback(
+            this.element,
+            this.shared,
+          );
+          eachAfterInitCallbackContainer.isCalled = true;
+        }
       }
     } catch (error) {
       if (
@@ -172,8 +191,15 @@ export class TerraformInjectorElementContainerClass<
             >
           )(this.id),
         );
-      for (const eachAfterInitCallback of this.afterInitElementCallbackArray) {
-        await eachAfterInitCallback(this.element, this.shared);
+      for (const eachAfterInitCallbackContainer of this
+        .afterInitElementCallbackContainerArray) {
+        if (!eachAfterInitCallbackContainer.isCalled) {
+          await eachAfterInitCallbackContainer.callback(
+            this.element,
+            this.shared,
+          );
+          eachAfterInitCallbackContainer.isCalled = true;
+        }
       }
     } catch (error) {
       if (

@@ -15,8 +15,8 @@ export const commitInjection = (
   const parentDepthLength = parentScopePath.split('/').length;
 
   const injectorEntries = Array.from(injectorMap.entries());
-  const children = (
-    parentScopePath === ''
+  const getChildren = () =>
+    (parentScopePath === ''
       ? injectorEntries
       : injectorEntries.filter(
           ([eachScope]) =>
@@ -25,8 +25,8 @@ export const commitInjection = (
               .slice(0, parentDepthLength)
               .join('/') == parentScopePath,
         )
-  ).map(([_, eachInjector]) => eachInjector);
-
+    ).map(([_, eachInjector]) => eachInjector);
+  const children = getChildren();
   if (!parentInjector.useAsync) {
     children.forEach((eachInjector) => {
       if (eachInjector.useAsync && !eachInjector.isInjected) {
@@ -80,12 +80,18 @@ export const commitInjection = (
           }
         }
         for (const eachContainer of elementContainerSet)
-          for (const eachAfterDependencyInjectedCallback of eachContainer.afterDependenciesInjectedCallbackArray)
-            await eachAfterDependencyInjectedCallback(
-              eachContainer.element,
-              eachContainer.shared,
-            );
-        resolve();
+          for (const eachAfterDependencyInjectedCallbackContainer of eachContainer.afterDependenciesInjectedCallbackContainerArray) {
+            if (!eachAfterDependencyInjectedCallbackContainer.isCalled) {
+              await eachAfterDependencyInjectedCallbackContainer.callback(
+                eachContainer.element,
+                eachContainer.shared,
+              );
+              eachAfterDependencyInjectedCallbackContainer.isCalled = true;
+            }
+          }
+        if (!getChildren().every((eachChild) => eachChild.isInjected))
+          await commitInjection(parentInjector);
+        else resolve();
       } catch (error) {
         reject(error);
       }
@@ -119,9 +125,16 @@ export const commitInjection = (
     }
   }
   for (const eachContainer of elementContainerSet)
-    for (const eachAfterDependencyInjectedCallback of eachContainer.afterDependenciesInjectedCallbackArray)
-      void eachAfterDependencyInjectedCallback(
-        eachContainer.element,
-        eachContainer.shared,
-      );
+    for (const eachAfterDependencyInjectedCallbackContainer of eachContainer.afterDependenciesInjectedCallbackContainerArray) {
+      if (!eachAfterDependencyInjectedCallbackContainer.isCalled) {
+        void eachAfterDependencyInjectedCallbackContainer.callback(
+          eachContainer.element,
+          eachContainer.shared,
+        );
+        eachAfterDependencyInjectedCallbackContainer.isCalled = true;
+      }
+    }
+
+  if (!getChildren().every((eachChild) => eachChild.isInjected))
+    void commitInjection(parentInjector);
 };
