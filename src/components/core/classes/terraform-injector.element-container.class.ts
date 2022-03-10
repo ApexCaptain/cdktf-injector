@@ -33,7 +33,6 @@ export class TerraformInjectorElementContainerClass<
     TerraformInjectorElementContainerClass<any, any, any>
   >();
   dependents = new Set<TerraformInjectorElementContainerClass<any, any, any>>();
-  retryCount = 1;
   isInitialized = false;
   terraformElementContainerNonInitializedError: TerraformInjectorElementContainerUninitializedError;
   afterInitElementCallbackArray = new Array<

@@ -13,13 +13,19 @@ export const commitInjection = (
 ): void | Promise<void> => {
   const parentScopePath = parentInjector.scope.node.path;
   const parentDepthLength = parentScopePath.split('/').length;
-  const children = Array.from(injectorMap.entries())
-    .filter(
-      ([eachScope]) =>
-        eachScope.node.path.split('/').slice(0, parentDepthLength).join('/') ==
-        parentScopePath,
-    )
-    .map(([_, eachInjector]) => eachInjector);
+
+  const injectorEntries = Array.from(injectorMap.entries());
+  const children = (
+    parentScopePath === ''
+      ? injectorEntries
+      : injectorEntries.filter(
+          ([eachScope]) =>
+            eachScope.node.path
+              .split('/')
+              .slice(0, parentDepthLength)
+              .join('/') == parentScopePath,
+        )
+  ).map(([_, eachInjector]) => eachInjector);
 
   if (!parentInjector.useAsync) {
     children.forEach((eachInjector) => {
