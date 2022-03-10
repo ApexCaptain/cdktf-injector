@@ -76,13 +76,14 @@ const project = new typescript.TypeScriptProject({
     'dependency',
   ],
   npmAccess: javascript.NpmAccess.PUBLIC,
-  deps: ['term-size@2.2.1', 'deepmerge'],
+  deps: ['term-size@2.2.1', 'lodash'],
   devDeps: [
     'eslint-plugin-spellcheck',
     'typedoc',
     'typedoc-plugin-missing-exports',
     'husky',
     '@octokit/rest',
+    '@types/lodash',
     '@cdktf/provider-aws', // tmp
   ],
   peerDeps: ['cdktf', 'constructs'],
@@ -109,7 +110,7 @@ const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: 'main',
   release: true,
   releaseToNpm: true,
-  gitignore: ['auth/'],
+  gitignore: ['auth/', 'cdktf.out/'],
   majorVersion: 1,
   repository: 'https://github.com/ApexCaptain/cdktf-injector',
 });
@@ -148,7 +149,7 @@ if (project.eslint) {
     'repo',
     'repos',
     'gitignore',
-    'deepmerge',
+    'fqn',
   ].sort();
 
   const srcWords = ['terraform', 'Getters', 'dep'].sort();

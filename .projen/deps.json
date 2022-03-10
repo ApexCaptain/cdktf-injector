@@ -13,6 +13,10 @@
       "type": "build"
     },
     {
+      "name": "@types/lodash",
+      "type": "build"
+    },
+    {
       "name": "@types/node",
       "version": "^12",
       "type": "build"
@@ -130,7 +134,7 @@
       "type": "peer"
     },
     {
-      "name": "deepmerge",
+      "name": "lodash",
       "type": "runtime"
     },
     {

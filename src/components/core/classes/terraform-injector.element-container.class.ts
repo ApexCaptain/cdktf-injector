@@ -5,7 +5,7 @@ import {
   TerraformOutputConfig,
 } from 'cdktf';
 import { Construct } from 'constructs';
-import deepmerge from 'deepmerge';
+import _ from 'lodash';
 import {
   TerraformInjectorElementClassType,
   TerraformInjectorBackendClassType,
@@ -202,22 +202,14 @@ export class TerraformInjectorElementContainerClass<
       this.useDefaultConfig &&
       !(this.terraformElementClass.prototype instanceof TerraformOutput)
     )
-      config = deepmerge(
+      config = _.merge(
         this.injector.defaultConfigure(
           this.id,
           this.terraformElementClass.name,
           this.description,
         ),
         config,
-      ) as ConfigType;
-
-    /*
-    TODO
-    Array.from(this.dependencies.values()).filter(
-      (eachElementContainer) => 'fqn' in eachElementContainer.element,
-    );
-    */
-
+      );
     this._element =
       this.terraformElementClass.prototype instanceof TerraformBackend
         ? new (this.terraformElementClass as TerraformInjectorBackendClassType<

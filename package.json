@@ -39,6 +39,7 @@
     "@cdktf/provider-aws": "^5.0.42",
     "@octokit/rest": "^18.12.0",
     "@types/jest": "^27.4.1",
+    "@types/lodash": "^4.14.179",
     "@types/node": "^12",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
@@ -70,7 +71,7 @@
     "constructs": "^10.0.83"
   },
   "dependencies": {
-    "deepmerge": "^4.2.2",
+    "lodash": "^4.17.21",
     "term-size": "2.2.1"
   },
   "keywords": [
