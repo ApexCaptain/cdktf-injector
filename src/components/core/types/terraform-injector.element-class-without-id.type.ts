@@ -1,7 +1,7 @@
 import { TerraformElement } from 'cdktf';
 import { Construct } from 'constructs';
 
-export type TerraformInjectorBackendClassType<
+export type TerraformInjectorElementClassWithoutIdType<
   TerraformBackendType extends TerraformElement,
   PropsType,
 > = {

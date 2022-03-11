@@ -6,7 +6,7 @@ import {
   TerraformInjectorClass,
   getCaller,
   TerraformInjectorElementClassType,
-  TerraformInjectorBackendClassType,
+  TerraformInjectorElementClassWithoutIdType,
   TerraformInjectorConfigureCallbackType,
   TerraformInjectorElementContainer,
 } from '../../module';
@@ -53,7 +53,7 @@ export class TerraformInjectorStack
     PropsType,
     SharedType = undefined,
   >(
-    terraformBackendClass: TerraformInjectorBackendClassType<
+    terraformBackendClass: TerraformInjectorElementClassWithoutIdType<
       TerraformBackendType,
       PropsType
     >,

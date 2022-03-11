@@ -6,7 +6,7 @@ import {
   getCaller,
   TerraformInjectorClass,
   TerraformInjectorElementContainerAsync,
-  TerraformInjectorBackendClassType,
+  TerraformInjectorElementClassWithoutIdType,
   TerraformInjectorConfigureCallbackType,
   TerraformInjectorConfigureCallbackAsyncType,
   TerraformInjectorElementClassType,
@@ -51,7 +51,7 @@ export class TerraformInjectorStackAsync
     PropsType,
     SharedType = undefined,
   >(
-    terraformBackendClass: TerraformInjectorBackendClassType<
+    terraformBackendClass: TerraformInjectorElementClassWithoutIdType<
       TerraformBackendType,
       PropsType
     >,

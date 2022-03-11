@@ -3,7 +3,7 @@ import {
   TerraformInjectorCommon,
   TerraformInjectorElementClassType,
   TerraformInjectorConfigureCallbackType,
-  TerraformInjectorBackendClassType,
+  TerraformInjectorElementClassWithoutIdType,
   TerraformInjectorElementContainer,
 } from '../../../module';
 
@@ -34,7 +34,7 @@ export interface TerraformInjector extends TerraformInjectorCommon {
     PropsType,
     SharedType = undefined,
   >(
-    terraformBackendClass: TerraformInjectorBackendClassType<
+    terraformBackendClass: TerraformInjectorElementClassWithoutIdType<
       TerraformBackendType,
       PropsType
     >,

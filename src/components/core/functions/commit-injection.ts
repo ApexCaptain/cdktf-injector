@@ -1,3 +1,4 @@
+import { Construct } from 'constructs';
 import {
   TerraformInjectorElementContainerClass,
   TerraformInjectorElementContainerSelfDependenceError,
@@ -8,25 +9,30 @@ import {
   injectorMap,
 } from '../../../module';
 
+const isScopeUnder = (rootScopePath: string, scope: Construct) => {
+  return (
+    scope.node.path
+      .split('/')
+      .slice(0, rootScopePath.split('/').length)
+      .join('/') == rootScopePath
+  );
+};
+const getInjectorsUnder = (rootScopePath: string) => {
+  const injectors = Array.from(injectorMap.values());
+  return Array.from(
+    rootScopePath === ''
+      ? injectors
+      : injectors.filter((eachInjector) =>
+          isScopeUnder(rootScopePath, eachInjector.scope),
+        ),
+  );
+};
+
 export const commitInjection = (
   parentInjector: TerraformInjectorClass,
 ): void | Promise<void> => {
   const parentScopePath = parentInjector.scope.node.path;
-  const parentDepthLength = parentScopePath.split('/').length;
-
-  const injectorEntries = Array.from(injectorMap.entries());
-  const getChildren = () =>
-    (parentScopePath === ''
-      ? injectorEntries
-      : injectorEntries.filter(
-          ([eachScope]) =>
-            eachScope.node.path
-              .split('/')
-              .slice(0, parentDepthLength)
-              .join('/') == parentScopePath,
-        )
-    ).map(([_, eachInjector]) => eachInjector);
-  const children = getChildren();
+  const children = getInjectorsUnder(parentScopePath);
   if (!parentInjector.useAsync) {
     children.forEach((eachInjector) => {
       if (eachInjector.useAsync && !eachInjector.isInjected) {
@@ -59,15 +65,17 @@ export const commitInjection = (
             const topContainer = containerDependencyCycleStack.pop()!;
             const newDepContainer = await topContainer.injectAsync();
             if (!newDepContainer) continue;
-            if (topContainer == newDepContainer)
-              throw new TerraformInjectorElementContainerSelfDependenceError(
-                `${topContainer.name} is self-dependent. You cannot use its own element when you configure the container.`,
-              );
-            if (!elementContainerSet.has(newDepContainer))
+            if (isScopeUnder(parentScopePath, newDepContainer.scope))
+              elementContainerSet.add(newDepContainer);
+            else
               throw new TerraformInjectorInvalidScopePathError(
                 parentInjector.scope,
                 topContainer,
                 newDepContainer,
+              );
+            if (topContainer == newDepContainer)
+              throw new TerraformInjectorElementContainerSelfDependenceError(
+                `${topContainer.name} is self-dependent. You cannot use its own element when you configure the container.`,
               );
             containerDependencyCycleStack.push(topContainer, newDepContainer);
             const cyclePoint =
@@ -89,7 +97,11 @@ export const commitInjection = (
               eachAfterDependencyInjectedCallbackContainer.isCalled = true;
             }
           }
-        if (!getChildren().every((eachChild) => eachChild.isInjected))
+        if (
+          !getInjectorsUnder(parentScopePath).every(
+            (eachChild) => eachChild.isInjected,
+          )
+        )
           await commitInjection(parentInjector);
         else resolve();
       } catch (error) {
@@ -105,15 +117,17 @@ export const commitInjection = (
       const topContainer = containerDependencyCycleStack.pop()!;
       const newDepContainer = topContainer.inject();
       if (!newDepContainer) continue;
-      if (topContainer == newDepContainer)
-        throw new TerraformInjectorElementContainerSelfDependenceError(
-          `${topContainer.name} is self-dependent. You cannot use its own element when you configure the container.`,
-        );
-      if (!elementContainerSet.has(newDepContainer))
+      if (isScopeUnder(parentScopePath, newDepContainer.scope))
+        elementContainerSet.add(newDepContainer);
+      else
         throw new TerraformInjectorInvalidScopePathError(
           parentInjector.scope,
           topContainer,
           newDepContainer,
+        );
+      if (topContainer == newDepContainer)
+        throw new TerraformInjectorElementContainerSelfDependenceError(
+          `${topContainer.name} is self-dependent. You cannot use its own element when you configure the container.`,
         );
       containerDependencyCycleStack.push(topContainer, newDepContainer);
       const cyclePoint = containerDependencyCycleStack.indexOf(newDepContainer);
@@ -135,6 +149,10 @@ export const commitInjection = (
       }
     }
 
-  if (!getChildren().every((eachChild) => eachChild.isInjected))
+  if (
+    !getInjectorsUnder(parentScopePath).every(
+      (eachChild) => eachChild.isInjected,
+    )
+  )
     void commitInjection(parentInjector);
 };

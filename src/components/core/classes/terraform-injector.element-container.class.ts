@@ -8,7 +8,7 @@ import { Construct } from 'constructs';
 import _ from 'lodash';
 import {
   TerraformInjectorElementClassType,
-  TerraformInjectorBackendClassType,
+  TerraformInjectorElementClassWithoutIdType,
   TerraformInjectorConfigureCallbackAsyncType,
   TerraformInjectorConfigureCallbackType,
   TerraformInjectorConfigAndSharedObjectType,
@@ -70,7 +70,10 @@ export class TerraformInjectorElementContainerClass<
     public scope: Construct,
     public terraformElementClass:
       | TerraformInjectorElementClassType<TerraformElementType, ConfigType>
-      | TerraformInjectorBackendClassType<TerraformElementType, ConfigType>,
+      | TerraformInjectorElementClassWithoutIdType<
+          TerraformElementType,
+          ConfigType
+        >,
     public id: string,
     public configure:
       | TerraformInjectorConfigureCallbackType<ConfigType, SharedType>
@@ -237,7 +240,8 @@ export class TerraformInjectorElementContainerClass<
       );
     this._element =
       this.terraformElementClass.prototype instanceof TerraformBackend
-        ? new (this.terraformElementClass as TerraformInjectorBackendClassType<
+        ? new (this
+            .terraformElementClass as TerraformInjectorElementClassWithoutIdType<
             TerraformElementType,
             ConfigType
           >)(this.scope, config)
