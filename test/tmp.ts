@@ -1,7 +1,7 @@
 /* eslint-disable spellcheck/spell-checker */
 import { vpc } from '@cdktf/provider-aws';
 import { App } from 'cdktf';
-import { TerraformInjectorStackAsync } from '../src/module';
+import { TerraformInjectorStackAsync } from '../src';
 
 class MyStack extends TerraformInjectorStackAsync {
   myVpc1 = this.provide(vpc.Vpc, 'mv', () => ({
@@ -18,6 +18,7 @@ const q = myStack.provideLazily(vpc.Vpc, 'something', () => {
       id: 'some',
       configure: () => ({
         cidrBlock: '10.2.0.0/16',
+        et: '',
       }),
     },
   ];

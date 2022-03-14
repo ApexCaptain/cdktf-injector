@@ -5,6 +5,9 @@ export {
   TerraformInjectorAsync,
   TerraformInjectorElementContainer,
   TerraformInjectorElementContainerAsync,
+  // Resource
+  TerraformLazyElementNestedConfig,
+  TerraformLazyElementNestedConfigAsync,
   // Stack
   TerraformInjectorStack,
   TerraformInjectorStackAsync,
