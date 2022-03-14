@@ -5,6 +5,11 @@ import {
   TerraformInjectorConfigureCallbackAsyncType,
   TerraformInjectorElementContainerAsync,
   TerraformInjectorElementClassWithoutIdType,
+  TerraformInjectorNestedConfigureCallbackAsyncType,
+  TerraformInjectorNestedConfigureCallbackType,
+  TerraformLazyElementAsync,
+  TerraformLazyElement,
+  TerraformInjectorElementContainer,
 } from '../../../module';
 
 /**
@@ -55,6 +60,8 @@ export interface TerraformInjectorCommon {
    *
    * @param configure Configuration callbak for certain element class.
    *
+   * @param useDefaultConfig Set false to ignore default config of the injector. Default is true.
+   *
    * @param description Optional description string.
    */
   provide<
@@ -73,6 +80,48 @@ export interface TerraformInjectorCommon {
     useDefaultConfig?: boolean,
     description?: string,
   ): TerraformInjectorElementContainerAsync<TerraformElementType, SharedType>;
+
+  provideLazily<
+    NestedTerraformElementType extends TerraformElement,
+    NestedConfigType,
+    NestedSharedType = undefined,
+    SharedType = undefined,
+  >(
+    nestedTerraformElementClass: TerraformInjectorElementClassType<
+      NestedTerraformElementType,
+      NestedConfigType
+    >,
+    id: string,
+    configure:
+      | TerraformInjectorNestedConfigureCallbackAsyncType<
+          NestedConfigType,
+          NestedSharedType,
+          SharedType
+        >
+      | TerraformInjectorNestedConfigureCallbackType<
+          NestedConfigType,
+          NestedSharedType,
+          SharedType
+        >,
+    useDefaultConfig?: boolean,
+    description?: string,
+  ):
+    | TerraformInjectorElementContainerAsync<
+        TerraformLazyElementAsync<
+          NestedTerraformElementType,
+          NestedConfigType,
+          NestedSharedType
+        >,
+        SharedType
+      >
+    | TerraformInjectorElementContainer<
+        TerraformLazyElement<
+          NestedTerraformElementType,
+          NestedConfigType,
+          NestedSharedType
+        >,
+        SharedType
+      >;
 
   setDefaultConfigure(
     defaultConfigure: (

@@ -1,7 +1,7 @@
 /* eslint-disable spellcheck/spell-checker */
 import { vpc } from '@cdktf/provider-aws';
 import { App } from 'cdktf';
-import { TerraformInjectorFactory, TerraformInjectorStackAsync } from '../src';
+import { TerraformInjectorStackAsync } from '../src/module';
 
 class MyStack extends TerraformInjectorStackAsync {
   myVpc1 = this.provide(vpc.Vpc, 'mv', () => ({
@@ -11,21 +11,34 @@ class MyStack extends TerraformInjectorStackAsync {
 
 const app = new App();
 const myStack = new MyStack(app, 'my-stack');
+const q = myStack.provideLazily(vpc.Vpc, 'something', () => {
+  myStack.myVpc1.element;
+  return [
+    {
+      id: 'some',
+      configure: () => ({
+        cidrBlock: '10.2.0.0/16',
+      }),
+    },
+  ];
+});
 
-class MyStack2 extends TerraformInjectorStackAsync {
-  myVpc2 = this.provide(vpc.Vpc, 'mv', () => {
-    myStack.myVpc1.element;
-    return {
-      cidrBlock: '10.1.0.0/16',
-    };
-  });
-}
-const myStack2 = new MyStack2(app, 'my-stack2');
+const ttt = myStack.provide(vpc.Vpc, 'ss2', () => {
+  q.element.nested[0].element;
+  return {
+    cidrBlock: '10.3.0.0/16',
+  };
+});
 
-TerraformInjectorFactory.scopesOnAsync(myStack2)
-  .inject()
-  .then(() => {
-    console.log(myStack.myVpc1.element);
-    console.log(myStack2.myVpc2.element);
-  })
-  .catch((e) => console.error(e));
+const process = async () => {
+  try {
+    await myStack.inject();
+
+    console.log(q.element.nested.length);
+    q.element.nested.forEach((each) => console.log(each.element));
+    console.log(ttt.element);
+  } catch (error) {
+    console.error(error);
+  }
+};
+void process();

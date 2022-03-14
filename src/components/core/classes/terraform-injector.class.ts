@@ -5,10 +5,17 @@ import {
   TerraformInjectorElementContainerClass,
   TerraformInjectorConfigureCallbackType,
   TerraformInjectorConfigureCallbackAsyncType,
+  TerraformInjectorElementContainer,
   TerraformInjectorElementContainerAsync,
   TerraformInjectorElementClassType,
   TerraformInjectorElementClassWithoutIdType,
   TerraformInjectorConflictedElementIdError,
+  TerraformLazyElement,
+  TerraformLazyElementAsync,
+  TerraformInjectorNestedConfigureCallbackType,
+  TerraformInjectorNestedConfigureCallbackAsyncType,
+  TerraformLazyElementNestedConfig,
+  TerraformLazyElementNestedConfigAsync,
   getCaller,
   commitInjection,
 } from '../../../module';
@@ -116,6 +123,97 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
     );
     this.elementMap.set(id, elementContainer);
     return elementContainer;
+  }
+
+  provideLazily<
+    NestedTerraformElementType extends TerraformElement,
+    NestedConfigType,
+    NestedSharedType = undefined,
+    SharedType = undefined,
+  >(
+    nestedTerraformElementClass: TerraformInjectorElementClassType<
+      NestedTerraformElementType,
+      NestedConfigType
+    >,
+    id: string,
+    configure:
+      | TerraformInjectorNestedConfigureCallbackAsyncType<
+          NestedConfigType,
+          NestedSharedType,
+          SharedType
+        >
+      | TerraformInjectorNestedConfigureCallbackType<
+          NestedConfigType,
+          NestedSharedType,
+          SharedType
+        >,
+    useDefaultConfig: boolean = true,
+    description?: string,
+  ):
+    | TerraformInjectorElementContainerAsync<
+        TerraformLazyElementAsync<
+          NestedTerraformElementType,
+          NestedConfigType,
+          NestedSharedType
+        >,
+        SharedType
+      >
+    | TerraformInjectorElementContainer<
+        TerraformLazyElement<
+          NestedTerraformElementType,
+          NestedConfigType,
+          NestedSharedType
+        >,
+        SharedType
+      > {
+    if (id == 'backend')
+      throw new TerraformInjectorConflictedElementIdError(
+        `id : ${id} is not allowed for non-backend class`,
+      );
+    if (this.elementMap.has(id))
+      throw new TerraformInjectorConflictedElementIdError(
+        `Element id "${id}" already exists in scope "${
+          this.scope
+        }". Element type : "${
+          this.useAsync
+            ? TerraformLazyElementAsync.name
+            : TerraformLazyElement.name
+        }"`,
+      );
+    const elementContainer = new TerraformInjectorElementContainerClass(
+      this.scope,
+      this.useAsync ? TerraformLazyElementAsync : TerraformLazyElement,
+      id,
+      (parentId) => {
+        const configureResult = configure(parentId);
+        let shared: SharedType | undefined = undefined;
+        let config: Array<
+          | TerraformLazyElementNestedConfig<NestedConfigType, NestedSharedType>
+          | TerraformLazyElementNestedConfigAsync<
+              NestedConfigType,
+              NestedSharedType
+            >
+        >;
+        if (Array.isArray(configureResult[0])) {
+          shared = configureResult[1] as SharedType;
+          config = configureResult[0];
+        } else config = configureResult as any;
+        return [
+          {
+            nestedTerraformElementClass: nestedTerraformElementClass,
+            injector: this,
+            nestedConfigure: config,
+          },
+          shared,
+        ] as any;
+      },
+      this,
+      getCaller(),
+      useDefaultConfig,
+      description,
+    );
+    this.elementMap.set(id, elementContainer);
+    return elementContainer as any;
   }
 
   setDefaultConfigure(

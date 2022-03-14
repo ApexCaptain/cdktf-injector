@@ -1,4 +1,11 @@
-import { TerraformInjectorCommon } from '../../../module';
+import { TerraformElement } from 'cdktf';
+import {
+  TerraformInjectorCommon,
+  TerraformInjectorElementClassType,
+  TerraformInjectorElementContainerAsync,
+  TerraformInjectorNestedConfigureCallbackAsyncType,
+  TerraformLazyElementAsync,
+} from '../../../module';
 
 /**
  * Asynchronous DI class interface.
@@ -14,4 +21,31 @@ export interface TerraformInjectorAsync extends TerraformInjectorCommon {
    * Commit dependency injection for all the elements below the scope level.
    */
   inject(): Promise<void>;
+
+  provideLazily<
+    NestedTerraformElementType extends TerraformElement,
+    NestedConfigType,
+    NestedSharedType = undefined,
+    SharedType = undefined,
+  >(
+    nestedTerraformElementClass: TerraformInjectorElementClassType<
+      NestedTerraformElementType,
+      NestedConfigType
+    >,
+    id: string,
+    configure: TerraformInjectorNestedConfigureCallbackAsyncType<
+      NestedConfigType,
+      NestedSharedType,
+      SharedType
+    >,
+    useDefaultConfig?: boolean,
+    description?: string,
+  ): TerraformInjectorElementContainerAsync<
+    TerraformLazyElementAsync<
+      NestedTerraformElementType,
+      NestedConfigType,
+      NestedSharedType
+    >,
+    SharedType
+  >;
 }

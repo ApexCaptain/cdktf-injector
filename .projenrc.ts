@@ -188,6 +188,7 @@ if (project.eslint) {
   '.projenrc.ts',
   '.ToDo',
   'typedoc.json',
+  'markdown',
 ].forEach((eachNpmIgnorePattern) =>
   project.addPackageIgnore(eachNpmIgnorePattern),
 );

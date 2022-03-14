@@ -5,6 +5,8 @@ import {
   TerraformInjectorConfigureCallbackType,
   TerraformInjectorElementClassWithoutIdType,
   TerraformInjectorElementContainer,
+  TerraformInjectorNestedConfigureCallbackType,
+  TerraformLazyElement,
 } from '../../../module';
 
 /**
@@ -53,6 +55,8 @@ export interface TerraformInjector extends TerraformInjectorCommon {
    *
    * @param configure Configuration callbak for certain element class.
    *
+   * @param useDefaultConfig Set false to ignore default config of the injector. Default is true.
+   *
    * @param description Optional description string.
    */
   provide<
@@ -69,6 +73,48 @@ export interface TerraformInjector extends TerraformInjectorCommon {
     useDefaultConfig?: boolean,
     description?: string,
   ): TerraformInjectorElementContainer<TerraformElementType, SharedType>;
+
+  /**
+   * Lazily provide elements to the injector.
+   *
+   * @see https://www.terraform.io/cdktf/concepts/providers-and-resources
+   *
+   * @param nestedTerraformElementClass Terraform element class to instantiate.
+   *
+   * @param id The scoped construct ID. Must be unique amongst siblings in the same scope.
+   *
+   * @param configure Configuration callbak for certain element class.
+   *
+   * @param useDefaultConfig Set false to ignore default config of the injector. Default is true.
+   *
+   * @param description Optional description string.
+   */
+  provideLazily<
+    NestedTerraformElementType extends TerraformElement,
+    NestedConfigType,
+    NestedSharedType = undefined,
+    SharedType = undefined,
+  >(
+    nestedTerraformElementClass: TerraformInjectorElementClassType<
+      NestedTerraformElementType,
+      NestedConfigType
+    >,
+    id: string,
+    configure: TerraformInjectorNestedConfigureCallbackType<
+      NestedConfigType,
+      NestedSharedType,
+      SharedType
+    >,
+    useDefaultConfig?: boolean,
+    description?: string,
+  ): TerraformInjectorElementContainer<
+    TerraformLazyElement<
+      NestedTerraformElementType,
+      NestedConfigType,
+      NestedSharedType
+    >,
+    SharedType
+  >;
 
   /**
    * Commit dependency injection for all the elements below the scope level.

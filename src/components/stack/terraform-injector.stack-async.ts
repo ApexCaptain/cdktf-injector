@@ -11,6 +11,8 @@ import {
   TerraformInjectorConfigureCallbackAsyncType,
   TerraformInjectorElementClassType,
 } from '../../module';
+import { TerraformInjectorNestedConfigureCallbackAsyncType } from '../core';
+import { TerraformLazyElementAsync } from '../resource';
 
 /**
  * Stack class extends ```TerraformStack``` and implementing {@link TerraformInjectorAsync}.
@@ -74,6 +76,8 @@ export class TerraformInjectorStackAsync
    *
    * @param configure Configuration callbak for certain element class.
    *
+   * @param useDefaultConfig Set false to ignore default config of the injector. Default is true.
+   *
    * @param description Optional description string.
    */
   provide<
@@ -94,6 +98,56 @@ export class TerraformInjectorStackAsync
   ): TerraformInjectorElementContainerAsync<TerraformElementType, SharedType> {
     return this.injector.provide(
       terraformElementClass,
+      id,
+      configure,
+      useDefaultConfig,
+      description,
+    );
+  }
+
+  /**
+   * Lazily provide elements to the injector.
+   *
+   * @see https://www.terraform.io/cdktf/concepts/providers-and-resources
+   *
+   * @param nestedTerraformElementClass Terraform element class to instantiate.
+   *
+   * @param id The scoped construct ID. Must be unique amongst siblings in the same scope.
+   *
+   * @param configure Configuration callbak for certain element class.
+   *
+   * @param useDefaultConfig Set false to ignore default config of the injector. Default is true.
+   *
+   * @param description Optional description string.
+   */
+  provideLazily<
+    NestedTerraformElementType extends TerraformElement,
+    NestedConfigType,
+    NestedSharedType = undefined,
+    SharedType = undefined,
+  >(
+    nestedTerraformElementClass: TerraformInjectorElementClassType<
+      NestedTerraformElementType,
+      NestedConfigType
+    >,
+    id: string,
+    configure: TerraformInjectorNestedConfigureCallbackAsyncType<
+      NestedConfigType,
+      NestedSharedType,
+      SharedType
+    >,
+    useDefaultConfig?: boolean,
+    description?: string,
+  ): TerraformInjectorElementContainerAsync<
+    TerraformLazyElementAsync<
+      NestedTerraformElementType,
+      NestedConfigType,
+      NestedSharedType
+    >,
+    SharedType
+  > {
+    return this.injector.provideLazily(
+      nestedTerraformElementClass,
       id,
       configure,
       useDefaultConfig,

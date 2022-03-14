@@ -10,6 +10,8 @@ import {
   TerraformInjectorConfigureCallbackType,
   TerraformInjectorElementContainer,
 } from '../../module';
+import { TerraformInjectorNestedConfigureCallbackType } from '../core';
+import { TerraformLazyElement } from '../resource';
 
 /**
  * Stack class extends ```TerraformStack``` and implementing {@link TerraformInjector}.
@@ -92,6 +94,57 @@ export class TerraformInjectorStack
   ): TerraformInjectorElementContainer<TerraformElementType, SharedType> {
     return this.injector.provide(
       terraformElementClass,
+      id,
+      configure,
+      useDefaultConfig,
+      description,
+    );
+  }
+
+  /**
+   * Lazily provide elements to the injector.
+   *
+   * @see https://www.terraform.io/cdktf/concepts/providers-and-resources
+   *
+   * @param nestedTerraformElementClass Terraform element class to instantiate.
+   *
+   * @param id The scoped construct ID. Must be unique amongst siblings in the same scope.
+   *
+   * @param configure Configuration callbak for certain element class.
+   *
+   * @param useDefaultConfig Set false to ignore default config of the injector. Default is true.
+   *
+   * @param description Optional description string.
+   *
+   */
+  provideLazily<
+    NestedTerraformElementType extends TerraformElement,
+    NestedConfigType,
+    NestedSharedType = undefined,
+    SharedType = undefined,
+  >(
+    nestedTerraformElementClass: TerraformInjectorElementClassType<
+      NestedTerraformElementType,
+      NestedConfigType
+    >,
+    id: string,
+    configure: TerraformInjectorNestedConfigureCallbackType<
+      NestedConfigType,
+      NestedSharedType,
+      SharedType
+    >,
+    useDefaultConfig?: boolean,
+    description?: string,
+  ): TerraformInjectorElementContainer<
+    TerraformLazyElement<
+      NestedTerraformElementType,
+      NestedConfigType,
+      NestedSharedType
+    >,
+    SharedType
+  > {
+    return this.injector.provideLazily(
+      nestedTerraformElementClass,
       id,
       configure,
       useDefaultConfig,

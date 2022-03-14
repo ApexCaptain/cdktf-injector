@@ -8,7 +8,6 @@ import {
   TerraformInjectorInvalidScopePathError,
   injectorMap,
 } from '../../../module';
-
 const isScopeUnder = (rootScopePath: string, scope: Construct) => {
   return (
     scope.node.path
@@ -103,7 +102,7 @@ export const commitInjection = (
           )
         )
           await commitInjection(parentInjector);
-        else resolve();
+        resolve();
       } catch (error) {
         reject(error);
       }
