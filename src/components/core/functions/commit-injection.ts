@@ -9,21 +9,19 @@ import {
   injectorMap,
 } from '../../../module';
 const isScopeUnder = (rootScopePath: string, scope: Construct) => {
-  return (
-    scope.node.path
-      .split('/')
-      .slice(0, rootScopePath.split('/').length)
-      .join('/') == rootScopePath
-  );
+  return rootScopePath === ''
+    ? true
+    : scope.node.path
+        .split('/')
+        .slice(0, rootScopePath.split('/').length)
+        .join('/') == rootScopePath;
 };
 const getInjectorsUnder = (rootScopePath: string) => {
   const injectors = Array.from(injectorMap.values());
   return Array.from(
-    rootScopePath === ''
-      ? injectors
-      : injectors.filter((eachInjector) =>
-          isScopeUnder(rootScopePath, eachInjector.scope),
-        ),
+    injectors.filter((eachInjector) =>
+      isScopeUnder(rootScopePath, eachInjector.scope),
+    ),
   );
 };
 
