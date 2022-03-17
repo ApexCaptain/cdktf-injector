@@ -293,10 +293,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@cdktf/provider-aws@^5.0.48":
-  version "5.0.48"
-  resolved "https://registry.yarnpkg.com/@cdktf/provider-aws/-/provider-aws-5.0.48.tgz#0cd84451670b93dc24f21e3a45dc15292d2e7248"
-  integrity sha512-5chBjK14JV+GEFpl/w7+Ca8i4CXtsYtK2slQ/2AW8y/NaM+Aa3YeV+b5W/xeegjErKLxg3cF6XsRs9P9PBExcg==
+"@cdktf/provider-aws@^5.0.49":
+  version "5.0.49"
+  resolved "https://registry.yarnpkg.com/@cdktf/provider-aws/-/provider-aws-5.0.49.tgz#5e900167fbb6b79a17ecb4cc02a6318699dd715c"
+  integrity sha512-hTDbzilBNCjAxzLr6aSxcHpDQRKplJhJTm8X69GkP9rjpqHsdgJUehXTLcPhOdjOIRsaD7jwYR2wuHokOBCuaQ==
 
 "@eslint/eslintrc@^1.2.1":
   version "1.2.1"
@@ -861,9 +861,9 @@
     pretty-format "^27.0.0"
 
 "@types/json-schema@^7.0.9":
-  version "7.0.9"
-  resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.9.tgz#97edc9037ea0c38585320b28964dde3b39e4660d"
-  integrity sha512-qcUXuemtEu+E5wZSJHNxUXeCZhAfXKQ41D+duX+VYPde7xyEVZci+/oXKJL13tnRs9lR2pr4fod59GT6/X1/yQ==
+  version "7.0.10"
+  resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.10.tgz#9b05b7896166cd00e9cbd59864853abf65d9ac23"
+  integrity sha512-BLO9bBq59vW3fxCpD4o0N4U+DXsvwvIcl+jofw0frQo/GrBFC+/jRZj1E7kgp6dvTyNmA4y6JCV5Id/r3mNP5A==
 
 "@types/json5@^0.0.29":
   version "0.0.29"
@@ -1684,10 +1684,10 @@ console-control-strings@^1.1.0:
   resolved "https://registry.yarnpkg.com/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
   integrity sha1-PXz0Rk22RG6mRL9LOVB/mFEAjo4=
 
-constructs@10.0.89:
-  version "10.0.89"
-  resolved "https://registry.yarnpkg.com/constructs/-/constructs-10.0.89.tgz#42ae1d4251848b301f342e9afaa0982a8bdbb0f1"
-  integrity sha512-Oz6A6lOgECJiysnLK7I2fZMkscfKmsIuAo4KX6AgKDOK5TO3OqSx0zHxajFXLuP6NZk/K2eBjry0aUpr32ZKkg==
+constructs@10.0.90:
+  version "10.0.90"
+  resolved "https://registry.yarnpkg.com/constructs/-/constructs-10.0.90.tgz#94b9e79a4a3ffaa157f7493e656741e25de02af9"
+  integrity sha512-Ik1gGIZOQ4pG2E8I7ZfigsnYb8Q1zYpNM1zchkxHYxVyT5adMfs2Len/HDJW5/lz4wCjHmj5i2FIWJA5Y8TRcA==
 
 conventional-changelog-angular@^5.0.12:
   version "5.0.13"
@@ -2111,9 +2111,9 @@ duplexer3@^0.1.4:
   integrity sha1-7gHdHKwO08vH/b6jfcCo8c4ALOI=
 
 electron-to-chromium@^1.4.84:
-  version "1.4.85"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.85.tgz#a3666ba42147026b9f34d4d8d4caf0740e80f751"
-  integrity sha512-K9AsQ41WS2bjZUFpRWfvaS4RjEcRCamEkBJN1Z1TQILBfP1H8QnJ9ti0wiLiMv0sRjX3EHKzgs9jDnmGFx2jXg==
+  version "1.4.86"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.86.tgz#90fe4a9787f48d6522957213408e08a8126b2ebc"
+  integrity sha512-EVTZ+igi8x63pK4bPuA95PXIs2b2Cowi3WQwI9f9qManLiZJOD1Lash1J3W4TvvcUCcIR4o/rgi9o8UicXSO+w==
 
 emittery@^0.8.1:
   version "0.8.1"
@@ -4820,10 +4820,10 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@^2.5.1:
-  version "2.5.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.5.1.tgz#fff75fa9d519c54cf0fce328c1017d94546bc56a"
-  integrity sha512-vBZcPRUR5MZJwoyi3ZoyQlc1rXeEck8KgeC9AwwOn+exuxLxq5toTRDTSaVrXHxelDMHy9zlicw8u66yxoSUFg==
+prettier@^2.6.0:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.6.0.tgz#12f8f504c4d8ddb76475f441337542fa799207d4"
+  integrity sha512-m2FgJibYrBGGgQXNzfd0PuDGShJgRavjUoRCw1mZERIWVSXF0iLzLm+aOqTAbLnC3n6JzUhAA8uZnFVghHJ86A==
 
 pretty-format@^27.0.0, pretty-format@^27.5.1:
   version "27.5.1"
