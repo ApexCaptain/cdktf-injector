@@ -15,12 +15,11 @@ type HookType =
   | 'pre-receive'
   | 'update';
 class HuskyAuxiliary implements Auxiliary {
-  private huskyDir = path.join(process.cwd(), '.husky');
-  // private gitConfigPath = path.join(process.cwd(), '.git/config');
+  private huskyDirPath = path.join(process.cwd(), '.husky');
   private hooks = new Map<HookType, Array<string>>();
   dictionary = ['applypatch', 'msg', 'cmd', 'unlink', 'readdir'];
   constructor() {
-    if (!fs.existsSync(this.huskyDir)) fs.mkdirSync(this.huskyDir);
+    if (!fs.existsSync(this.huskyDirPath)) fs.mkdirSync(this.huskyDirPath);
   }
   private addAllCommand(fileDir: string, cmdArray: Array<string>) {
     cmdArray.forEach((eachCmd) => husky.add(fileDir, eachCmd));
@@ -28,8 +27,8 @@ class HuskyAuxiliary implements Auxiliary {
 
   async build() {
     const hooksMapKeys = Array.from(this.hooks.keys());
-    fs.readdirSync(this.huskyDir).forEach((eachFileName) => {
-      const eachFilePath = path.join(this.huskyDir, eachFileName);
+    fs.readdirSync(this.huskyDirPath).forEach((eachFileName) => {
+      const eachFilePath = path.join(this.huskyDirPath, eachFileName);
       if (
         !fs.statSync(eachFilePath).isDirectory() &&
         !hooksMapKeys.includes(eachFileName as HookType)
@@ -39,7 +38,7 @@ class HuskyAuxiliary implements Auxiliary {
       }
     });
     for (const [hookName, cmdArray] of this.hooks) {
-      const eachFileName = path.join(this.huskyDir, hookName);
+      const eachFileName = path.join(this.huskyDirPath, hookName);
       if (fs.existsSync(eachFileName)) {
         const prevHookContents = fs
           .readFileSync(eachFileName)
@@ -51,7 +50,7 @@ class HuskyAuxiliary implements Auxiliary {
         }
       } else this.addAllCommand(eachFileName, cmdArray);
     }
-    husky.install(this.huskyDir);
+    husky.install();
   }
 
   addHook(hookName: HookType, cmd: string) {
