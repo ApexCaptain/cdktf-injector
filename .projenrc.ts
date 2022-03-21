@@ -53,7 +53,7 @@ const project = new typescript.TypeScriptProject({
     // include
     workflow: true,
     workflowOptions: {
-      schedule: javascript.UpgradeDependenciesSchedule.DAILY,
+      schedule: javascript.UpgradeDependenciesSchedule.WEEKLY,
     },
     taskName: 'upgrade',
     pullRequestTitle: 'upgrade dependencies',
