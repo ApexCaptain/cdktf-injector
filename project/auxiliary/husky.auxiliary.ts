@@ -16,6 +16,7 @@ type HookType =
   | 'update';
 class HuskyAuxiliary implements Auxiliary {
   private huskyDir = path.join(process.cwd(), '.husky');
+  private gitConfigPath = path.join(process.cwd(), '.git/config');
   private hooks = new Map<HookType, Array<string>>();
   dictionary = ['applypatch', 'msg', 'cmd', 'unlink', 'readdir'];
   constructor() {
@@ -51,6 +52,13 @@ class HuskyAuxiliary implements Auxiliary {
       } else this.addAllCommand(eachFileName, cmdArray);
     }
     husky.install(this.huskyDir);
+    fs.writeFileSync(
+      this.gitConfigPath,
+      fs
+        .readFileSync(this.gitConfigPath)
+        .toString()
+        .replace('hooksPath = ', 'hooksPath = %(prefix)'),
+    );
   }
 
   addHook(hookName: HookType, cmd: string) {
