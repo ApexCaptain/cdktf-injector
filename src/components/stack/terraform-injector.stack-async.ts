@@ -161,8 +161,9 @@ export class TerraformInjectorStackAsync
       className: string,
       description?: string,
     ) => { [x: string]: any },
-  ): void {
+  ): TerraformInjectorStackAsync {
     this.injector.setDefaultConfigure(defaultConfigure);
+    return this;
   }
   /**
    * Commit dependency injection for all the elements below the scope level.

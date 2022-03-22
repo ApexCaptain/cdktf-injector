@@ -28,6 +28,16 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
     string,
     TerraformInjectorElementContainerClass<any, any, any>
   >();
+  _defaultConfigure!: (
+    id: string,
+    className: string,
+    description?: string,
+  ) => {
+    [x: string]: any;
+  };
+  get defaultConfigure() {
+    return this._defaultConfigure;
+  }
   // Getters
   // Constructor
   constructor(
@@ -35,14 +45,10 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
     public useAsync: boolean,
     public caller: string,
     public description?: string,
-  ) {}
-  defaultConfigure: (
-    id: string,
-    className: string,
-    description?: string,
-  ) => {
-    [x: string]: any;
-  } = () => ({});
+  ) {
+    this._defaultConfigure = () => ({});
+  }
+
   // Methods
   // Production
   toString(): string {
@@ -222,8 +228,9 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
       className: string,
       description?: string,
     ) => { [x: string]: any },
-  ): void {
-    this.defaultConfigure = defaultConfigure;
+  ): TerraformInjectorClass {
+    this._defaultConfigure = defaultConfigure;
+    return this;
   }
 
   inject(): void | Promise<void> {

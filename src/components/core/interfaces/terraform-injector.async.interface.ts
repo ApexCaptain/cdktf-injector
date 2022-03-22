@@ -48,4 +48,14 @@ export interface TerraformInjectorAsync extends TerraformInjectorCommon {
     >,
     SharedType
   >;
+
+  setDefaultConfigure(
+    defaultConfigure: (
+      id: string,
+      className: string,
+      description?: string,
+    ) => {
+      [x: string]: any;
+    },
+  ): TerraformInjectorAsync;
 }

@@ -131,5 +131,5 @@ export interface TerraformInjectorCommon {
     ) => {
       [x: string]: any;
     },
-  ): void;
+  ): TerraformInjectorCommon;
 }

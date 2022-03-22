@@ -20,6 +20,11 @@ import {
  */
 export interface TerraformInjector extends TerraformInjectorCommon {
   /**
+   * Commit dependency injection for all the elements below the scope level.
+   */
+  inject(): void;
+
+  /**
    * Set backend of the injector. You cannot provide multiple backend elements to the injector and only one backend
    * could be provided for one stack each.
    *
@@ -116,8 +121,13 @@ export interface TerraformInjector extends TerraformInjectorCommon {
     SharedType
   >;
 
-  /**
-   * Commit dependency injection for all the elements below the scope level.
-   */
-  inject(): void;
+  setDefaultConfigure(
+    defaultConfigure: (
+      id: string,
+      className: string,
+      description?: string,
+    ) => {
+      [x: string]: any;
+    },
+  ): TerraformInjector;
 }

@@ -158,8 +158,9 @@ export class TerraformInjectorStack
       className: string,
       description?: string,
     ) => { [x: string]: any },
-  ): void {
+  ): TerraformInjectorStack {
     this.injector.setDefaultConfigure(defaultConfigure);
+    return this;
   }
 
   /**
