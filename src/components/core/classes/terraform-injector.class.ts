@@ -28,7 +28,7 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
     string,
     TerraformInjectorElementContainerClass<any, any, any>
   >();
-  _defaultConfigure!: (
+  _defaultConfigure?: (
     id: string,
     className: string,
     description?: string,
@@ -45,9 +45,7 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
     public useAsync: boolean,
     public caller: string,
     public description?: string,
-  ) {
-    this._defaultConfigure = () => ({});
-  }
+  ) {}
 
   // Methods
   // Production

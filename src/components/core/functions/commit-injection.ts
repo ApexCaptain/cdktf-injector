@@ -8,13 +8,13 @@ import {
   TerraformInjectorInvalidScopePathError,
   injectorMap,
 } from '../../../module';
-const isScopeUnder = (rootScopePath: string, scope: Construct) => {
-  return rootScopePath === ''
+const isScopeUnder = (stdPath: string, targetScope: Construct) => {
+  return stdPath === ''
     ? true
-    : scope.node.path
+    : targetScope.node.path
         .split('/')
-        .slice(0, rootScopePath.split('/').length)
-        .join('/') == rootScopePath;
+        .slice(0, stdPath.split('/').length)
+        .join('/') == stdPath;
 };
 const getInjectorsUnder = (rootScopePath: string) => {
   const injectors = Array.from(injectorMap.values());
@@ -24,14 +24,27 @@ const getInjectorsUnder = (rootScopePath: string) => {
     ),
   );
 };
+const getInjectorsUpper = (
+  injectors: Array<TerraformInjectorClass>,
+  targetInjector: TerraformInjectorClass,
+) => {
+  return injectors
+    .filter((eachInjector) =>
+      isScopeUnder(eachInjector.scope.node.path, targetInjector.scope),
+    )
+    .sort(
+      (front, rear) =>
+        front.scope.node.path.length - rear.scope.node.path.length,
+    );
+};
 
 export const commitInjection = (
   parentInjector: TerraformInjectorClass,
 ): void | Promise<void> => {
   const parentScopePath = parentInjector.scope.node.path;
-  const children = getInjectorsUnder(parentScopePath);
+  const injectors = getInjectorsUnder(parentScopePath);
   if (!parentInjector.useAsync) {
-    children.forEach((eachInjector) => {
+    injectors.forEach((eachInjector) => {
       if (eachInjector.useAsync && !eachInjector.isInjected) {
         throw new TerraformInjectorConflictedInjectingMethodTypeError(
           `Synchronous injector on ${parentScopePath} cannot commit cascading injection on nested asynchronous injector on ${eachInjector.scope.node.path}. You should call "inject" function of nested one, or wrap the parent with async injector.`,
@@ -41,7 +54,7 @@ export const commitInjection = (
   }
 
   const elementContainerSet = new Set(
-    children
+    injectors
       .map((eachChildInjector) =>
         Array.from(eachChildInjector.elementMap.values()),
       )
@@ -60,7 +73,9 @@ export const commitInjection = (
           containerDependencyCycleStack.push(eachContainer);
           while (containerDependencyCycleStack.length) {
             const topContainer = containerDependencyCycleStack.pop()!;
-            const newDepContainer = await topContainer.injectAsync();
+            const newDepContainer = await topContainer.injectAsync(
+              getInjectorsUpper(injectors, topContainer.injector),
+            );
             if (!newDepContainer) continue;
             if (isScopeUnder(parentScopePath, newDepContainer.scope))
               elementContainerSet.add(newDepContainer);
@@ -112,7 +127,9 @@ export const commitInjection = (
     containerDependencyCycleStack.push(eachContainer);
     while (containerDependencyCycleStack.length) {
       const topContainer = containerDependencyCycleStack.pop()!;
-      const newDepContainer = topContainer.inject();
+      const newDepContainer = topContainer.inject(
+        getInjectorsUpper(injectors, topContainer.injector),
+      );
       if (!newDepContainer) continue;
       if (isScopeUnder(parentScopePath, newDepContainer.scope))
         elementContainerSet.add(newDepContainer);

@@ -147,7 +147,9 @@ export class TerraformInjectorElementContainerClass<
   }
 
   // Hidden
-  inject(): TerraformInjectorElementContainerClass<any, any, any> | void {
+  inject(
+    upperInjectors: Array<TerraformInjectorClass>,
+  ): TerraformInjectorElementContainerClass<any, any, any> | void {
     try {
       if (!this.isInitialized)
         this.initialize(
@@ -157,6 +159,7 @@ export class TerraformInjectorElementContainerClass<
               SharedType
             >
           )(this.id),
+          upperInjectors,
         );
       for (const eachAfterInitCallbackContainer of this
         .afterInitElementCallbackContainerArray) {
@@ -179,11 +182,9 @@ export class TerraformInjectorElementContainerClass<
       } else throw error;
     }
   }
-  async injectAsync(): Promise<TerraformInjectorElementContainerClass<
-    any,
-    any,
-    any
-  > | void> {
+  async injectAsync(
+    upperInjectors: Array<TerraformInjectorClass>,
+  ): Promise<TerraformInjectorElementContainerClass<any, any, any> | void> {
     try {
       if (!this.isInitialized)
         this.initialize(
@@ -193,6 +194,7 @@ export class TerraformInjectorElementContainerClass<
               SharedType
             >
           )(this.id),
+          upperInjectors,
         );
       for (const eachAfterInitCallbackContainer of this
         .afterInitElementCallbackContainerArray) {
@@ -220,6 +222,7 @@ export class TerraformInjectorElementContainerClass<
       ConfigType,
       SharedType
     >,
+    upperInjectors: Array<TerraformInjectorClass>,
   ) {
     let config: ConfigType;
     if (Array.isArray(configAndSharedObject)) {
@@ -229,15 +232,20 @@ export class TerraformInjectorElementContainerClass<
     if (
       this.useDefaultConfig &&
       !(this.terraformElementClass.prototype instanceof TerraformOutput)
-    )
-      config = _.merge(
-        this.injector.defaultConfigure(
-          this.id,
-          this.terraformElementClass.name,
-          this.description,
-        ),
-        config,
-      );
+    ) {
+      for (const eachInjector of upperInjectors) {
+        if (eachInjector.defaultConfigure) {
+          config = _.merge(
+            eachInjector.defaultConfigure(
+              this.id,
+              this.terraformElementClass.name,
+              this.description,
+            ),
+            config,
+          );
+        }
+      }
+    }
     this._element =
       this.terraformElementClass.prototype instanceof TerraformBackend
         ? new (this
