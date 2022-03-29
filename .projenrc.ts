@@ -86,6 +86,12 @@ const project = new typescript.TypeScriptProject({
     '@types/lodash',
     '@cdktf/provider-aws', // tmp
   ],
+  autoApproveOptions: {
+    allowedUsernames: ['ApexCaptain'],
+    label: 'auto-merge-upgrade',
+  },
+  autoApproveProjenUpgrades: true,
+  autoApproveUpgrades: true,
   peerDeps: ['cdktf', 'constructs'],
 
   projenrcJsonOptions: {
