@@ -76,7 +76,12 @@ export const commitInjection = (
             const newDepContainer = await topContainer.injectAsync(
               getInjectorsUpper(injectors, topContainer.injector),
             );
-            if (!newDepContainer) continue;
+            if (!newDepContainer) {
+              topContainer.injector.onNewElementInjectedCallbackArray.forEach(
+                (eachCallback) => eachCallback(topContainer.element),
+              );
+              continue;
+            }
             if (isScopeUnder(parentScopePath, newDepContainer.scope))
               elementContainerSet.add(newDepContainer);
             else
@@ -130,7 +135,12 @@ export const commitInjection = (
       const newDepContainer = topContainer.inject(
         getInjectorsUpper(injectors, topContainer.injector),
       );
-      if (!newDepContainer) continue;
+      if (!newDepContainer) {
+        topContainer.injector.onNewElementInjectedCallbackArray.forEach(
+          (eachCallback) => eachCallback(topContainer.element),
+        );
+        continue;
+      }
       if (isScopeUnder(parentScopePath, newDepContainer.scope))
         elementContainerSet.add(newDepContainer);
       else

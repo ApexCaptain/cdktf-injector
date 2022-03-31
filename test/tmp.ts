@@ -15,13 +15,24 @@ class SomeOtherStack extends TerraformInjectorStackAsync {
 }
 
 const app = new App();
-new MyStack(app, 'my-stack');
-new SomeOtherStack(app, 'some-other-stack').setDefaultConfigure(() => ({
-  tags: {
-    tmp1: 't-tmp1',
-    tmp3: 't-tmp3',
-  },
-}));
+const ms = new MyStack(app, 'my-stack');
+const sos = new SomeOtherStack(app, 'some-other-stack').setDefaultConfigure(
+  () => ({
+    tags: {
+      tmp1: 't-tmp1',
+      tmp3: 't-tmp3',
+    },
+  }),
+);
+ms.onNewElementInjected((element) => {
+  console.log('1', element);
+});
+ms.onNewElementInjected((element) => {
+  console.log('2', element);
+});
+sos.onNewElementInjected((element) => {
+  console.log(element);
+});
 
 const main = async () => {
   await TerraformInjectorFactory.scopesOnAsync(app)

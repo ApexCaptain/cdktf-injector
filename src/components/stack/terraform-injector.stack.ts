@@ -169,4 +169,11 @@ export class TerraformInjectorStack
   inject(): void {
     return this.injector.inject();
   }
+
+  onNewElementInjected(
+    onNewElementInjectedCallback: (element: TerraformElement) => void,
+  ): TerraformInjectorStack {
+    this.injector.onNewElementInjected(onNewElementInjectedCallback);
+    return this;
+  }
 }

@@ -35,6 +35,9 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
   ) => {
     [x: string]: any;
   };
+  onNewElementInjectedCallbackArray = new Array<
+    (element: TerraformElement) => void
+  >();
   get defaultConfigure() {
     return this._defaultConfigure;
   }
@@ -228,6 +231,13 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
     ) => { [x: string]: any },
   ): TerraformInjectorClass {
     this._defaultConfigure = defaultConfigure;
+    return this;
+  }
+
+  onNewElementInjected(
+    onNewElementInjectedCallback: (element: TerraformElement) => void,
+  ): TerraformInjectorClass {
+    this.onNewElementInjectedCallbackArray.push(onNewElementInjectedCallback);
     return this;
   }
 

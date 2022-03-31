@@ -171,4 +171,11 @@ export class TerraformInjectorStackAsync
   inject(): Promise<void> {
     return this.injector.inject();
   }
+
+  onNewElementInjected(
+    onNewElementInjectedCallback: (element: TerraformElement) => void,
+  ): TerraformInjectorStackAsync {
+    this.injector.onNewElementInjected(onNewElementInjectedCallback);
+    return this;
+  }
 }

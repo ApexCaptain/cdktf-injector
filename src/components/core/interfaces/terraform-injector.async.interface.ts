@@ -17,6 +17,10 @@ import {
  * You can later inject all the dependencies below the scope level of the instance by using ```inject``` method.
  */
 export interface TerraformInjectorAsync extends TerraformInjectorCommon {
+  onNewElementInjected(
+    onNewElementInjectedCallback: (element: TerraformElement) => void,
+  ): TerraformInjectorAsync;
+
   /**
    * Commit dependency injection for all the elements below the scope level.
    */

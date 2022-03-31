@@ -22,6 +22,10 @@ import {
  * You can later inject all the dependencies below the scope level of the instance by using ```inject``` method.
  */
 export interface TerraformInjectorCommon {
+  onNewElementInjected(
+    onNewElementInjectedCallback: (element: TerraformElement) => void,
+  ): TerraformInjectorCommon;
+
   /**
    * Set backend of the injector. You cannot provide multiple backend elements to the injector and only one backend
    * could be provided for one stack each.
