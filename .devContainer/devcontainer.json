@@ -1,16 +1,13 @@
 {
   "name": "Dev Container - Terraform Injector",
-  "build": {
-    "dockerfile": "Dockerfile",
-    "args": {
-      "NODE_VERSION": "16",
-      "TERRAFORM_VERSION": "1.1.7"
-    }
-  },
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
   "extensions": [
     "dbaeumer.vscode-eslint",
     "editorconfig.editorconfig",
     "hoovercj.vscode-power-mode",
     "esbenp.prettier-vscode"
-  ]
+  ],
+  "postCreateCommand": "sudo chown node node_modules"
 }

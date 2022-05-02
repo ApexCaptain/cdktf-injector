@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: cdktf-injector_devContainer
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+      args:
+        NODE_VERSION: 16
+        TERRAFORM_VERSION: '1.1.7'
+        NPM_VERSION: '8.8.0'
+
+    volumes:
+      - ..:/workspace:cached
+      - cdktf_injector-node_modules:/workspace/node_modules
+
+    command: sleep infinity
+
+    user: node
+
+volumes:
+  cdktf_injector-node_modules:
