@@ -38,13 +38,13 @@
   "devDependencies": {
     "@cdktf/provider-aws": "^5.0.52",
     "@octokit/rest": "^18.12.0",
-    "@types/jest": "^27.4.1",
+    "@types/jest": "^27.5.0",
     "@types/lodash": "^4.14.182",
     "@types/node": "^12",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
-    "cdktf": "0.10.3",
-    "constructs": "10.0.130",
+    "cdktf": "0.10.4",
+    "constructs": "10.1.4",
     "eslint": "^8",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-node": "^0.3.6",
@@ -67,8 +67,8 @@
     "typescript": "4.4"
   },
   "peerDependencies": {
-    "cdktf": "^0.10.3",
-    "constructs": "^10.0.130"
+    "cdktf": "^0.10.4",
+    "constructs": "^10.1.4"
   },
   "dependencies": {
     "lodash": "^4.17.21",
