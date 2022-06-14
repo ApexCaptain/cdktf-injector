@@ -31,7 +31,8 @@
         "OUTFILE": "package.json",
         "CHANGELOG": "dist/changelog.md",
         "BUMPFILE": "dist/version.txt",
-        "RELEASETAG": "dist/releasetag.txt"
+        "RELEASETAG": "dist/releasetag.txt",
+        "RELEASE_TAG_PREFIX": ""
       },
       "steps": [
         {
@@ -229,7 +230,8 @@
         "OUTFILE": "package.json",
         "CHANGELOG": "dist/changelog.md",
         "BUMPFILE": "dist/version.txt",
-        "RELEASETAG": "dist/releasetag.txt"
+        "RELEASETAG": "dist/releasetag.txt",
+        "RELEASE_TAG_PREFIX": ""
       },
       "steps": [
         {
@@ -245,19 +247,19 @@
       },
       "steps": [
         {
-          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='term-size,projen'"
+          "exec": "npm-check-updates --dep dev --upgrade --target=minor --reject='typescript,term-size,projen'"
         },
         {
-          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='term-size,projen'"
+          "exec": "npm-check-updates --dep optional --upgrade --target=minor --reject='typescript,term-size,projen'"
         },
         {
-          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='term-size,projen'"
+          "exec": "npm-check-updates --dep peer --upgrade --target=minor --reject='typescript,term-size,projen'"
         },
         {
-          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='term-size,projen'"
+          "exec": "npm-check-updates --dep prod --upgrade --target=minor --reject='typescript,term-size,projen'"
         },
         {
-          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='term-size,projen'"
+          "exec": "npm-check-updates --dep bundle --upgrade --target=minor --reject='typescript,term-size,projen'"
         },
         {
           "exec": "yarn install --check-files"
