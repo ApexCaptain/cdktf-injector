@@ -113,11 +113,13 @@
       "type": "build"
     },
     {
-      "name": "typedoc",
+      "name": "typedoc-plugin-missing-exports",
+      "version": "0.23.0",
       "type": "build"
     },
     {
-      "name": "typedoc-plugin-missing-exports",
+      "name": "typedoc",
+      "version": "0.22.18",
       "type": "build"
     },
     {

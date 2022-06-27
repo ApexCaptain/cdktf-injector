@@ -9,7 +9,7 @@ services:
       args:
         NODE_VERSION: 16
         TERRAFORM_VERSION: '1.1.7'
-        NPM_VERSION: '8.8.0'
+        NPM_VERSION: '8.13.1'
 
     volumes:
       - ..:/workspace:cached

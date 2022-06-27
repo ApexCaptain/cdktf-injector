@@ -7,6 +7,11 @@ ARG NPM_VERSION
 RUN npm install -g \
     npm@${NPM_VERSION}
 
+# Install APT Deps
+RUN apt update -y \
+    && apt install -y \
+        yarn
+
 # Install Terraform
 RUN wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
     unzip ./terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/local/bin/ && \

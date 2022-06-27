@@ -79,8 +79,8 @@ const project = new typescript.TypeScriptProject({
   deps: ['term-size@2.2.1', 'lodash'],
   devDeps: [
     'eslint-plugin-spellcheck',
-    'typedoc',
-    'typedoc-plugin-missing-exports',
+    'typedoc@0.22.18',
+    'typedoc-plugin-missing-exports@0.23.0',
     'husky',
     '@octokit/rest',
     '@types/lodash',

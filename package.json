@@ -62,8 +62,8 @@
     "standard-version": "^9",
     "ts-jest": "^27.1.5",
     "ts-node": "^9",
-    "typedoc": "^0.23.1",
-    "typedoc-plugin-missing-exports": "*",
+    "typedoc": "0.22.18",
+    "typedoc-plugin-missing-exports": "0.23.0",
     "typescript": "4.4"
   },
   "peerDependencies": {
