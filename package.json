@@ -62,7 +62,7 @@
     "standard-version": "^9",
     "ts-jest": "^27.1.5",
     "ts-node": "^9",
-    "typedoc": "^0.22.17",
+    "typedoc": "^0.23.1",
     "typedoc-plugin-missing-exports": "*",
     "typescript": "4.4"
   },
