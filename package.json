@@ -44,13 +44,13 @@
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "cdktf": "0.11.2",
-    "constructs": "10.1.42",
+    "constructs": "10.1.43",
     "eslint": "^8",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-node": "^0.3.6",
     "eslint-import-resolver-typescript": "^2.7.1",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-spellcheck": "^0.0.19",
     "husky": "^7.0.4",
     "jest": "^27.5.1",
@@ -68,7 +68,7 @@
   },
   "peerDependencies": {
     "cdktf": "^0.11.2",
-    "constructs": "^10.1.42"
+    "constructs": "^10.1.43"
   },
   "dependencies": {
     "lodash": "^4.17.21",
