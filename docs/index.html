@@ -12,25 +12,14 @@
 <p><strong>There are two prerequisites for cdktf-injector</strong></p>
 <ul>
 <li><p><a href="https://www.terraform.io/">Terraform</a> - You need to install <a href="https://www.terraform.io/">terraform</a> on your dev env and it should be accessible on cli path. If you&#39;re using <code>devcontainer</code> you may paste following commands to your <code>Dockerfile</code>.</p>
-<p>```docker
-...</p>
-</li>
-</ul>
-
-<a href="#pass-terraform-version-as-an-argument" id="pass-terraform-version-as-an-argument" style="color: inherit; text-decoration: none;">
-  <h1>Pass terraform version as an argument</h1>
-</a>
-<p>  ARG TERRAFORM_VERSION=1.1.7</p>
-
-<a href="#install-terraform" id="install-terraform" style="color: inherit; text-decoration: none;">
-  <h1>Install Terraform</h1>
-</a>
-<p>  RUN wget <a href="https://releases.hashicorp.com/terraform/$%7BTERRAFORM_VERSION%7D/terraform_$%7BTERRAFORM_VERSION%7D_linux_amd64.zip">https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip</a> &amp;&amp; <br>      unzip ./terraform_${TERRAFORM_VERSION}<em>linux_amd64.zip -d /usr/local/bin/ &amp;&amp; <br>      rm terraform</em>${TERRAFORM_VERSION}_linux_amd64.zip</p>
-<p>  ...</p>
-<pre><code><br/><span class="hl-0">- [</span><span class="hl-1">cdktf</span><span class="hl-0">] - </span><span class="hl-2">A</span><span class="hl-0"> </span><span class="hl-1">library</span><span class="hl-0"> </span><span class="hl-1">for</span><span class="hl-0"> </span><span class="hl-1">defining</span><span class="hl-0"> [</span><span class="hl-1">Terraform</span><span class="hl-0">] </span><span class="hl-1">resources</span><span class="hl-0"> </span><span class="hl-1">using</span><span class="hl-0"> </span><span class="hl-1">programming</span><span class="hl-0"> </span><span class="hl-1">constructs</span><span class="hl-0">. </span><span class="hl-1">Click</span><span class="hl-0"> [</span><span class="hl-1">here</span><span class="hl-0">](</span><span class="hl-1">https</span><span class="hl-0">:</span><span class="hl-3">//github.com/hashicorp/terraform-cdk/blob/main/docs/getting-started/typescript.md) to get started. Or, simply type following lines.</span><br/><span class="hl-4">```sh</span><br/><span class="hl-4">mkdir your-project-name</span><br/><span class="hl-4">cd your-project-name</span><br/><span class="hl-4">npx cdktf-cli init --template=&quot;typescript&quot; --local</span>
+<pre><code class="language-docker"><span class="hl-0">...</span><br/><br/><span class="hl-1"># Pass terraform version as an argument</span><br/><span class="hl-2">ARG</span><span class="hl-0"> TERRAFORM_VERSION=1.1.7</span><br/><br/><span class="hl-1"># Install Terraform</span><br/><span class="hl-2">RUN</span><span class="hl-0"> wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip &amp;&amp; \</span><br/><span class="hl-0">    unzip ./terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/local/bin/ &amp;&amp; \</span><br/><span class="hl-0">    rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip</span><br/><br/><span class="hl-0">...</span>
 </code></pre>
-  <br>
-
+</li>
+<li><p><a href="https://www.terraform.io/cdktf">cdktf</a> - A library for defining <a href="https://www.terraform.io/">Terraform</a> resources using programming constructs. Click <a href="https://github.com/hashicorp/terraform-cdk/blob/main/docs/getting-started/typescript.md">here</a> to get started. Or, simply type following lines.</p>
+<pre><code class="language-sh"><span class="hl-0">mkdir your-project-name</span><br/><span class="hl-3">cd</span><span class="hl-0"> your-project-name</span><br/><span class="hl-0">npx cdktf-cli init --template=</span><span class="hl-4">&quot;typescript&quot;</span><span class="hl-0"> --local</span>
+</code></pre>
+<br></li>
+</ul>
 
 <a href="#features" id="features" style="color: inherit; text-decoration: none;">
   <h2>Features</h2>
