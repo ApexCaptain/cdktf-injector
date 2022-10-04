@@ -8,7 +8,7 @@ services:
       dockerfile: .devcontainer/Dockerfile
       args:
         NODE_VERSION: 16
-        TERRAFORM_VERSION: 1.1.7
+        TERRAFORM_VERSION: 1.3.1
         NPM_VERSION: 8.19.2
 
     volumes:
