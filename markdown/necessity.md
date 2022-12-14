@@ -97,7 +97,7 @@ app.synth();
 
 In [cdktf], every resource is a class instance. Thoese are pretty straight forward. Constructing resources using `new` keyword, passing id string and its config, you can build real world infrastructure.
 
-However unlike `hcl`, it is a sequencial language. You cannot create instance refering to another one that is not defined yet.
+However unlike `hcl`, it is a sequential language. You cannot create instance refering to another one that is not defined yet.
 
 <img src="https://github.com/ApexCaptain/cdktf-injector/blob/main/assets/cdktf-err.png?raw=true" width="80%">
 
