@@ -44,9 +44,9 @@
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "cdktf": "0.14.3",
-    "constructs": "10.1.207",
+    "constructs": "10.1.214",
     "eslint": "^8",
-    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-prettier": "^8.6.0",
     "eslint-import-resolver-node": "^0.3.6",
     "eslint-import-resolver-typescript": "^2.7.1",
     "eslint-plugin-import": "^2.26.0",
@@ -57,7 +57,7 @@
     "jest-junit": "^13",
     "json-schema": "^0.4.0",
     "npm-check-updates": "^12",
-    "prettier": "^2.8.1",
+    "prettier": "^2.8.2",
     "projen": "^0.52.49",
     "standard-version": "^9",
     "ts-jest": "^27.1.5",
@@ -68,7 +68,7 @@
   },
   "peerDependencies": {
     "cdktf": "^0.14.3",
-    "constructs": "^10.1.207"
+    "constructs": "^10.1.214"
   },
   "dependencies": {
     "lodash": "^4.17.21",
