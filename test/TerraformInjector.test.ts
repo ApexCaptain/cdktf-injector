@@ -1,6 +1,7 @@
 import { App, Testing } from 'cdktf';
 import 'cdktf/lib/testing/adapters/jest';
 Testing.setupJest();
+import { MockElement } from './util';
 import {
   TerraformInjector,
   TerraformInjectorStack,
@@ -15,7 +16,6 @@ import {
   TerraformInjectorElementContainerSelfDependenceError,
   TerraformInjectorInvalidScopePathError,
 } from '../src/module';
-import { MockElement } from './util';
 
 describe(`Terraform-Injector`, () => {
   let testingApplication: App;
