@@ -43,8 +43,8 @@
     "@types/node": "^12",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
-    "cdktf": "0.15.2",
-    "constructs": "10.1.242",
+    "cdktf": "0.15.4",
+    "constructs": "10.1.249",
     "eslint": "^8",
     "eslint-config-prettier": "^8.6.0",
     "eslint-import-resolver-node": "^0.3.7",
@@ -57,7 +57,7 @@
     "jest-junit": "^13",
     "json-schema": "^0.4.0",
     "npm-check-updates": "^12",
-    "prettier": "^2.8.3",
+    "prettier": "^2.8.4",
     "projen": "^0.52.49",
     "standard-version": "^9",
     "ts-jest": "^27.1.5",
@@ -67,8 +67,8 @@
     "typescript": "4.4"
   },
   "peerDependencies": {
-    "cdktf": "^0.15.2",
-    "constructs": "^10.1.242"
+    "cdktf": "^0.15.4",
+    "constructs": "^10.1.249"
   },
   "dependencies": {
     "lodash": "^4.17.21",
