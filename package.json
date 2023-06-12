@@ -44,7 +44,7 @@
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
     "cdktf": "0.16.3",
-    "constructs": "10.2.43",
+    "constructs": "10.2.50",
     "eslint": "^8",
     "eslint-config-prettier": "^8.8.0",
     "eslint-import-resolver-node": "^0.3.7",
@@ -68,7 +68,7 @@
   },
   "peerDependencies": {
     "cdktf": "^0.16.3",
-    "constructs": "^10.2.43"
+    "constructs": "^10.2.50"
   },
   "dependencies": {
     "lodash": "^4.17.21",
