@@ -39,7 +39,7 @@
     "@cdktf/provider-aws": "^5.0.52",
     "@octokit/rest": "^18.12.0",
     "@types/jest": "^27.5.2",
-    "@types/lodash": "^4.14.197",
+    "@types/lodash": "^4.14.198",
     "@types/node": "^12",
     "@typescript-eslint/eslint-plugin": "^5",
     "@typescript-eslint/parser": "^5",
