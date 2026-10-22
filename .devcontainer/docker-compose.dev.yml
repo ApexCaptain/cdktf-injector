@@ -1,0 +1,43 @@
+services:
+  workspace:
+    container_name: cdktf_injector_devcontainer_workspace
+    build:
+      context: ./
+      dockerfile: Dockerfile.workspace
+      args:
+        USER_NAME: ${username}
+    environment:
+      # Timezone
+      TZ: 'Asia/Seoul'
+      # Dev Container 환경 변수
+      IS_DEV_CONTAINER: true
+      # Auto Sync 활성화
+      ENABLE_AUTO_SYNC: true
+      # Disable Corepack Download Prompt
+      COREPACK_ENABLE_DOWNLOAD_PROMPT: 0
+      # 소유자를 변경할 디렉토리 경로 (복수 지정시 Space 구분)
+      DIR_PATHS_TO_CHANGE_OWNER: ${CONTAINER_PNPM_STORE_DIR_PATH} ${CONTAINER_CLAUDE_DIR_PATH}
+
+      # Node Options
+      NODE_OPTIONS: --max-old-space-size=6144
+
+    env_file:
+      - .env
+
+    command: sleep infinity
+
+    volumes:
+      # Anonymous Volume
+      ## Cache
+      - ..:${containerWorkspaceFolder}:cached
+      ## Claude
+      - ${HOST_CLAUDE_JSON_FILE_PATH}:${CONTAINER_CLAUDE_JSON_FILE_PATH}
+      - ${HOST_CLAUDE_DIR_PATH}:${CONTAINER_CLAUDE_DIR_PATH}
+
+      # Shared Volume
+      ## Pnpm Store
+      - Pnpm-Store:${CONTAINER_PNPM_STORE_DIR_PATH}
+
+volumes:
+  Pnpm-Store:
+    name: Shared-Volume_Pnpm-Store

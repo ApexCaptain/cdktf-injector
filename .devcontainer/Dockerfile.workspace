@@ -1,0 +1,12 @@
+FROM mcr.microsoft.com/devcontainers/base:dev-resolute
+
+USER root
+
+COPY data/workspace/ubuntu.sources /etc/apt/sources.list.d/ubuntu.sources
+
+RUN set -eux; \
+    apt-get update && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+USER vscode 
