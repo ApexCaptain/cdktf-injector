@@ -3,6 +3,7 @@
   "out": "./docs",
   "plugin": ["typedoc-plugin-missing-exports"],
   "excludeExternals": true,
+  "gitRevision": "main",
   "internalModule": "Reference",
   "excludePrivate": true,
   "excludeProtected": true
