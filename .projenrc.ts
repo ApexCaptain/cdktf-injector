@@ -84,7 +84,7 @@ const project = new typescript.TypeScriptProject({
     'dependency',
   ],
   npmAccess: javascript.NpmAccess.PUBLIC,
-  deps: ['term-size@2.2.1', 'lodash'],
+  deps: ['term-size@2.2.1', 'lodash@^4.18.1'],
   devDeps: [
     'cdktf@0.20.3',
     'constructs@^10.5.0', // projen 0.104 peer requirement

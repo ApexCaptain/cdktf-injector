@@ -346,7 +346,7 @@
             "--peer",
             "--no-deprecated",
             "--dep=dev,prod,peer,optional",
-            "--filter=@octokit/rest,@types/jest,@types/lodash,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,eslint-plugin-spellcheck,jest,prettier,ts-jest,ts-node,lodash"
+            "--filter=@octokit/rest,@types/jest,@types/lodash,eslint-config-prettier,eslint-import-resolver-typescript,eslint-plugin-import,eslint-plugin-prettier,eslint-plugin-spellcheck,jest,prettier,ts-jest,ts-node"
           ]
         },
         {
