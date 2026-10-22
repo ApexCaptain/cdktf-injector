@@ -116,6 +116,7 @@ const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: 'main',
   release: true,
   releaseToNpm: true,
+  npmTrustedPublishing: true,
   gitignore: ['auth/', 'cdktf.out/', '/.pnpm-store', 'tmp/', '.superpowers'],
   majorVersion: 1,
   repository: 'https://github.com/ApexCaptain/cdktf-injector',
