@@ -21,9 +21,10 @@ export class TerraformInjectorElementContainerClass<
   TerraformElementType extends TerraformElement,
   ConfigType,
   SharedType,
-> implements
-    TerraformInjectorElementContainerAsync<TerraformElementType, SharedType>
-{
+> implements TerraformInjectorElementContainerAsync<
+  TerraformElementType,
+  SharedType
+> {
   // Properties
   // Production
 
@@ -54,14 +55,16 @@ export class TerraformInjectorElementContainerClass<
   _shared!: SharedType;
   _element!: TerraformElementType;
   get shared(): SharedType {
-    if (!this.isInitialized)
+    if (!this.isInitialized) {
       throw this.terraformElementContainerNonInitializedError;
+    }
     return this._shared;
   }
 
   get element(): TerraformElementType {
-    if (!this.isInitialized)
+    if (!this.isInitialized) {
       throw this.terraformElementContainerNonInitializedError;
+    }
     return this._element;
   }
 
@@ -151,7 +154,7 @@ export class TerraformInjectorElementContainerClass<
     upperInjectors: Array<TerraformInjectorClass>,
   ): TerraformInjectorElementContainerClass<any, any, any> | void {
     try {
-      if (!this.isInitialized)
+      if (!this.isInitialized) {
         this.initialize(
           (
             this.configure as TerraformInjectorConfigureCallbackType<
@@ -161,6 +164,7 @@ export class TerraformInjectorElementContainerClass<
           )(this.id),
           upperInjectors,
         );
+      }
       for (const eachAfterInitCallbackContainer of this
         .afterInitElementCallbackContainerArray) {
         if (!eachAfterInitCallbackContainer.isCalled) {
@@ -179,14 +183,16 @@ export class TerraformInjectorElementContainerClass<
         this.dependencies.add(dependencyContainer);
         dependencyContainer.dependents.add(this);
         return dependencyContainer;
-      } else throw error;
+      } else {
+        throw error;
+      }
     }
   }
   async injectAsync(
     upperInjectors: Array<TerraformInjectorClass>,
   ): Promise<TerraformInjectorElementContainerClass<any, any, any> | void> {
     try {
-      if (!this.isInitialized)
+      if (!this.isInitialized) {
         this.initialize(
           await (
             this.configure as TerraformInjectorConfigureCallbackAsyncType<
@@ -196,6 +202,7 @@ export class TerraformInjectorElementContainerClass<
           )(this.id),
           upperInjectors,
         );
+      }
       for (const eachAfterInitCallbackContainer of this
         .afterInitElementCallbackContainerArray) {
         if (!eachAfterInitCallbackContainer.isCalled) {
@@ -214,7 +221,9 @@ export class TerraformInjectorElementContainerClass<
         this.dependencies.add(dependencyContainer);
         dependencyContainer.dependents.add(this);
         return dependencyContainer;
-      } else throw error;
+      } else {
+        throw error;
+      }
     }
   }
   private initialize(
@@ -228,7 +237,9 @@ export class TerraformInjectorElementContainerClass<
     if (Array.isArray(configAndSharedObject)) {
       config = configAndSharedObject[0];
       this._shared = configAndSharedObject[1];
-    } else config = configAndSharedObject;
+    } else {
+      config = configAndSharedObject;
+    }
     if (
       this.useDefaultConfig &&
       !(this.terraformElementClass.prototype instanceof TerraformOutput)
@@ -248,15 +259,19 @@ export class TerraformInjectorElementContainerClass<
     }
     this._element =
       this.terraformElementClass.prototype instanceof TerraformBackend
-        ? new (this
-            .terraformElementClass as TerraformInjectorElementClassWithoutIdType<
-            TerraformElementType,
-            ConfigType
-          >)(this.scope, config)
-        : new (this.terraformElementClass as TerraformInjectorElementClassType<
-            TerraformElementType,
-            ConfigType
-          >)(this.scope, this.id, config);
+        ? new (
+            this
+              .terraformElementClass as TerraformInjectorElementClassWithoutIdType<
+              TerraformElementType,
+              ConfigType
+            >
+          )(this.scope, config)
+        : new (
+            this.terraformElementClass as TerraformInjectorElementClassType<
+              TerraformElementType,
+              ConfigType
+            >
+          )(this.scope, this.id, config);
     this.isInitialized = true;
   }
 }

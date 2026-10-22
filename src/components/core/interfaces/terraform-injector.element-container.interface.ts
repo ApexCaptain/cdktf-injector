@@ -9,9 +9,9 @@ export interface TerraformInjectorElementContainer<
   TerraformElementType extends TerraformElement,
   SharedType,
 > extends TerraformInjectorElementContainerAsync<
-    TerraformElementType,
-    SharedType
-  > {
+  TerraformElementType,
+  SharedType
+> {
   // Overridden Methods
   // Methods
   /**
