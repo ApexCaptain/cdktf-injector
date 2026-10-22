@@ -1,5 +1,5 @@
 import { javascript, typescript } from 'projen';
-import { huskyAuxiliary } from './project';
+import { generateHuskyHooks } from './projenrc/generate-husky-hooks';
 const PROJECT_NAME = 'cdktf-injector';
 const project = new typescript.TypeScriptProject({
   /* Typescript */
@@ -9,8 +9,9 @@ const project = new typescript.TypeScriptProject({
   eslint: true,
   eslintOptions: {
     tsconfigPath: './tsconfig.dev.json',
+    projectService: false,
     dirs: ['src'],
-    devdirs: ['test', 'tasks', 'project'],
+    devdirs: ['test', 'tasks', 'projenrc'],
     fileExtensions: ['.ts'],
     ignorePatterns: [
       '*.js',
@@ -18,46 +19,43 @@ const project = new typescript.TypeScriptProject({
       'node_modules/',
       '*.generated.ts',
       'coverage',
+      '/.pnpm-store/*',
+      'tmp/',
     ],
-    lintProjenRc: true,
     prettier: true,
-    // aliasMap
-    // aliasExtensions
     tsAlwaysTryTypes: true,
   },
-  typescriptVersion: '4.4',
+  typescriptVersion: '~5.9.3',
 
   // tsconfig
   tsconfigDev: {
-    include: ['tasks/**/*.ts', 'project/**/*.ts'],
+    include: ['.projenrc.ts', 'tasks/**/*.ts', 'projenrc/**/*.ts'],
+    exclude: ['.pnpm-store', 'tmp', '.superpowers', 'lib', 'docs'],
     compilerOptions: {},
   },
   tsconfigDevFile: 'tsconfig.dev.json',
   disableTsconfig: false,
-  // sampleCode
-  // entrypointTypes
   projenrcTs: true,
-  // projenrcTsOptions
 
   /* Node */
-  // copyrightOwner
-  // copyrightPeriod
-  // projenVersion
+  packageManager: javascript.NodePackageManager.YARN_CLASSIC,
+  projenVersion: '^0.104.11',
   projenDevDependency: true,
+  minNodeVersion: '22.0.0',
+  workflowNodeVersion: '24',
   buildWorkflow: true,
+  stale: true,
 
   /* ETC */
   depsUpgrade: true,
   depsUpgradeOptions: {
     exclude: ['term-size'],
-    // include
     workflow: true,
     workflowOptions: {
       schedule: javascript.UpgradeDependenciesSchedule.WEEKLY,
     },
     taskName: 'upgrade',
     pullRequestTitle: 'upgrade dependencies',
-    ignoreProjen: true,
     signoff: true,
   },
   name: PROJECT_NAME,
@@ -78,31 +76,23 @@ const project = new typescript.TypeScriptProject({
   npmAccess: javascript.NpmAccess.PUBLIC,
   deps: ['term-size@2.2.1', 'lodash'],
   devDeps: [
+    'cdktf@0.20.3',
+    'constructs@^10.5.0', // projen 0.104 peer requirement
     'eslint-plugin-spellcheck',
-    'typedoc@0.22.18',
-    'typedoc-plugin-missing-exports@0.23.0',
-    'husky',
+    'typedoc@^0.28.20',
+    'typedoc-plugin-missing-exports@^4.1.4',
+    'husky@^9.1.7',
     '@octokit/rest',
     '@types/lodash',
-    '@cdktf/provider-aws', // tmp
   ],
   autoApproveOptions: {
     allowedUsernames: ['ApexCaptain'],
     label: 'auto-merge-upgrade',
   },
-  autoApproveProjenUpgrades: true,
   autoApproveUpgrades: true,
-  peerDeps: ['cdktf', 'constructs'],
+  peerDeps: ['cdktf@^0.20.3', 'constructs@^10.3.0'],
+  peerDependencyOptions: { pinnedDevDependency: false },
 
-  projenrcJsonOptions: {
-    filename: '.projenrc.ts',
-  },
-  scripts: {
-    predocgen: 'rm -r -f ./docs',
-    docgen: 'typedoc --options ./typedoc.json',
-    precompile: 'rm -r -f ./lib',
-    postprojen: 'chmod +x .husky/*',
-  },
   homepage: 'https://apexcaptain.github.io/cdktf-injector/',
   prettier: true,
   prettierOptions: {
@@ -116,9 +106,22 @@ const project = new typescript.TypeScriptProject({
   defaultReleaseBranch: 'main',
   release: true,
   releaseToNpm: true,
-  gitignore: ['auth/', 'cdktf.out/'],
+  gitignore: ['auth/', 'cdktf.out/', '/.pnpm-store', 'tmp/', '.superpowers'],
   majorVersion: 1,
   repository: 'https://github.com/ApexCaptain/cdktf-injector',
+});
+
+// Tasks
+project.preCompileTask.exec('rm -r -f ./lib');
+project.addTask('docgen', {
+  steps: [
+    { exec: 'rm -r -f ./docs' },
+    { exec: 'typedoc --options ./typedoc.json' },
+  ],
+});
+project.addTask('deploy-topics', {
+  description: 'Deploy package.json keywords as GitHub repository topics',
+  exec: 'ts-node --project tsconfig.dev.json tasks/DeployKeywordsAsRepoTopics.task.ts',
 });
 
 // Eslint
@@ -156,22 +159,23 @@ if (project.eslint) {
     'repos',
     'gitignore',
     'fqn',
+    'pnpm',
+    'devcontainer',
+    'outdir',
+    'fi',
   ].sort();
 
   const srcWords = ['terraform', 'Getters', 'dep'].sort();
 
   const testWords = ['tf'].sort();
 
+  const huskyWords = ['applypatch', 'msg', 'cmd', 'unlink', 'readdir'].sort();
+
   eslint.addRules({
     'spellcheck/spell-checker': [
       'warn',
       {
-        skipWords: [
-          ...projenWords,
-          ...srcWords,
-          ...testWords,
-          ...huskyAuxiliary.dictionary,
-        ],
+        skipWords: [...projenWords, ...srcWords, ...testWords, ...huskyWords],
       },
     ],
   });
@@ -179,13 +183,16 @@ if (project.eslint) {
 
 // Package Ignore (.npmignore)
 [
-  '.devContainer',
+  '.devcontainer',
   '.husky',
+  '.pnpm-store',
+  '.superpowers',
   'assets',
   'auth',
   'docs',
-  'project',
+  'projenrc',
   'tasks',
+  'tmp',
   '.editorconfig',
   '.eslintrc.json',
   '.gitattributes',
@@ -200,10 +207,16 @@ if (project.eslint) {
 );
 
 project.synth();
-/* Auxiliary */
-void (async () => {
-  await huskyAuxiliary
-    .addHook('pre-commit', 'yarn docgen && git add -A')
-    .addHook('pre-push', 'yarn ts-node ./tasks/DeployKeywordsAsRepoTopics.task')
-    .build();
-})();
+
+/* Git Hooks */
+generateHuskyHooks({
+  projectPath: project.outdir,
+  hooks: {
+    'pre-commit': [
+      'if ! command -v pnpm >/dev/null 2>&1; then',
+      '  exit 0',
+      'fi',
+      'pnpm exec projen docgen && git add docs',
+    ].join('\n'),
+  },
+});

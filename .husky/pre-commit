@@ -1,4 +1,4 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-yarn docgen && git add -A
+if ! command -v pnpm >/dev/null 2>&1; then
+  exit 0
+fi
+pnpm exec projen docgen && git add docs

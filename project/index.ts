@@ -1,1 +1,0 @@
-export { huskyAuxiliary } from './module';
