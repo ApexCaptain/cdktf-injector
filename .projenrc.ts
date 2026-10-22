@@ -38,7 +38,17 @@ const project = new typescript.TypeScriptProject({
   projenrcTs: true,
 
   /* Node */
-  packageManager: javascript.NodePackageManager.YARN_CLASSIC,
+  packageManager: javascript.NodePackageManager.PNPM,
+  pnpmVersion: '10.33.0',
+  addPackageManagerToDevEngines: false,
+  // Dependency build script allow-list. With strictDepBuilds, any package not listed
+  // in allowScripts or ignoredBuiltDependencies fails the install.
+  allowScripts: ['unrs-resolver', '@parcel/watcher'],
+  pnpmOptions: {
+    workspaceYamlOptions: {
+      strictDepBuilds: true,
+    },
+  },
   projenVersion: '^0.104.11',
   projenDevDependency: true,
   minNodeVersion: '22.0.0',
@@ -163,6 +173,9 @@ if (project.eslint) {
     'devcontainer',
     'outdir',
     'fi',
+    'workspace',
+    'yaml',
+    'unrs',
   ].sort();
 
   const srcWords = ['terraform', 'Getters', 'dep'].sort();
@@ -186,6 +199,7 @@ if (project.eslint) {
   '.devcontainer',
   '.husky',
   '.pnpm-store',
+  'pnpm-workspace.yaml',
   '.superpowers',
   'assets',
   'auth',
