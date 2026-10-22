@@ -26,10 +26,11 @@ const createInjector = (
           ),
         )
         .get(scope)!;
-  if (injector.useAsync != useAsync)
+  if (injector.useAsync != useAsync) {
     throw new TerraformInjectorConflictedInjectingMethodTypeError(
       `You cannot use both '${TerraformInjectorFactory.scopesOn.name}' and '${TerraformInjectorFactory.scopesOnAsync.name}' for the same scope simultaneously.`,
     );
+  }
   return injector;
 };
 /**

@@ -82,18 +82,20 @@ export const commitInjection = (
               );
               continue;
             }
-            if (isScopeUnder(parentScopePath, newDepContainer.scope))
+            if (isScopeUnder(parentScopePath, newDepContainer.scope)) {
               elementContainerSet.add(newDepContainer);
-            else
+            } else {
               throw new TerraformInjectorInvalidScopePathError(
                 parentInjector.scope,
                 topContainer,
                 newDepContainer,
               );
-            if (topContainer == newDepContainer)
+            }
+            if (topContainer == newDepContainer) {
               throw new TerraformInjectorElementContainerSelfDependenceError(
                 `${topContainer.name} is self-dependent. You cannot use its own element when you configure the container.`,
               );
+            }
             containerDependencyCycleStack.push(topContainer, newDepContainer);
             const cyclePoint =
               containerDependencyCycleStack.indexOf(newDepContainer);
@@ -104,7 +106,7 @@ export const commitInjection = (
             }
           }
         }
-        for (const eachContainer of elementContainerSet)
+        for (const eachContainer of elementContainerSet) {
           for (const eachAfterDependencyInjectedCallbackContainer of eachContainer.afterDependenciesInjectedCallbackContainerArray) {
             if (!eachAfterDependencyInjectedCallbackContainer.isCalled) {
               await eachAfterDependencyInjectedCallbackContainer.callback(
@@ -114,12 +116,14 @@ export const commitInjection = (
               eachAfterDependencyInjectedCallbackContainer.isCalled = true;
             }
           }
+        }
         if (
           !getInjectorsUnder(parentScopePath).every(
             (eachChild) => eachChild.isInjected,
           )
-        )
+        ) {
           await commitInjection(parentInjector);
+        }
         resolve();
       } catch (error) {
         reject(error);
@@ -141,18 +145,20 @@ export const commitInjection = (
         );
         continue;
       }
-      if (isScopeUnder(parentScopePath, newDepContainer.scope))
+      if (isScopeUnder(parentScopePath, newDepContainer.scope)) {
         elementContainerSet.add(newDepContainer);
-      else
+      } else {
         throw new TerraformInjectorInvalidScopePathError(
           parentInjector.scope,
           topContainer,
           newDepContainer,
         );
-      if (topContainer == newDepContainer)
+      }
+      if (topContainer == newDepContainer) {
         throw new TerraformInjectorElementContainerSelfDependenceError(
           `${topContainer.name} is self-dependent. You cannot use its own element when you configure the container.`,
         );
+      }
       containerDependencyCycleStack.push(topContainer, newDepContainer);
       const cyclePoint = containerDependencyCycleStack.indexOf(newDepContainer);
       if (cyclePoint != containerDependencyCycleStack.length - 1) {
@@ -162,7 +168,7 @@ export const commitInjection = (
       }
     }
   }
-  for (const eachContainer of elementContainerSet)
+  for (const eachContainer of elementContainerSet) {
     for (const eachAfterDependencyInjectedCallbackContainer of eachContainer.afterDependenciesInjectedCallbackContainerArray) {
       if (!eachAfterDependencyInjectedCallbackContainer.isCalled) {
         void eachAfterDependencyInjectedCallbackContainer.callback(
@@ -172,11 +178,13 @@ export const commitInjection = (
         eachAfterDependencyInjectedCallbackContainer.isCalled = true;
       }
     }
+  }
 
   if (
     !getInjectorsUnder(parentScopePath).every(
       (eachChild) => eachChild.isInjected,
     )
-  )
+  ) {
     void commitInjection(parentInjector);
+  }
 };

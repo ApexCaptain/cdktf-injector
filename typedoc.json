@@ -1,8 +1,10 @@
 {
   "entryPoints": ["./src/index.ts"],
   "out": "./docs",
+  "plugin": ["typedoc-plugin-missing-exports"],
   "excludeExternals": true,
-  "internalNamespace": "Reference",
+  "gitRevision": "main",
+  "internalModule": "Reference",
   "excludePrivate": true,
   "excludeProtected": true
 }

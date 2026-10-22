@@ -1,13 +1,51 @@
 {
-  "name": "Dev Container - Terraform Injector",
-  "dockerComposeFile": "docker-compose.yml",
-  "service": "app",
-  "workspaceFolder": "/workspace",
-  "extensions": [
-    "dbaeumer.vscode-eslint",
-    "editorconfig.editorconfig",
-    "hoovercj.vscode-power-mode",
-    "esbenp.prettier-vscode"
-  ],
-  "postCreateCommand": "sudo chown node node_modules"
-}
+    // Basic
+    "name": "Cdktf Injector Dev Container",
+    "dockerComposeFile": "docker-compose.dev.yml",
+    "service": "workspace",
+    "workspaceFolder": "/home/vscode/workspace/${localWorkspaceFolderBasename}",
+    "remoteUser": "vscode",
+    // Features
+    "features": {
+      // Node.js
+      "ghcr.io/devcontainers/features/node:1": {
+        "version": "24"
+      },
+
+      // Projen
+      "ghcr.io/devcontainers-extra/features/projen:1": {},
+  
+      // Github CLI
+      "ghcr.io/devcontainers/features/github-cli:1": {},
+  
+      // Terraform
+      "ghcr.io/devcontainers/features/terraform:1": {},
+  
+      // Apt-get Packages
+      "ghcr.io/devcontainers-extra/features/apt-get-packages:1": {
+        "packages": "netcat-openbsd, iputils-ping, parallel, ripgrep"
+      }
+    },
+    // Custom
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "PKief.material-icon-theme",
+          "dbaeumer.vscode-eslint",
+          "esbenp.prettier-vscode",
+          "wayou.vscode-todo-highlight",
+          "mhutchie.git-graph",
+          "github.vscode-github-actions",
+          "bierner.markdown-preview-github-styles",
+          "ms-azuretools.vscode-docker",
+          "ms-kubernetes-tools.vscode-kubernetes-tools",
+          "hashicorp.terraform",
+        ]
+      }
+    },
+    // LifeCycles
+    "initializeCommand": "bash ./.devcontainer/commands/initializeCommand.sh ${localWorkspaceFolder} ${containerWorkspaceFolder} ${localWorkspaceFolderBasename} ${containerWorkspaceFolderBasename} vscode",
+    "updateContentCommand": "bash ./.devcontainer/commands/updateContentCommand.sh",
+    "postStartCommand": "bash ./.devcontainer/commands/postStartCommand.sh"
+  }
+  

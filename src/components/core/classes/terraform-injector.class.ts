@@ -77,10 +77,11 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
     description?: string,
   ): TerraformInjectorElementContainerAsync<TerraformBackendType, SharedType> {
     const id = 'backend';
-    if (this.elementMap.has(id))
+    if (this.elementMap.has(id)) {
       throw new TerraformInjectorConflictedElementIdError(
         `Element id "${id}" already exists in scope "${this.scope}". Element type : "${terraformBackendClass.name}"`,
       );
+    }
     const backendContainer = new TerraformInjectorElementContainerClass(
       this.scope,
       terraformBackendClass,
@@ -110,14 +111,16 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
     useDefaultConfig: boolean = true,
     description?: string,
   ): TerraformInjectorElementContainerAsync<TerraformElementType, SharedType> {
-    if (id == 'backend')
+    if (id == 'backend') {
       throw new TerraformInjectorConflictedElementIdError(
         `id : ${id} is not allowed for non-backend class`,
       );
-    if (this.elementMap.has(id))
+    }
+    if (this.elementMap.has(id)) {
       throw new TerraformInjectorConflictedElementIdError(
         `Element id "${id}" already exists in scope "${this.scope}". Element type : "${terraformElementClass.name}"`,
       );
+    }
     const elementContainer = new TerraformInjectorElementContainerClass(
       this.scope,
       terraformElementClass,
@@ -173,11 +176,12 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
         >,
         SharedType
       > {
-    if (id == 'backend')
+    if (id == 'backend') {
       throw new TerraformInjectorConflictedElementIdError(
         `id : ${id} is not allowed for non-backend class`,
       );
-    if (this.elementMap.has(id))
+    }
+    if (this.elementMap.has(id)) {
       throw new TerraformInjectorConflictedElementIdError(
         `Element id "${id}" already exists in scope "${
           this.scope
@@ -187,6 +191,7 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
             : TerraformLazyElement.name
         }"`,
       );
+    }
     const elementContainer = new TerraformInjectorElementContainerClass(
       this.scope,
       this.useAsync ? TerraformLazyElementAsync : TerraformLazyElement,
@@ -204,7 +209,9 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
         if (Array.isArray(configureResult[0])) {
           shared = configureResult[1] as SharedType;
           config = configureResult[0];
-        } else config = configureResult as any;
+        } else {
+          config = configureResult as any;
+        }
         return [
           {
             nestedTerraformElementClass: nestedTerraformElementClass,
