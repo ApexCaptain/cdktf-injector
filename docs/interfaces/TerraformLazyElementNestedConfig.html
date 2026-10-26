@@ -10,6 +10,9 @@
 <ul class="tsd-breadcrumb" aria-label="Breadcrumb">
 <li><a href="" aria-current="page">TerraformLazyElementNestedConfig</a></li></ul>
 <h1>Interface TerraformLazyElementNestedConfig&lt;NestedConfigType, NestedSharedType&gt;</h1></div>
+<section class="tsd-panel tsd-comment">
+<div class="tsd-comment tsd-typography"><p>One element to create from a <code>provideLazily</code> configure callback.</p>
+</div></section>
 <div class="tsd-signature"><span class="tsd-signature-keyword">interface</span> <span class="tsd-kind-interface">TerraformLazyElementNestedConfig</span><span class="tsd-signature-symbol">&lt;</span><br/>    <a class="tsd-signature-type tsd-kind-type-parameter" href="#nestedconfigtype">NestedConfigType</a><span class="tsd-signature-symbol">,</span><br/>    <a class="tsd-signature-type tsd-kind-type-parameter" href="#nestedsharedtype">NestedSharedType</a> <span class="tsd-signature-symbol">=</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">&gt;</span> <span class="tsd-signature-symbol">{</span><br/>    <a class="tsd-kind-property" href="#configure">configure</a><span class="tsd-signature-symbol">:</span> <a href="../types/Reference.TerraformInjectorConfigureCallbackType.html" class="tsd-signature-type tsd-kind-type-alias">TerraformInjectorConfigureCallbackType</a><span class="tsd-signature-symbol">&lt;</span><br/>        <a class="tsd-signature-type tsd-kind-type-parameter" href="#nestedconfigtype">NestedConfigType</a><span class="tsd-signature-symbol">,</span><br/>        <a class="tsd-signature-type tsd-kind-type-parameter" href="#nestedsharedtype">NestedSharedType</a><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#description">description</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#id">id</a><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">;</span><br/>    <a class="tsd-kind-property" href="#usedefaultconfig">useDefaultConfig</a><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">;</span><br/><span class="tsd-signature-symbol">}</span></div>
 <section class="tsd-panel">
 <h4>Type Parameters</h4>
@@ -17,7 +20,7 @@
 <li><span id="nestedconfigtype"><span class="tsd-kind-type-parameter">NestedConfigType</span></span></li>
 <li><span id="nestedsharedtype"><span class="tsd-kind-type-parameter">NestedSharedType</span> = <span class="tsd-signature-type">undefined</span></span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ApexCaptain/cdktf-injector/blob/main/src/components/resource/interfaces/terraform-injector.lazy-element-nested-config.ts#L3">resource/interfaces/terraform-injector.lazy-element-nested-config.ts:3</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/ApexCaptain/cdktf-injector/blob/main/src/components/resource/interfaces/terraform-injector.lazy-element-nested-config.ts#L4">resource/interfaces/terraform-injector.lazy-element-nested-config.ts:4</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -37,22 +40,22 @@
 <h3 class="tsd-anchor-link" id="configure"><span>configure</span><a href="#configure" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">configure</span><span class="tsd-signature-symbol">:</span> <a href="../types/Reference.TerraformInjectorConfigureCallbackType.html" class="tsd-signature-type tsd-kind-type-alias">TerraformInjectorConfigureCallbackType</a><span class="tsd-signature-symbol">&lt;</span><br/>    <a class="tsd-signature-type tsd-kind-type-parameter" href="#nestedconfigtype">NestedConfigType</a><span class="tsd-signature-symbol">,</span><br/>    <a class="tsd-signature-type tsd-kind-type-parameter" href="#nestedsharedtype">NestedSharedType</a><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">&gt;</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ApexCaptain/cdktf-injector/blob/main/src/components/resource/interfaces/terraform-injector.lazy-element-nested-config.ts#L8">resource/interfaces/terraform-injector.lazy-element-nested-config.ts:8</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/ApexCaptain/cdktf-injector/blob/main/src/components/resource/interfaces/terraform-injector.lazy-element-nested-config.ts#L9">resource/interfaces/terraform-injector.lazy-element-nested-config.ts:9</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="description"><code class="tsd-tag">Optional</code><span>description</span><a href="#description" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">description</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ApexCaptain/cdktf-injector/blob/main/src/components/resource/interfaces/terraform-injector.lazy-element-nested-config.ts#L13">resource/interfaces/terraform-injector.lazy-element-nested-config.ts:13</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/ApexCaptain/cdktf-injector/blob/main/src/components/resource/interfaces/terraform-injector.lazy-element-nested-config.ts#L14">resource/interfaces/terraform-injector.lazy-element-nested-config.ts:14</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="id"><span>id</span><a href="#id" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">id</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ApexCaptain/cdktf-injector/blob/main/src/components/resource/interfaces/terraform-injector.lazy-element-nested-config.ts#L7">resource/interfaces/terraform-injector.lazy-element-nested-config.ts:7</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/ApexCaptain/cdktf-injector/blob/main/src/components/resource/interfaces/terraform-injector.lazy-element-nested-config.ts#L8">resource/interfaces/terraform-injector.lazy-element-nested-config.ts:8</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="usedefaultconfig"><code class="tsd-tag">Optional</code><span>use<wbr/>Default<wbr/>Config</span><a href="#usedefaultconfig" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <div class="tsd-signature"><span class="tsd-kind-property">useDefaultConfig</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">boolean</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/ApexCaptain/cdktf-injector/blob/main/src/components/resource/interfaces/terraform-injector.lazy-element-nested-config.ts#L12">resource/interfaces/terraform-injector.lazy-element-nested-config.ts:12</a></li></ul></aside></section></section></details></div>
+<li>Defined in <a href="https://github.com/ApexCaptain/cdktf-injector/blob/main/src/components/resource/interfaces/terraform-injector.lazy-element-nested-config.ts#L13">resource/interfaces/terraform-injector.lazy-element-nested-config.ts:13</a></li></ul></aside></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

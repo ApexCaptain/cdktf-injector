@@ -17,6 +17,10 @@ import {
   TerraformInjectorClass,
 } from '../../../module';
 
+/**
+ * Deep-merges `override` onto `defaults` without mutating either.
+ * Arrays are replaced, not concatenated, so a user-supplied array always wins as a whole.
+ */
 const mergeElementConfig = <T>(
   defaults: Record<string, unknown>,
   override: T,
@@ -29,6 +33,7 @@ const mergeElementConfig = <T>(
       Array.isArray(srcValue) ? srcValue : undefined,
   ) as T;
 
+/** Prototype-chain check on the class itself, since no instance exists yet. */
 const isClassOrSubclass = (
   elementClass: unknown,
   base: abstract new (...args: never[]) => object,
@@ -37,6 +42,11 @@ const isClassOrSubclass = (
   (typeof elementClass === 'function' &&
     (elementClass as { prototype: object }).prototype instanceof base);
 
+/**
+ * Implementation behind `TerraformInjectorElementContainer` and
+ * `TerraformInjectorElementContainerAsync`. Holds a configure callback until
+ * injection, then instantiates and keeps the element.
+ */
 export class TerraformInjectorElementContainerClass<
   TerraformElementType extends TerraformElement,
   ConfigType,
@@ -49,13 +59,20 @@ export class TerraformInjectorElementContainerClass<
   // Production
 
   // Hidden
+  /** Display name, `<ClassName id>`, used in error messages. */
   name: string;
+  /** Containers this one was found to read during configure. Bookkeeping only. */
   dependencies = new Set<
     TerraformInjectorElementContainerClass<any, any, any>
   >();
   dependents = new Set<TerraformInjectorElementContainerClass<any, any, any>>();
   isInitialized = false;
+  /**
+   * Thrown by the `element` / `shared` getters before initialization. It carries this
+   * container, which is how `commitInjection` learns what a dependent is waiting for.
+   */
   terraformElementContainerNonInitializedError: TerraformInjectorElementContainerUninitializedError;
+  // `isCalled` keeps each callback to a single run across repeated injection passes.
   afterInitElementCallbackContainerArray = new Array<{
     isCalled: boolean;
     callback: (
@@ -170,6 +187,13 @@ export class TerraformInjectorElementContainerClass<
   }
 
   // Hidden
+  /**
+   * Tries to initialize the element, then runs pending `afterInitElement` callbacks.
+   *
+   * @param upperInjectors Injectors from the root down to this container's scope, for default configs.
+   * @returns The uninitialized container that configure (or a callback) tried to read, or
+   * nothing when this container is done. A returned container means "inject that first, then retry me".
+   */
   inject(
     upperInjectors: Array<TerraformInjectorClass>,
   ): TerraformInjectorElementContainerClass<any, any, any> | void {
@@ -208,6 +232,7 @@ export class TerraformInjectorElementContainerClass<
       }
     }
   }
+  /** Async variant of `inject`: awaits configure and `afterInitElement` callbacks. */
   async injectAsync(
     upperInjectors: Array<TerraformInjectorClass>,
   ): Promise<TerraformInjectorElementContainerClass<any, any, any> | void> {
@@ -246,6 +271,11 @@ export class TerraformInjectorElementContainerClass<
       }
     }
   }
+  /**
+   * Splits `[config, shared]`, merges default configs (root first, so the closest scope
+   * wins and the user config wins over all), then constructs the element.
+   * `TerraformOutput` never takes defaults.
+   */
   private initialize(
     configAndSharedObject: TerraformInjectorConfigAndSharedObjectType<
       ConfigType,
@@ -279,6 +309,7 @@ export class TerraformInjectorElementContainerClass<
       }
       config = mergeElementConfig(defaults, config);
     }
+    // A backend takes (scope, config); every other element takes (scope, id, config).
     this._element = isClassOrSubclass(
       this.terraformElementClass,
       TerraformBackend,

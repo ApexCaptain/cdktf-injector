@@ -11,7 +11,7 @@ In case you are not a big fan of [AWS], I'll make a list of what elements are us
 - EC2 Instance - A virtual computing environment.
   > This is your **Computer**.
 - Output - Exported data about your resource. In this example, output value is public ip of EC2 instance.
-  > And this is an **Public IP address of your computer**.
+  > And this is the **Public IP address of your computer**.
 
 ### Using [terraform] only ([Hashicorp Configuration Language][hcl])
 
@@ -36,7 +36,7 @@ output "instance-ip" {
 }
 ```
 
-As you can see, there are 4 [terraform] resources declared up above and their relationships are as follow.
+As you can see, there are 4 [terraform] resources declared up above and their relationships are as follows.
 
 <img src="https://github.com/ApexCaptain/cdktf-injector/blob/main/assets/hcl-dep.png?raw=true" width="80%">
 
@@ -44,7 +44,7 @@ As you can see, there are 4 [terraform] resources declared up above and their re
 - `my-ec2-instance` depends on `my-subnet`
 - And `my-subnet` depends on `my-vpc`
 
-In general, if you used to normal programming languages, the first thing you can come up with might be...
+In general, if you are used to normal programming languages, the first thing you can come up with might be...
 
 "Ok, `A` depends on `B`, therefore I should declare `B` over `A`."
 
@@ -52,11 +52,11 @@ In `hcl` however, you don't have to. Declaration order is not important. [Terraf
 
 This is a **good thing**. Imagine if you have to declare each and every single element in the right order. There could be hundreds or maybe thousands of different stuffs that depend on one another.
 
-Still, `hcl` is a confusing, not very programmable language, and its intellisence is so slow.
+Still, `hcl` is a confusing, not very programmable language, and its IntelliSense is slow.
 
-[cdktf] could be an alternative. [cdktf] in a nutshell, is a tool used to generate `hcl` code with any one of your familiar programming languages such as `TypeSript`, `Python`, `Java`, `C#` or etc.
+[cdktf] could be an alternative. [cdktf] in a nutshell, is a tool used to generate `hcl` code with any one of your familiar programming languages such as `TypeScript`, `Python`, `Java`, `C#` or etc.
 
-Let's take a look example below.
+Let's take a look at the example below.
 
 ### Using [cdktf] in TypeScript
 
@@ -97,9 +97,9 @@ new MyStack(app, 'my-stack');
 app.synth();
 ```
 
-In [cdktf], every resource is a class instance. Thoese are pretty straight forward. Constructing resources using `new` keyword, passing id string and its config, you can build real world infrastructure.
+In [cdktf], every resource is a class instance. Those are pretty straightforward. Constructing resources using `new` keyword, passing id string and its config, you can build real world infrastructure.
 
-However unlike `hcl`, it is a sequential language. You cannot create instance refering to another one that is not defined yet.
+However unlike `hcl`, it is a sequential language. You cannot create instance referring to another one that is not defined yet.
 
 <img src="https://github.com/ApexCaptain/cdktf-injector/blob/main/assets/cdktf-err.png?raw=true" width="80%">
 
@@ -146,9 +146,9 @@ myStack.inject(); // At this point, all the elements are instantiated
 app.synth();
 ```
 
-I intentionally cofigured all the resources completely upside down.
+I intentionally configured all the resources completely upside down.
 
-Still, it's working. Be aware that you should call `inject` method before sythesize your app.
+Still, it's working. Be aware that you should call `inject` method before synthesizing your app.
 
 <!-- External Links -->
 

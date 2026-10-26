@@ -4,6 +4,9 @@ import {
   TerraformInjectorClass,
   TerraformLazyElementNestedConfig,
 } from '../../../module';
+/**
+ * Config the injector passes to {@link TerraformLazyElement}. Built internally by ```provideLazily```.
+ */
 export interface TerraformLazyElementConfig<
   NestedTerraformElementType extends TerraformElement,
   NestedConfigType,

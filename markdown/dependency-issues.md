@@ -79,9 +79,9 @@ There are 5 resources.
 
 Finally, `res5` depends on `res3`. Oops! There is a problem.
 
-Commiting injection later, `cdktf-injector` will require element of `res3` to initialize `res5`.
+Committing injection later, `cdktf-injector` will require element of `res3` to initialize `res5`.
 
-But, because `res3` depends on `res4` and `res4` depends `res5`, it's another impossible structure.
+But, because `res3` depends on `res4` and `res4` depends on `res5`, it's another impossible structure.
 
 It'll throw an error saying...
 
@@ -115,9 +115,37 @@ Error: There are 3 elements trapped in dependency cycle.
 ◀ ◀ ◀
 ```
 
-In most case, the last resource of cycle is the cause of error.
+In most cases, the last resource of cycle is the cause of error.
 
 > Keep this in mind, existence of such errors is not normal. No matter what provider you're using there should not be any dependency cycles among resources.
+
+### Case 3. Dependency Outside the Injected Scope
+
+```typescript
+const app = new App();
+const stackA = new (class extends TerraformInjectorStack {
+  res1 = this.provide(MockElement, 'res1', () => ({}));
+})(app, 'stack-a');
+
+const stackB = new (class extends TerraformInjectorStack {
+  res2 = this.provide(MockElement, 'res2', () => {
+    console.log(stackA.res1.element);
+    return {};
+  });
+})(app, 'stack-b');
+
+stackB.inject();
+```
+
+`inject` only instantiates elements at or below its own scope. `res2` needs `res1`, but `stack-a` is not under `stack-b`, so `res1` cannot be created here.
+
+It'll throw an error saying...
+
+```
+Error: Element stack-a/res1 is not under the scope path <stack-b>. stack-b/res2 depends on it
+```
+
+Call `inject` on a common ancestor instead, e.g. `TerraformInjectorFactory.scopesOn(app).inject()`. See [Cross-Stack References](./cross-stack-references.md).
 
 <!-- External Links -->
 

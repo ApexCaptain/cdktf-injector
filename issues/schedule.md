@@ -18,7 +18,6 @@
 | 트리거 | 할 일 | 이슈 | 상태 |
 |---|---|---|---|
 | typedoc이 TS 7을 받을 때, projen이 pnpm allowBuilds·ESLint flat을 받을 때 | TS 7, pnpm 11+, ESLint flat | [툴체인 메이저](active/2026-10-26-toolchain-majors.md) | 진행중 |
-| 이 변경이 원격에 들어간 뒤 | Dependabot open이 닫혔는지 확인 | [Dependabot 간접 의존성](active/2026-10-26-dependabot-transitive.md) | 적용 |
 
 ---
 

@@ -1,6 +1,7 @@
 import { Construct } from 'constructs';
 import { TerraformInjectorElementContainerClass } from '../../../module';
 
+/** An element depends on one outside the scope being injected. Call ```inject()``` on a common ancestor instead. */
 export class TerraformInjectorInvalidScopePathError extends Error {
   constructor(
     parentScope: Construct,

@@ -91,7 +91,7 @@ could be provided for one stack each.</p>
 <div class="tsd-comment tsd-typography"><p>Remote backend class to instantiate.</p>
 </div></li>
 <li><span><span class="tsd-kind-parameter">configure</span>: <a href="../types/Reference.TerraformInjectorConfigureCallbackType.html" class="tsd-signature-type tsd-kind-type-alias">TerraformInjectorConfigureCallbackType</a><span class="tsd-signature-symbol">&lt;</span><a class="tsd-signature-type tsd-kind-type-parameter" href="#backendpropstype">PropsType</a><span class="tsd-signature-symbol">,</span> <a class="tsd-signature-type tsd-kind-type-parameter" href="#backendsharedtype">SharedType</a><span class="tsd-signature-symbol">&gt;</span></span>
-<div class="tsd-comment tsd-typography"><p>Configuration callbak for certain backend class.</p>
+<div class="tsd-comment tsd-typography"><p>Configuration callback for certain backend class.</p>
 </div></li>
 <li><span><code class="tsd-tag">Optional</code><span class="tsd-kind-parameter">description</span>: <span class="tsd-signature-type">string</span></span>
 <div class="tsd-comment tsd-typography"><p>Optional description string.</p>
@@ -115,21 +115,26 @@ could be provided for one stack each.</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/TerraformInjector.html">TerraformInjector</a>.<a href="../interfaces/TerraformInjector.html#inject">inject</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/ApexCaptain/cdktf-injector/blob/main/src/components/stack/terraform-injector.stack.ts#L169">stack/terraform-injector.stack.ts:169</a></li></ul></aside></div></li></ul></section>
+<li>Defined in <a href="https://github.com/ApexCaptain/cdktf-injector/blob/main/src/components/stack/terraform-injector.stack.ts#L179">stack/terraform-injector.stack.ts:179</a></li></ul></aside></div></li></ul></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="onnewelementinjected"><span>on<wbr/>New<wbr/>Element<wbr/>Injected</span><a href="#onnewelementinjected" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
 <li class="">
 <div class="tsd-signature tsd-anchor-link" id="onnewelementinjected-1"><span class="tsd-kind-call-signature">onNewElementInjected</span><span class="tsd-signature-symbol">(</span><br/>    <span class="tsd-kind-parameter">onNewElementInjectedCallback</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">element</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TerraformElement</span><span class="tsd-signature-symbol">)</span> <span class="tsd-signature-symbol">=&gt;</span> <span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <a href="" class="tsd-signature-type tsd-kind-class">TerraformInjectorStack</a><a href="#onnewelementinjected-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
 <div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Register a callback that runs whenever an element of this injector is instantiated,
+after its own <code>afterInitElement</code> callbacks. Useful for cross-cutting work such as tagging.</p>
+</div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
-<li><span><span class="tsd-kind-parameter">onNewElementInjectedCallback</span>: <span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">element</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TerraformElement</span><span class="tsd-signature-symbol">)</span> <span class="tsd-signature-symbol">=&gt;</span> <span class="tsd-signature-type">void</span></span></li></ul></div>
+<li><span><span class="tsd-kind-parameter">onNewElementInjectedCallback</span>: <span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">element</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TerraformElement</span><span class="tsd-signature-symbol">)</span> <span class="tsd-signature-symbol">=&gt;</span> <span class="tsd-signature-type">void</span></span>
+<div class="tsd-comment tsd-typography"><p>Receives each newly created element.</p>
+</div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="" class="tsd-signature-type tsd-kind-class">TerraformInjectorStack</a></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/TerraformInjector.html">TerraformInjector</a>.<a href="../interfaces/TerraformInjector.html#onnewelementinjected">onNewElementInjected</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/ApexCaptain/cdktf-injector/blob/main/src/components/stack/terraform-injector.stack.ts#L173">stack/terraform-injector.stack.ts:173</a></li></ul></aside></div></li></ul></section>
+<li>Defined in <a href="https://github.com/ApexCaptain/cdktf-injector/blob/main/src/components/stack/terraform-injector.stack.ts#L189">stack/terraform-injector.stack.ts:189</a></li></ul></aside></div></li></ul></section>
 <section class="tsd-panel tsd-member">
 <h3 class="tsd-anchor-link" id="provide"><span>provide</span><a href="#provide" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h3>
 <ul class="tsd-signatures">
@@ -154,7 +159,7 @@ could be provided for one stack each.</p>
 <div class="tsd-comment tsd-typography"><p>The scoped construct ID. Must be unique amongst siblings in the same scope.</p>
 </div></li>
 <li><span><span class="tsd-kind-parameter">configure</span>: <a href="../types/Reference.TerraformInjectorConfigureCallbackType.html" class="tsd-signature-type tsd-kind-type-alias">TerraformInjectorConfigureCallbackType</a><span class="tsd-signature-symbol">&lt;</span><a class="tsd-signature-type tsd-kind-type-parameter" href="#provideconfigtype">ConfigType</a><span class="tsd-signature-symbol">,</span> <a class="tsd-signature-type tsd-kind-type-parameter" href="#providesharedtype">SharedType</a><span class="tsd-signature-symbol">&gt;</span></span>
-<div class="tsd-comment tsd-typography"><p>Configuration callbak for certain element class.</p>
+<div class="tsd-comment tsd-typography"><p>Configuration callback for certain element class.</p>
 </div></li>
 <li><span><code class="tsd-tag">Optional</code><span class="tsd-kind-parameter">useDefaultConfig</span>: <span class="tsd-signature-type">boolean</span></span></li>
 <li><span><code class="tsd-tag">Optional</code><span class="tsd-kind-parameter">description</span>: <span class="tsd-signature-type">string</span></span>
@@ -193,7 +198,7 @@ could be provided for one stack each.</p>
 <div class="tsd-comment tsd-typography"><p>The scoped construct ID. Must be unique amongst siblings in the same scope.</p>
 </div></li>
 <li><span><span class="tsd-kind-parameter">configure</span>: <a href="../types/Reference.TerraformInjectorNestedConfigureCallbackType.html" class="tsd-signature-type tsd-kind-type-alias">TerraformInjectorNestedConfigureCallbackType</a><span class="tsd-signature-symbol">&lt;</span><br/>    <a class="tsd-signature-type tsd-kind-type-parameter" href="#providelazilynestedconfigtype">NestedConfigType</a><span class="tsd-signature-symbol">,</span><br/>    <a class="tsd-signature-type tsd-kind-type-parameter" href="#providelazilynestedsharedtype">NestedSharedType</a><span class="tsd-signature-symbol">,</span><br/>    <a class="tsd-signature-type tsd-kind-type-parameter" href="#providelazilysharedtype">SharedType</a><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">&gt;</span></span>
-<div class="tsd-comment tsd-typography"><p>Configuration callbak for certain element class.</p>
+<div class="tsd-comment tsd-typography"><p>Configuration callback for certain element class.</p>
 </div></li>
 <li><span><code class="tsd-tag">Optional</code><span class="tsd-kind-parameter">useDefaultConfig</span>: <span class="tsd-signature-type">boolean</span></span>
 <div class="tsd-comment tsd-typography"><p>Set false to ignore default config of the injector. Default is true.</p>
@@ -215,14 +220,22 @@ could be provided for one stack each.</p>
 <li class="">
 <div class="tsd-signature tsd-anchor-link" id="setdefaultconfigure-1"><span class="tsd-kind-call-signature">setDefaultConfigure</span><span class="tsd-signature-symbol">(</span><br/>    <span class="tsd-kind-parameter">defaultConfigure</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><br/>        <span class="tsd-kind-parameter">id</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span><br/>        <span class="tsd-kind-parameter">className</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span><br/>        <span class="tsd-kind-parameter">description</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span><br/>    <span class="tsd-signature-symbol">)</span> <span class="tsd-signature-symbol">=&gt;</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-signature-symbol">[</span><span class="tsd-kind-index-signature">x</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]:</span> <span class="tsd-signature-type">any</span> <span class="tsd-signature-symbol">}</span><span class="tsd-signature-symbol">,</span><br/><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <a href="" class="tsd-signature-type tsd-kind-class">TerraformInjectorStack</a><a href="#setdefaultconfigure-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
 <div class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Set a default config that is deep-merged into every element provided under this scope,
+including elements of nested injectors.</p>
+<p>Merge order is outermost scope first, then inner scopes, then the element's own config, so
+the more specific value wins. Arrays are replaced, not concatenated. <code>TerraformOutput</code>
+and elements provided with <code>useDefaultConfig = false</code> are skipped.</p>
+</div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
-<li><span><span class="tsd-kind-parameter">defaultConfigure</span>: <span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">id</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span> <span class="tsd-kind-parameter">className</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span> <span class="tsd-kind-parameter">description</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span> <span class="tsd-signature-symbol">=&gt;</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-signature-symbol">[</span><span class="tsd-kind-index-signature">x</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]:</span> <span class="tsd-signature-type">any</span> <span class="tsd-signature-symbol">}</span></span></li></ul></div>
+<li><span><span class="tsd-kind-parameter">defaultConfigure</span>: <span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">id</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span> <span class="tsd-kind-parameter">className</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">,</span> <span class="tsd-kind-parameter">description</span><span class="tsd-signature-symbol">?:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span> <span class="tsd-signature-symbol">=&gt;</span> <span class="tsd-signature-symbol">{</span> <span class="tsd-signature-symbol">[</span><span class="tsd-kind-index-signature">x</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]:</span> <span class="tsd-signature-type">any</span> <span class="tsd-signature-symbol">}</span></span>
+<div class="tsd-comment tsd-typography"><p>Returns the default config for an element, given its id, class name and description.</p>
+</div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="" class="tsd-signature-type tsd-kind-class">TerraformInjectorStack</a></h4><aside class="tsd-sources">
 <p>Implementation of <a href="../interfaces/TerraformInjector.html">TerraformInjector</a>.<a href="../interfaces/TerraformInjector.html#setdefaultconfigure">setDefaultConfigure</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/ApexCaptain/cdktf-injector/blob/main/src/components/stack/terraform-injector.stack.ts#L155">stack/terraform-injector.stack.ts:155</a></li></ul></aside></div></li></ul></section></section></details></div>
+<li>Defined in <a href="https://github.com/ApexCaptain/cdktf-injector/blob/main/src/components/stack/terraform-injector.stack.ts#L165">stack/terraform-injector.stack.ts:165</a></li></ul></aside></div></li></ul></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">

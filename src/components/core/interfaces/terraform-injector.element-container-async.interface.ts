@@ -58,8 +58,8 @@ export interface TerraformInjectorElementContainerAsync<
    *
    * @see https://www.terraform.io/cdktf/concepts/variables-and-outputs
    *
-   * @param outputId Id string for output element. It could either be a string or another callback that retunrs a string. Likewise, it also has to be unique amongst other siblings.
-   * @param outputConfig Configuration callbak for ```TerraformOutput``` class.
+   * @param outputId Id string for output element. It could either be a string or another callback that returns a string. Likewise, it also has to be unique amongst other siblings.
+   * @param outputConfig Configuration callback for ```TerraformOutput``` class.
    */
   addOutput(
     outputId: string | ((elementId: string) => string),

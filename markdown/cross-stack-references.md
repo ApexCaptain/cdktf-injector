@@ -1,6 +1,6 @@
-# Cross-stacks References
+# Cross-Stack References
 
-Sometimes, you may want to separate your infrastructures into multiple stacks. And when the resources have cross-stack dependencis too complexly so that you cannot order which stack comes first, it would be a nightmare.
+Sometimes, you may want to separate your infrastructures into multiple stacks. And when the resources have cross-stack dependencies too complexly so that you cannot order which stack comes first, it would be a nightmare.
 
 Basically, all injectors scopes on certain `Construct` instance. And when you call `inject` method of it, it'll load every injector below its scope path just like `app.synth`. Therefore, you do not have to manually commit injection for every injector, just call from the very root you want. Take the following example.
 
@@ -11,7 +11,7 @@ const myBasicStack = new BasicStack(app, 'my-basic-stack');
 const myVpcStack = new VpcStack(myBasicStack, 'my-vpc-stack');
 const myEcsStack = new EcsStack(myVpcStack, 'my-ecs-stack')
 myBasicStack.inject(); // Also commit injection for myVpcStack and myEcsStack
-// Or, TerraformInjectorFactory.scopeOn(app).inject() <-- this will inject every resource below scope 'app'
+// Or, TerraformInjectorFactory.scopesOn(app).inject() <-- this will inject every resource below scope 'app'
 app.synth();
 ```
 
@@ -28,7 +28,7 @@ There are 2 types of injector.
 | ---------------------------------------- | ---------------------------------------------- | ----------------------------------------------------------------------------- |
 | How to load injector                     | TerraformInjectorFactory<br>.`scopesOn`(scope) | TerraformInjectorFactory<br>.`scopesOnAsync`(scope)                           |
 | Class Name of predefined stack           | `TerraformInjectorStack`                       | `TerraformInjectorStackAsync`                                                 |
-| Return type of<br>configuration callabck | `Config` or `[Config, Shared]`                 | `Config` or `[Config, Shared]`<br>or Promise\<`Config` or `[Config, Shared]`> |
+| Return type of<br>configuration callback | `Config` or `[Config, Shared]`                 | `Config` or `[Config, Shared]`<br>or Promise\<`Config` or `[Config, Shared]`> |
 | Injection Method                         | inject() : void                                | inject() : Promise\<void>                                                     |
 | Able to embed                            | `static` injector only                         | `static`/`async` injector                                                     |
 

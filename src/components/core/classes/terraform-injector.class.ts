@@ -20,10 +20,16 @@ import {
   commitInjection,
 } from '../../../module';
 
+/**
+ * Implementation behind `TerraformInjector` and `TerraformInjectorAsync`. One instance per
+ * scope, created by `TerraformInjectorFactory`. Registration methods only record containers;
+ * nothing is instantiated until `inject()`.
+ */
 export class TerraformInjectorClass implements TerraformInjectorCommon {
   // Properties
   // Production
   // Hidden
+  /** Containers by element id. `'backend'` is reserved for the single backend. */
   elementMap = new Map<
     string,
     TerraformInjectorElementContainerClass<any, any, any>
@@ -192,6 +198,9 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
         }"`,
       );
     }
+    // The lazy element is an ordinary container whose config is the list of nested
+    // configures. Its constructor provides the nested elements to this injector, and a
+    // later pass of the same inject() picks them up.
     const elementContainer = new TerraformInjectorElementContainerClass(
       this.scope,
       this.useAsync ? TerraformLazyElementAsync : TerraformLazyElement,
@@ -206,6 +215,7 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
               NestedSharedType
             >
         >;
+        // `[configs, shared]` vs a bare `configs` array: only the tuple has an array first.
         if (Array.isArray(configureResult[0])) {
           shared = configureResult[1] as SharedType;
           config = configureResult[0];
@@ -252,6 +262,7 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
     return commitInjection(this);
   }
   // Hidden
+  /** True when every container is initialized; an empty injector counts as injected. */
   get isInjected() {
     const containers = Array.from(this.elementMap.values());
     return containers.length == 0
