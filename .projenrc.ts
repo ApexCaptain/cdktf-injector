@@ -66,7 +66,9 @@ const project = new typescript.TypeScriptProject({
     workflow: true,
     workflowOptions: {
       schedule: javascript.UpgradeDependenciesSchedule.WEEKLY,
+      branches: ['develop'],
     },
+
     taskName: 'upgrade',
     pullRequestTitle: 'upgrade dependencies',
     signoff: true,
@@ -137,7 +139,7 @@ const project = new typescript.TypeScriptProject({
     '/rulesync.local.jsonc',
     '/.github/generated',
   ],
-  majorVersion: 1,
+  majorVersion: 2,
   repository: 'https://github.com/ApexCaptain/cdktf-injector',
 });
 

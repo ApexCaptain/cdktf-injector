@@ -17,6 +17,26 @@ import {
   TerraformInjectorClass,
 } from '../../../module';
 
+const mergeElementConfig = <T>(
+  defaults: Record<string, unknown>,
+  override: T,
+): T =>
+  _.mergeWith(
+    {},
+    defaults,
+    override,
+    (_objValue: unknown, srcValue: unknown) =>
+      Array.isArray(srcValue) ? srcValue : undefined,
+  ) as T;
+
+const isClassOrSubclass = (
+  elementClass: unknown,
+  base: abstract new (...args: never[]) => object,
+): boolean =>
+  elementClass === base ||
+  (typeof elementClass === 'function' &&
+    (elementClass as { prototype: object }).prototype instanceof base);
+
 export class TerraformInjectorElementContainerClass<
   TerraformElementType extends TerraformElement,
   ConfigType,
@@ -242,36 +262,40 @@ export class TerraformInjectorElementContainerClass<
     }
     if (
       this.useDefaultConfig &&
-      !(this.terraformElementClass.prototype instanceof TerraformOutput)
+      !isClassOrSubclass(this.terraformElementClass, TerraformOutput)
     ) {
+      let defaults: Record<string, unknown> = {};
       for (const eachInjector of upperInjectors) {
         if (eachInjector.defaultConfigure) {
-          config = _.merge(
+          defaults = mergeElementConfig(
+            defaults,
             eachInjector.defaultConfigure(
               this.id,
               this.terraformElementClass.name,
               this.description,
             ),
-            config,
           );
         }
       }
+      config = mergeElementConfig(defaults, config);
     }
-    this._element =
-      this.terraformElementClass.prototype instanceof TerraformBackend
-        ? new (
-            this
-              .terraformElementClass as TerraformInjectorElementClassWithoutIdType<
-              TerraformElementType,
-              ConfigType
-            >
-          )(this.scope, config)
-        : new (
-            this.terraformElementClass as TerraformInjectorElementClassType<
-              TerraformElementType,
-              ConfigType
-            >
-          )(this.scope, this.id, config);
+    this._element = isClassOrSubclass(
+      this.terraformElementClass,
+      TerraformBackend,
+    )
+      ? new (
+          this
+            .terraformElementClass as TerraformInjectorElementClassWithoutIdType<
+            TerraformElementType,
+            ConfigType
+          >
+        )(this.scope, config)
+      : new (
+          this.terraformElementClass as TerraformInjectorElementClassType<
+            TerraformElementType,
+            ConfigType
+          >
+        )(this.scope, this.id, config);
     this.isInitialized = true;
   }
 }

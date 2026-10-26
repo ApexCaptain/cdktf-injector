@@ -5,7 +5,7 @@
 | **등록일** | 2026-10-26 |
 | **영역** | `src/` 주입 로직 |
 | **관련 코드** | `src/components/core/classes/terraform-injector.element-container.class.ts`, `src/components/core/functions/commit-injection.ts` |
-| **상태** | **보류** — [특성 테스트](2026-10-26-feature-tests.md) 이후. 동작이 바뀌므로 메이저 버전 여부를 그때 검토 |
+| **상태** | **해결 대기** — B1~B4 수정. `majorVersion: 2`. 다음 `main` 릴리스가 `2.0.0` |
 | **트리거** | 특성 테스트가 현재 동작을 고정한 뒤 |
 
 ## 배경
@@ -27,9 +27,9 @@ pnpm exec ts-node --transpile-only --project tsconfig.dev.json tmp/check/repro.t
 
 ## 수용 기준
 
-- [ ] B2·B3·B4 재현 테스트가 실패 → 수정 후 통과
-- [ ] B1 조건이 `TerraformOutput` 자신을 올바르게 구분한다
-- [ ] 메이저 bump 여부를 사용자와 정한 뒤 반영한다
+- [x] B2·B3·B4 재현 테스트가 실패 → 수정 후 통과
+- [x] B1 조건이 `TerraformOutput` 자신을 올바르게 구분한다
+- [x] 메이저 bump 여부를 사용자와 정한 뒤 반영한다 (`majorVersion: 2`)
 
 ## 범위 밖
 
@@ -41,3 +41,5 @@ sync/async 중복, 전역 `injectorMap`, 에러 클래스 비공개 export, `get
 |------|------|
 | 2026-10-22 | `tmp/check/repro.ts`로 B1~B4 재현 |
 | 2026-10-26 | 핸드오프 P3를 이 이슈로 등록 |
+| 2026-10-26 | B1 클래스 자신 구분, B2 하위 스코프 우선, B3 ancestor injector, B4 배열 교체. 32테스트 통과. 메이저 bump는 미정 |
+| 2026-10-26 | 사용자가 메이저 bump 결정. `.projenrc.ts` `majorVersion` 1 → 2. `1.x`는 main에서 더 이상 올리지 않음 |

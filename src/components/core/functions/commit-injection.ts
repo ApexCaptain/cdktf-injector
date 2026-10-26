@@ -24,18 +24,19 @@ const getInjectorsUnder = (rootScopePath: string) => {
     ),
   );
 };
-const getInjectorsUpper = (
-  injectors: Array<TerraformInjectorClass>,
-  targetInjector: TerraformInjectorClass,
-) => {
-  return injectors
-    .filter((eachInjector) =>
-      isScopeUnder(eachInjector.scope.node.path, targetInjector.scope),
-    )
-    .sort(
-      (front, rear) =>
-        front.scope.node.path.length - rear.scope.node.path.length,
-    );
+const getInjectorsUpper = (targetInjector: TerraformInjectorClass) => {
+  const ancestors = new Array<TerraformInjectorClass>();
+  let current: Construct | undefined = targetInjector.scope;
+  while (current) {
+    const found = injectorMap.get(current);
+    if (found) {
+      ancestors.push(found);
+    }
+    current = current.node.scope as Construct | undefined;
+  }
+  return ancestors.sort(
+    (front, rear) => front.scope.node.path.length - rear.scope.node.path.length,
+  );
 };
 
 export const commitInjection = (
@@ -74,7 +75,7 @@ export const commitInjection = (
           while (containerDependencyCycleStack.length) {
             const topContainer = containerDependencyCycleStack.pop()!;
             const newDepContainer = await topContainer.injectAsync(
-              getInjectorsUpper(injectors, topContainer.injector),
+              getInjectorsUpper(topContainer.injector),
             );
             if (!newDepContainer) {
               topContainer.injector.onNewElementInjectedCallbackArray.forEach(
@@ -137,7 +138,7 @@ export const commitInjection = (
     while (containerDependencyCycleStack.length) {
       const topContainer = containerDependencyCycleStack.pop()!;
       const newDepContainer = topContainer.inject(
-        getInjectorsUpper(injectors, topContainer.injector),
+        getInjectorsUpper(topContainer.injector),
       );
       if (!newDepContainer) {
         topContainer.injector.onNewElementInjectedCallbackArray.forEach(
