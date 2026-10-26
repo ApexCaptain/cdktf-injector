@@ -45,6 +45,7 @@ tmp/
 /.rulesync.local/
 /rulesync.local.jsonc
 /.github/generated
+.DS_Store
 /test-reports/
 junit.xml
 /coverage/

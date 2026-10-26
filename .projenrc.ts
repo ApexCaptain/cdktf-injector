@@ -138,6 +138,7 @@ const project = new typescript.TypeScriptProject({
     '/.rulesync.local/',
     '/rulesync.local.jsonc',
     '/.github/generated',
+    '.DS_Store',
   ],
   majorVersion: 2,
   repository: 'https://github.com/ApexCaptain/cdktf-injector',
