@@ -11,7 +11,7 @@ The most common method is
 ```
 
 ```typescript
-// Use can load injector outside the stack with TerraformInjectorFactory
+// You can load injector outside the stack with TerraformInjectorFactory
 import { App, TerraformStack } from 'cdktf';
 import { TerraformInjectorFactory } from 'cdktf-injector';
 
@@ -21,7 +21,7 @@ const myInjector = TerraformInjectorFactory.scopesOn(myStack); // Load Injector 
 /*
   Add resources here
   const myBackend = myInjector.backend(SomeBackendClass, configurationCallback)
-  const myResource =  myInjector.provide(SomeResourceClass, configurationCallback)
+  const myResource =  myInjector.provide(SomeResourceClass, id, configurationCallback)
 */
 myInjector.inject();
 app.synth();
@@ -52,7 +52,7 @@ app.synth();
 import { App } from 'cdktf';
 import { TerraformInjectorStack } from 'cdktf-injector';
 
-// It already extends TerraformStack and implemnts TerraformInjector
+// It already extends TerraformStack and implements TerraformInjector
 class MyStack extends TerraformInjectorStack {
   /*
     Add resource here
@@ -71,7 +71,7 @@ app.synth();
 
 Providing backend is an option. It decides remote backend where your terraform state files are stored. In default, it would be in your local dir.
 
-Sytax is as following
+Syntax is as follows
 
 ```typescript
   yourInjector.backend(backendClass : ClassExtendsTerraformBackend, configure : () => BackendProps)
@@ -130,7 +130,7 @@ myStack.inject();
 app.synth();
 ```
 
-### Step 4. Add resources
+### Step 4. Add Resources
 
 Let's add some resources.
 
@@ -170,7 +170,7 @@ myStack.inject();
 app.synth();
 ```
 
-### Step 5. Inject all the dependencies
+### Step 5. Inject All the Dependencies
 
 Call `inject` before `synth`
 

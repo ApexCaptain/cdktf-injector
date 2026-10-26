@@ -5,6 +5,11 @@ import {
   TerraformLazyElementConfig,
 } from '../../module';
 
+/**
+ * Element created by ```provideLazily``` on a sync injector. It synthesizes nothing itself; its
+ * constructor provides one sibling element per nested config to the same injector.
+ * Those containers are in ```nested```, in the order the configs were returned.
+ */
 export class TerraformLazyElement<
   NestedTerraformElementType extends TerraformElement,
   NestedConfigType,

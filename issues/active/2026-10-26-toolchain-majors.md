@@ -4,8 +4,8 @@
 |------|------|
 | **등록일** | 2026-10-26 |
 | **영역** | TypeScript, pnpm, ESLint, Actions |
-| **상태** | **진행중** — TS 6.0과 Actions SHA부터. TS 7·pnpm 11+·ESLint flat은 보류 |
-| **트리거** | 남은 항목: typedoc이 TS 7을 받을 때, projen이 pnpm `allowBuilds`·ESLint flat을 받을 때 |
+| **상태** | **보류** — TS 6.0·Actions SHA는 완료. 유지보수 모드 결정으로 나머지는 필요할 때만 |
+| **트리거** | 보안 권고 또는 빌드·CI 깨짐. (이전: typedoc이 TS 7을 받을 때, projen이 pnpm `allowBuilds`·ESLint flat을 받을 때) |
 
 ## 배경
 
@@ -31,3 +31,4 @@
 | 2026-10-26 | 잡무 이슈에서 분리해 등록 |
 | 2026-10-26 | typedoc 0.28.20이 TS 6.0을 받음. TS `~6.0.3`과 남은 Actions SHA 고정 착수. TS 7·pnpm 11+·flat은 그대로 보류 |
 | 2026-10-26 | `tsc --build` 경고 없음. 테스트 32개 통과. `engines.node >= 22`, CI Node 24 유지 |
+| 2026-10-26 | CDKTF 유지보수 모드 결정([CDKTF upstream 지원 종료](2026-10-26-cdktf-upstream-deprecation.md))에 따라 보류. TS 7·pnpm 11+·ESLint flat은 보안·빌드 문제가 있을 때만 |

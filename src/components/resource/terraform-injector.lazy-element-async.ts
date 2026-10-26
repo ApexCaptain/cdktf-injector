@@ -5,6 +5,7 @@ import {
   TerraformLazyElementConfigAsync,
 } from '../../module';
 
+/** Async-injector variant of {@link TerraformLazyElement}. */
 export class TerraformLazyElementAsync<
   NestedTerraformElementType extends TerraformElement,
   NestedConfigType,

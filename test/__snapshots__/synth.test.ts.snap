@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`Terraform-Injector synth should synth a backend and output through Testing.synthScope 1`] = `
+exports[`synth should synth a backend and output through Testing.synthScope 1`] = `
 "{
   "output": {
     "source-out": {

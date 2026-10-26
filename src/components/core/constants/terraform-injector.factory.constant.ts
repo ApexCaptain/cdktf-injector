@@ -7,7 +7,13 @@ import {
   getCaller,
 } from '../../../module';
 
+/**
+ * Module-wide registry: one injector per scope. `inject()` walks this map to find the
+ * injectors under its scope, so injectors never need to be linked to each other.
+ */
 export const injectorMap = new Map<Construct, TerraformInjectorClass>();
+
+/** Returns the scope's injector, creating it on first use. Rejects mixing sync and async on one scope. */
 const createInjector = (
   scope: Construct,
   useAsync: boolean,
@@ -18,12 +24,7 @@ const createInjector = (
     : injectorMap
         .set(
           scope,
-          new TerraformInjectorClass(
-            scope,
-            useAsync,
-            getCaller(1),
-            description,
-          ),
+          new TerraformInjectorClass(scope, useAsync, getCaller(), description),
         )
         .get(scope)!;
   if (injector.useAsync != useAsync) {

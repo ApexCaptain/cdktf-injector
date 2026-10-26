@@ -19,6 +19,12 @@ import {
  * You can later inject all the dependencies below the scope level of the instance by using ```inject``` method.
  */
 export interface TerraformInjector extends TerraformInjectorCommon {
+  /**
+   * Register a callback that runs whenever an element of this injector is instantiated,
+   * after its own ```afterInitElement``` callbacks. Useful for cross-cutting work such as tagging.
+   *
+   * @param onNewElementInjectedCallback Receives each newly created element.
+   */
   onNewElementInjected(
     onNewElementInjectedCallback: (element: TerraformElement) => void,
   ): TerraformInjector;
@@ -36,7 +42,7 @@ export interface TerraformInjector extends TerraformInjectorCommon {
    *
    * @param terraformBackendClass Remote backend class to instantiate.
    *
-   * @param configure Configuration callbak for certain backend class.
+   * @param configure Configuration callback for certain backend class.
    *
    * @param description Optional description string.
    */
@@ -62,7 +68,7 @@ export interface TerraformInjector extends TerraformInjectorCommon {
    *
    * @param id The scoped construct ID. Must be unique amongst siblings in the same scope.
    *
-   * @param configure Configuration callbak for certain element class.
+   * @param configure Configuration callback for certain element class.
    *
    * @param useDefaultConfig Set false to ignore default config of the injector. Default is true.
    *
@@ -92,7 +98,7 @@ export interface TerraformInjector extends TerraformInjectorCommon {
    *
    * @param id The scoped construct ID. Must be unique amongst siblings in the same scope.
    *
-   * @param configure Configuration callbak for certain element class.
+   * @param configure Configuration callback for certain element class.
    *
    * @param useDefaultConfig Set false to ignore default config of the injector. Default is true.
    *
@@ -125,6 +131,16 @@ export interface TerraformInjector extends TerraformInjectorCommon {
     SharedType
   >;
 
+  /**
+   * Set a default config that is deep-merged into every element provided under this scope,
+   * including elements of nested injectors.
+   *
+   * Merge order is outermost scope first, then inner scopes, then the element's own config, so
+   * the more specific value wins. Arrays are replaced, not concatenated. ```TerraformOutput```
+   * and elements provided with ```useDefaultConfig = false``` are skipped.
+   *
+   * @param defaultConfigure Returns the default config for an element, given its id, class name and description.
+   */
   setDefaultConfigure(
     defaultConfigure: (
       id: string,

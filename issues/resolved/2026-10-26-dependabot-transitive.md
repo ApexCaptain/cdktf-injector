@@ -5,8 +5,13 @@
 | **등록일** | 2026-10-26 |
 | **영역** | npm lock, Dependabot |
 | **관련 코드** | `pnpm-lock.yaml`, `.projenrc.ts` `pnpmOptions.workspaceYamlOptions.overrides` |
-| **상태** | **적용** — lock에 패치 버전 반영. Dependabot UI는 푸시 후 닫힘 확인 |
+| **상태** | **해결** — Dependabot `pnpm-lock.yaml` open 0건 |
+| **해결일** | 2026-10-26 |
 | **출처** | [의존성·문서 잡무](../resolved/2026-10-26-deps-and-docs-chores.md)에서 주간 upgrade에 맡긴 항목 |
+
+## 해결 요약
+
+`2d3039e` / [PR #124](https://github.com/ApexCaptain/cdktf-injector/pull/124). 대상 알림은 모두 `fixed`. 열린 알림 없음.
 
 ## 배경
 
@@ -42,7 +47,7 @@
 ## 범위 밖
 
 - 이미 `fixed` / `auto_dismissed`인 알림
-- TS 7, pnpm 11+, ESLint flat → [툴체인 메이저](2026-10-26-toolchain-majors.md)
+- TS 7, pnpm 11+, ESLint flat → [툴체인 메이저](../active/2026-10-26-toolchain-majors.md)
 
 ## 타임라인
 
@@ -50,3 +55,4 @@
 |------|------|
 | 2026-10-26 | Dependabot 열린 알림 12건을 이 이슈로 등록 |
 | 2026-10-26 | `pnpm-workspace.yaml` overrides: MCP `1.32.2`, flatted `3.4.4`, js-yaml@3 `3.15.2`, brace-expansion@1 `1.1.21`, picomatch@2 `2.3.2`. 테스트 32개 통과 |
+| 2026-10-26 | Dependabot `pnpm-lock.yaml` open 0건. **해결** |

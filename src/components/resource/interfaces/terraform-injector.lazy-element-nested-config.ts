@@ -1,5 +1,6 @@
 import { TerraformInjectorConfigureCallbackType } from '../../../module';
 
+/** One element to create from a ```provideLazily``` configure callback. */
 export interface TerraformLazyElementNestedConfig<
   NestedConfigType,
   NestedSharedType = undefined,

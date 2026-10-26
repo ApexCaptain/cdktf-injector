@@ -3,6 +3,7 @@ import {
   TerraformInjectorConfigureCallbackAsyncType,
 } from '../../../module';
 
+/** Async-injector variant of {@link TerraformLazyElementNestedConfig}; ```configure``` may be async. */
 export interface TerraformLazyElementNestedConfigAsync<
   NestedConfigType,
   NestedSharedType = undefined,

@@ -1,6 +1,7 @@
 import termSize from 'term-size';
 import { TerraformInjectorElementContainerClass } from '../../../module';
 
+/** Elements depend on each other in a loop. The message draws the cycle; the last element is usually the culprit. */
 export class TerraformInjectorElementContainerDependencyCycleError extends Error {
   private static arrows = {
     right: '➤',
