@@ -28,14 +28,14 @@ export class TerraformInjectorStack
     name: string,
     injectorDescription: string = `Injector of <${
       TerraformInjectorStack.name
-    }> created at (${getCaller(1)})`,
+    }> created at (${getCaller()})`,
   ) {
     super(scope, name);
     this.injector = TerraformInjectorFactory.scopesOn(
       this,
       injectorDescription,
     );
-    (this.injector as TerraformInjectorClass).caller = getCaller(1);
+    (this.injector as TerraformInjectorClass).caller = getCaller();
   }
 
   /**

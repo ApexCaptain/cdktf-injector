@@ -52,7 +52,9 @@ first.afterInitElement → onNewElementInjected(first)
 → first.afterDependenciesInjected → second.afterDependenciesInjected
 ```
 
-Each callback runs once, even if `inject` is called again. Multiple callbacks on one container run in registration order. On an `async` injector, callbacks may return a `Promise` and are awaited.
+Each callback runs once, even if `inject` is called again. Multiple callbacks on one container run in registration order. A callback registered after its element was created runs on the next `inject` call.
+
+On an `async` injector, configure and callbacks may return a `Promise` and are awaited. A synchronous injector cannot await, so a `Promise` from configure or any callback throws `TerraformInjectorConflictedInjectingMethodTypeError`. Make the callback synchronous, or use `scopesOnAsync` / `TerraformInjectorStackAsync`.
 
 ### Default Configuration
 

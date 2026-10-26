@@ -15,6 +15,7 @@ import {
   TerraformInjectorElementContainerUninitializedError,
   TerraformInjectorElementContainerAsync,
   TerraformInjectorClass,
+  TerraformInjectorConflictedInjectingMethodTypeError,
 } from '../../../module';
 
 /**
@@ -32,6 +33,9 @@ const mergeElementConfig = <T>(
     (_objValue: unknown, srcValue: unknown) =>
       Array.isArray(srcValue) ? srcValue : undefined,
   ) as T;
+
+const isPromiseLike = (value: unknown): value is PromiseLike<unknown> =>
+  typeof (value as PromiseLike<unknown> | undefined)?.then === 'function';
 
 /** Prototype-chain check on the class itself, since no instance exists yet. */
 const isClassOrSubclass = (
@@ -67,6 +71,8 @@ export class TerraformInjectorElementContainerClass<
   >();
   dependents = new Set<TerraformInjectorElementContainerClass<any, any, any>>();
   isInitialized = false;
+  /** Set once `onNewElementInjected` callbacks have run for this element. */
+  isNewElementNotified = false;
   /**
    * Thrown by the `element` / `shared` getters before initialization. It carries this
    * container, which is how `commitInjection` learns what a dependent is waiting for.
@@ -89,6 +95,16 @@ export class TerraformInjectorElementContainerClass<
   }>();
 
   // Getters
+  /** An `afterInitElement` callback that has not run yet, e.g. one registered after injection. */
+  get hasPendingAfterInitCallback(): boolean {
+    return this.afterInitElementCallbackContainerArray.some(
+      (eachCallbackContainer) => !eachCallbackContainer.isCalled,
+    );
+  }
+  /** Initialized and every `afterInitElement` callback has run. */
+  get isSettled(): boolean {
+    return this.isInitialized && !this.hasPendingAfterInitCallback;
+  }
   _shared!: SharedType;
   _element!: TerraformElementType;
   get shared(): SharedType {
@@ -200,21 +216,24 @@ export class TerraformInjectorElementContainerClass<
     try {
       if (!this.isInitialized) {
         this.initialize(
-          (
-            this.configure as TerraformInjectorConfigureCallbackType<
-              ConfigType,
-              SharedType
-            >
-          )(this.id),
+          this.throwIfPromise(
+            (
+              this.configure as TerraformInjectorConfigureCallbackType<
+                ConfigType,
+                SharedType
+              >
+            )(this.id),
+            'configure',
+          ),
           upperInjectors,
         );
       }
       for (const eachAfterInitCallbackContainer of this
         .afterInitElementCallbackContainerArray) {
         if (!eachAfterInitCallbackContainer.isCalled) {
-          void eachAfterInitCallbackContainer.callback(
-            this.element,
-            this.shared,
+          void this.throwIfPromise(
+            eachAfterInitCallbackContainer.callback(this.element, this.shared),
+            'afterInitElement',
           );
           eachAfterInitCallbackContainer.isCalled = true;
         }
@@ -270,6 +289,20 @@ export class TerraformInjectorElementContainerClass<
         throw error;
       }
     }
+  }
+  /**
+   * A sync injector cannot await, so a Promise from a user callback would run detached:
+   * its work lands after `inject()` returns and a rejection crashes the process. Reject it
+   * up front instead. The Promise gets a no-op handler so it cannot become an unhandled rejection.
+   */
+  throwIfPromise<T>(value: T, callbackName: string): T {
+    if (isPromiseLike(value)) {
+      Promise.resolve(value).catch(() => undefined);
+      throw new TerraformInjectorConflictedInjectingMethodTypeError(
+        `${callbackName} of ${this.name} returned a Promise, but the injector on <${this.injector.scope.node.path}> is synchronous. Make the callback synchronous, or use TerraformInjectorFactory.scopesOnAsync / TerraformInjectorStackAsync.`,
+      );
+    }
+    return value;
   }
   /**
    * Splits `[config, shared]`, merges default configs (root first, so the closest scope

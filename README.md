@@ -6,6 +6,9 @@
 
 # Dependency Injection for CDKTF
 
+> [!NOTE]
+> **Maintenance mode.** HashiCorp sunset CDKTF and archived [hashicorp/terraform-cdk](https://github.com/hashicorp/terraform-cdk) on 2025-12-10 (last release `0.21.0`). `cdktf-injector` keeps supporting `cdktf >=0.20.3 <0.22` with bug and security fixes only. No new features are planned.
+
 `cdktf-injector` is a dependency injection library for [CDKTF][cdktf] ([AWS Cloud Development Kit][cdk] for [Terraform]).
 
 If you are not familiar with [cdktf] and [terraform] yet or haven't heard of them before, this library may not be that so useful. That's totally cool, but I recommend you to have a look what they ([cdktf] and [terraform]) are or at least what's the concept of [IaC]. Those are really amazing.

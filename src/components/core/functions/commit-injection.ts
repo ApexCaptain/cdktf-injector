@@ -10,27 +10,24 @@ import {
 } from '../../../module';
 
 /**
- * Whether `targetScope` is `stdPath` itself or one of its descendants.
- * An empty `stdPath` is the App root, which contains every scope.
+ * Whether `targetScope` is `ancestorScope` itself or one of its descendants.
+ * Compares construct identity, not path strings: two Apps in one process can hold
+ * constructs with identical paths, and those must not be mixed.
  */
-const isScopeUnder = (stdPath: string, targetScope: Construct) => {
-  return stdPath === ''
-    ? true
-    : targetScope.node.path
-        .split('/')
-        .slice(0, stdPath.split('/').length)
-        .join('/') == stdPath;
+const isScopeUnder = (ancestorScope: Construct, targetScope: Construct) => {
+  let current: Construct | undefined = targetScope;
+  while (current) {
+    if (current === ancestorScope) return true;
+    current = current.node.scope;
+  }
+  return false;
 };
 
-/** Every registered injector whose scope is at or below `rootScopePath`. */
-const getInjectorsUnder = (rootScopePath: string) => {
-  const injectors = Array.from(injectorMap.values());
-  return Array.from(
-    injectors.filter((eachInjector) =>
-      isScopeUnder(rootScopePath, eachInjector.scope),
-    ),
+/** Every registered injector whose scope is `rootScope` or below it. */
+const getInjectorsUnder = (rootScope: Construct) =>
+  Array.from(injectorMap.values()).filter((eachInjector) =>
+    isScopeUnder(rootScope, eachInjector.scope),
   );
-};
 
 /**
  * Injectors on the target's scope and all its ancestor scopes, ordered root first.
@@ -66,8 +63,9 @@ const getInjectorsUpper = (targetInjector: TerraformInjectorClass) => {
 export const commitInjection = (
   parentInjector: TerraformInjectorClass,
 ): void | Promise<void> => {
-  const parentScopePath = parentInjector.scope.node.path;
-  const injectors = getInjectorsUnder(parentScopePath);
+  const parentScope = parentInjector.scope;
+  const parentScopePath = parentScope.node.path;
+  const injectors = getInjectorsUnder(parentScope);
   // A sync commit cannot await async configure callbacks, so a pending nested async
   // injector must be injected on its own first.
   if (!parentInjector.useAsync) {
@@ -99,21 +97,24 @@ export const commitInjection = (
     return new Promise(async (resolve, reject) => {
       try {
         for (const eachContainer of elementContainerSet) {
-          if (eachContainer.isInitialized) continue;
+          if (eachContainer.isSettled) continue;
           containerDependencyCycleStack.push(eachContainer);
           while (containerDependencyCycleStack.length) {
             const topContainer = containerDependencyCycleStack.pop()!;
             const newDepContainer = await topContainer.injectAsync(
               getInjectorsUpper(topContainer.injector),
             );
-            // Initialized: notify the owning injector and pop back to its dependent.
+            // Done: notify the owning injector (once per element) and pop back to its dependent.
             if (!newDepContainer) {
-              topContainer.injector.onNewElementInjectedCallbackArray.forEach(
-                (eachCallback) => eachCallback(topContainer.element),
-              );
+              if (!topContainer.isNewElementNotified) {
+                topContainer.isNewElementNotified = true;
+                topContainer.injector.onNewElementInjectedCallbackArray.forEach(
+                  (eachCallback) => eachCallback(topContainer.element),
+                );
+              }
               continue;
             }
-            if (isScopeUnder(parentScopePath, newDepContainer.scope)) {
+            if (isScopeUnder(parentScope, newDepContainer.scope)) {
               elementContainerSet.add(newDepContainer);
             } else {
               throw new TerraformInjectorInvalidScopePathError(
@@ -154,7 +155,7 @@ export const commitInjection = (
         // Callbacks may have provided new elements or created new injectors; run another
         // pass until nothing under the scope is pending.
         if (
-          !getInjectorsUnder(parentScopePath).every(
+          !getInjectorsUnder(parentScope).every(
             (eachChild) => eachChild.isInjected,
           )
         ) {
@@ -167,9 +168,10 @@ export const commitInjection = (
     });
   }
 
-  // Synchronous path: same steps as above without awaiting.
+  // Synchronous path: same steps as above without awaiting. A Promise from any user
+  // callback is rejected by `throwIfPromise`, since nothing here could await it.
   for (const eachContainer of elementContainerSet) {
-    if (eachContainer.isInitialized) continue;
+    if (eachContainer.isSettled) continue;
     containerDependencyCycleStack.push(eachContainer);
     while (containerDependencyCycleStack.length) {
       const topContainer = containerDependencyCycleStack.pop()!;
@@ -177,12 +179,19 @@ export const commitInjection = (
         getInjectorsUpper(topContainer.injector),
       );
       if (!newDepContainer) {
-        topContainer.injector.onNewElementInjectedCallbackArray.forEach(
-          (eachCallback) => eachCallback(topContainer.element),
-        );
+        if (!topContainer.isNewElementNotified) {
+          topContainer.isNewElementNotified = true;
+          topContainer.injector.onNewElementInjectedCallbackArray.forEach(
+            (eachCallback) =>
+              topContainer.throwIfPromise(
+                eachCallback(topContainer.element),
+                'onNewElementInjected',
+              ),
+          );
+        }
         continue;
       }
-      if (isScopeUnder(parentScopePath, newDepContainer.scope)) {
+      if (isScopeUnder(parentScope, newDepContainer.scope)) {
         elementContainerSet.add(newDepContainer);
       } else {
         throw new TerraformInjectorInvalidScopePathError(
@@ -208,9 +217,12 @@ export const commitInjection = (
   for (const eachContainer of elementContainerSet) {
     for (const eachAfterDependencyInjectedCallbackContainer of eachContainer.afterDependenciesInjectedCallbackContainerArray) {
       if (!eachAfterDependencyInjectedCallbackContainer.isCalled) {
-        void eachAfterDependencyInjectedCallbackContainer.callback(
-          eachContainer.element,
-          eachContainer.shared,
+        void eachContainer.throwIfPromise(
+          eachAfterDependencyInjectedCallbackContainer.callback(
+            eachContainer.element,
+            eachContainer.shared,
+          ),
+          'afterDependenciesInjected',
         );
         eachAfterDependencyInjectedCallbackContainer.isCalled = true;
       }
@@ -218,9 +230,7 @@ export const commitInjection = (
   }
 
   if (
-    !getInjectorsUnder(parentScopePath).every(
-      (eachChild) => eachChild.isInjected,
-    )
+    !getInjectorsUnder(parentScope).every((eachChild) => eachChild.isInjected)
   ) {
     void commitInjection(parentInjector);
   }

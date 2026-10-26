@@ -24,12 +24,7 @@ const createInjector = (
     : injectorMap
         .set(
           scope,
-          new TerraformInjectorClass(
-            scope,
-            useAsync,
-            getCaller(1),
-            description,
-          ),
+          new TerraformInjectorClass(scope, useAsync, getCaller(), description),
         )
         .get(scope)!;
   if (injector.useAsync != useAsync) {

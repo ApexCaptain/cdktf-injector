@@ -27,14 +27,14 @@ export class TerraformInjectorStackAsync
     name: string,
     injectorDescription: string = `Async-Injector of <${
       TerraformInjectorStackAsync.name
-    }> created at (${getCaller(1)})`,
+    }> created at (${getCaller()})`,
   ) {
     super(scope, name);
     this.injector = TerraformInjectorFactory.scopesOnAsync(
       this,
       injectorDescription,
     );
-    (this.injector as TerraformInjectorClass).caller = getCaller(1);
+    (this.injector as TerraformInjectorClass).caller = getCaller();
   }
   /**
    * Set backend of the injector. You cannot provide multiple backend elements to the injector and only one backend

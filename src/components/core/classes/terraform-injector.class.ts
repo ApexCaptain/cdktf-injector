@@ -262,11 +262,13 @@ export class TerraformInjectorClass implements TerraformInjectorCommon {
     return commitInjection(this);
   }
   // Hidden
-  /** True when every container is initialized; an empty injector counts as injected. */
+  /**
+   * True when every container is initialized and has no pending `afterInitElement` callback;
+   * an empty injector counts as injected.
+   */
   get isInjected() {
-    const containers = Array.from(this.elementMap.values());
-    return containers.length == 0
-      ? true
-      : containers.every((eachContainer) => eachContainer.isInitialized);
+    return Array.from(this.elementMap.values()).every(
+      (eachContainer) => eachContainer.isSettled,
+    );
   }
 }
