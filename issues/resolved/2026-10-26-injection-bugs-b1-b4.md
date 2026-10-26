@@ -5,8 +5,12 @@
 | **등록일** | 2026-10-26 |
 | **영역** | `src/` 주입 로직 |
 | **관련 코드** | `src/components/core/classes/terraform-injector.element-container.class.ts`, `src/components/core/functions/commit-injection.ts` |
-| **상태** | **해결 대기** — B1~B4 수정. `majorVersion: 2`. 다음 `main` 릴리스가 `2.0.0` |
-| **트리거** | 특성 테스트가 현재 동작을 고정한 뒤 |
+| **상태** | **해결** — B1~B4 수정. `cdktf-injector@2.0.0` |
+| **해결일** | 2026-10-26 |
+
+## 해결 요약
+
+더 가까운 스코프와 사용자 설정이 이기고, ancestor default는 `inject()` 호출 위치와 상관없이 적용되며, 배열은 교체되고 `TerraformOutput`에는 default가 들어가지 않는다. `majorVersion: 2`. [PR #121](https://github.com/ApexCaptain/cdktf-injector/pull/121) / `v2.0.0`.
 
 ## 배경
 
@@ -43,3 +47,4 @@ sync/async 중복, 전역 `injectorMap`, 에러 클래스 비공개 export, `get
 | 2026-10-26 | 핸드오프 P3를 이 이슈로 등록 |
 | 2026-10-26 | B1 클래스 자신 구분, B2 하위 스코프 우선, B3 ancestor injector, B4 배열 교체. 32테스트 통과. 메이저 bump는 미정 |
 | 2026-10-26 | 사용자가 메이저 bump 결정. `.projenrc.ts` `majorVersion` 1 → 2. `1.x`는 main에서 더 이상 올리지 않음 |
+| 2026-10-26 | `3e34dda` / PR #121 / `v2.0.0`. **해결** |

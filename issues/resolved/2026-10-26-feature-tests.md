@@ -5,8 +5,12 @@
 | **등록일** | 2026-10-26 |
 | **영역** | `test/`, 현재 동작 고정 |
 | **관련 코드** | `test/TerraformInjector.test.ts` |
-| **상태** | **해결 대기** — 테스트 보강 완료. 사용자 커밋 후 아카이브 |
-| **트리거** | 사용자가 테스트 보강을 재개할 때 |
+| **상태** | **해결** — async/lazy/output/backend/hook/synth 테스트가 `2.0.0`에 포함 |
+| **해결일** | 2026-10-26 |
+
+## 해결 요약
+
+`3e34dda` / [PR #121](https://github.com/ApexCaptain/cdktf-injector/pull/121) / `cdktf-injector@2.0.0`. 테스트 32개.
 
 ## 배경
 
@@ -41,3 +45,4 @@
 |------|------|
 | 2026-10-26 | 핸드오프 P2를 이 이슈로 등록 |
 | 2026-10-26 | `test/TerraformInjector.test.ts`에 async/lazy/defaultConfigure/output/backend/hook/synth 특성 테스트 추가. B1~B4는 현재 동작으로 고정. `src/` 변경 없음 |
+| 2026-10-26 | `3e34dda` / PR #121 / `2.0.0`. **해결** |

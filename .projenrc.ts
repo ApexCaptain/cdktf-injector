@@ -25,7 +25,7 @@ const project = new typescript.TypeScriptProject({
     prettier: true,
     tsAlwaysTryTypes: true,
   },
-  typescriptVersion: '~5.9.3',
+  typescriptVersion: '~6.0.3',
 
   // tsconfig
   tsconfigDev: {
@@ -210,6 +210,8 @@ if (project.eslint) {
     'pipenet',
     'tldjs',
     'postinstall',
+    'sha',
+    'evans',
   ].sort();
 
   const srcWords = ['terraform', 'Getters', 'dep'].sort();
@@ -223,6 +225,7 @@ if (project.eslint) {
       'warn',
       {
         skipWords: [...projenWords, ...srcWords, ...testWords, ...huskyWords],
+        skipIfMatch: ['[0-9a-f]{40}'],
       },
     ],
   });
@@ -281,6 +284,32 @@ project.addScripts({
   'git@pr':
     'gh pr create --base main --title "$(cat .github/generated/pull-request-title.txt)" --body-file ".github/generated/pull-request-body.md"',
 });
+
+// checkout / upload-artifact / download-artifact / semantic-pull-request는
+// projen이 이미 커밋 sha를 쓴다. 태그로 남은 액션만 해당 태그의 커밋에 고정한다.
+if (project.github) {
+  const actionPins: Array<[string, string]> = [
+    [
+      'pnpm/action-setup@v6.0.10',
+      'pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86',
+    ],
+    [
+      'actions/setup-node@v7.0.0',
+      'actions/setup-node@820762786026740c76f36085b0efc47a31fe5020',
+    ],
+    [
+      'actions/stale@v11.0.0',
+      'actions/stale@4391f3da665fdf50b6810c1a66712fb9ba21aa93',
+    ],
+    [
+      'peter-evans/create-pull-request@v8.1.1',
+      'peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1',
+    ],
+  ];
+  for (const [action, override] of actionPins) {
+    project.github.actions.set(action, override);
+  }
+}
 
 project.synth();
 
