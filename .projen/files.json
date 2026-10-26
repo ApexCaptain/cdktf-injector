@@ -19,6 +19,7 @@
     ".projen/tasks.json",
     "LICENSE",
     "projenrc/tsconfig.json",
+    "rulesync.jsonc",
     "tsconfig.dev.json",
     "tsconfig.json"
   ],

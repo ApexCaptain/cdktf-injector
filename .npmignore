@@ -44,6 +44,11 @@ tmp
 .ToDo
 typedoc.json
 markdown
+issues
+.rulesync
+rulesync.jsonc
+.cursor
+.claude
 /.gitattributes
 /.projenrc.ts
 /projenrc

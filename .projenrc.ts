@@ -1,4 +1,4 @@
-import { javascript, typescript } from 'projen';
+import { javascript, JsonFile, typescript } from 'projen';
 import { generateHuskyHooks } from './projenrc/generate-husky-hooks';
 const PROJECT_NAME = 'cdktf-injector';
 const project = new typescript.TypeScriptProject({
@@ -47,6 +47,9 @@ const project = new typescript.TypeScriptProject({
   pnpmOptions: {
     workspaceYamlOptions: {
       strictDepBuilds: true,
+      // rulesync → fastmcp → mcp-proxy → pipenet → tldjs. postinstall은
+      // public suffix 목록 갱신일 뿐, rulesync generate/doctor에는 필요 없다.
+      ignoredBuiltDependencies: ['tldjs'],
     },
   },
   projenVersion: '^0.104.11',
@@ -94,13 +97,15 @@ const project = new typescript.TypeScriptProject({
     'husky@^9.1.7',
     '@octokit/rest',
     '@types/lodash',
+    // 2주 사이 메이저가 뛰어 레퍼런스와 같은 26.0.0에 고정한다. 올리려면 별도 이슈.
+    'rulesync@26.0.0',
   ],
   autoApproveOptions: {
     allowedUsernames: ['ApexCaptain'],
     label: 'auto-merge-upgrade',
   },
   autoApproveUpgrades: true,
-  peerDeps: ['cdktf@^0.20.3', 'constructs@^10.3.0'],
+  peerDeps: ['cdktf@>=0.20.3 <0.22', 'constructs@^10.3.0'],
   peerDependencyOptions: { pinnedDevDependency: false },
 
   homepage: 'https://apexcaptain.github.io/cdktf-injector/',
@@ -117,7 +122,21 @@ const project = new typescript.TypeScriptProject({
   release: true,
   releaseToNpm: true,
   npmTrustedPublishing: true,
-  gitignore: ['auth/', 'cdktf.out/', '/.pnpm-store', 'tmp/', '.superpowers'],
+  gitignore: [
+    'auth/',
+    'cdktf.out/',
+    '/.pnpm-store',
+    'tmp/',
+    '.superpowers',
+    // rulesync generate 산출물. SSOT는 .rulesync/
+    '/.cursor/rules/',
+    '/.cursor/skills/',
+    '/.claude/rules/',
+    '/.claude/skills/',
+    '/.rulesync.local/',
+    '/rulesync.local.jsonc',
+    '/.github/generated',
+  ],
   majorVersion: 1,
   repository: 'https://github.com/ApexCaptain/cdktf-injector',
 });
@@ -177,6 +196,16 @@ if (project.eslint) {
     'workspace',
     'yaml',
     'unrs',
+    'rulesync',
+    'jsonc',
+    'claudecode',
+    'claude',
+    'ai',
+    'mcp',
+    'fastmcp',
+    'pipenet',
+    'tldjs',
+    'postinstall',
   ].sort();
 
   const srcWords = ['terraform', 'Getters', 'dep'].sort();
@@ -217,9 +246,37 @@ if (project.eslint) {
   '.ToDo',
   'typedoc.json',
   'markdown',
+  'issues',
+  '.rulesync',
+  'rulesync.jsonc',
+  '.cursor',
+  '.claude',
 ].forEach((eachNpmIgnorePattern) =>
   project.addPackageIgnore(eachNpmIgnorePattern),
 );
+
+new JsonFile(project, 'rulesync.jsonc', {
+  obj: {
+    $schema:
+      'https://github.com/dyoshikawa/rulesync/releases/latest/download/config-schema.json',
+    targets: {
+      cursor: ['rules', 'skills'],
+      claudecode: ['rules', 'skills'],
+    },
+    outputRoots: ['.'],
+    delete: true,
+  },
+});
+
+project.addScripts({
+  'ai:generate': 'rulesync generate',
+  'ai:check': 'rulesync generate --check',
+  'ai:doctor': 'rulesync doctor',
+  postprojen: 'pnpm ai:generate',
+  'git@commit': 'git commit -F .github/generated/commit-message.txt',
+  'git@pr':
+    'gh pr create --base main --title "$(cat .github/generated/pull-request-title.txt)" --body-file ".github/generated/pull-request-body.md"',
+});
 
 project.synth();
 

@@ -26,7 +26,13 @@
     "unbump": "projen unbump",
     "upgrade": "projen upgrade",
     "watch": "projen watch",
-    "projen": "projen"
+    "projen": "projen",
+    "ai:generate": "rulesync generate",
+    "ai:check": "rulesync generate --check",
+    "ai:doctor": "rulesync doctor",
+    "postprojen": "pnpm ai:generate",
+    "git@commit": "git commit -F .github/generated/commit-message.txt",
+    "git@pr": "gh pr create --base main --title \"$(cat .github/generated/pull-request-title.txt)\" --body-file \".github/generated/pull-request-body.md\""
   },
   "author": {
     "name": "SangHun Lee",
@@ -53,6 +59,7 @@
     "jest-junit": "^17",
     "prettier": "^3.9.10",
     "projen": "^0.104.11",
+    "rulesync": "26.0.0",
     "ts-jest": "^29.4.15",
     "ts-node": "^10.9.2",
     "typedoc": "^0.28.20",
@@ -60,7 +67,7 @@
     "typescript": "~5.9.3"
   },
   "peerDependencies": {
-    "cdktf": "^0.20.3",
+    "cdktf": ">=0.20.3 <0.22",
     "constructs": "^10.3.0"
   },
   "dependencies": {
