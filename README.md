@@ -12,21 +12,7 @@ If you are not familiar with [cdktf] and [terraform] yet or haven't heard of the
 
 **There are two prerequisites for cdktf-injector**
 
-- [Terraform][terraform] - You need to install [terraform] on your dev env and it should be accessible on cli path. If you're using `devcontainer` you may paste following commands to your `Dockerfile`.
-
-  ```docker
-  ...
-
-  # Pass terraform version as an argument
-  ARG TERRAFORM_VERSION=1.1.7
-
-  # Install Terraform
-  RUN wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
-      unzip ./terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/local/bin/ && \
-      rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip
-
-  ...
-  ```
+- [Terraform][terraform] - Terraform must be on your `PATH`. This repo's devcontainer installs it with the `ghcr.io/devcontainers/features/terraform` feature, not a `wget` in a custom Dockerfile. For a local install see the [Terraform install guide](https://developer.hashicorp.com/terraform/install).
 
 - [cdktf] - A library for defining [Terraform] resources using programming constructs. Click [here](https://github.com/hashicorp/terraform-cdk/blob/main/docs/getting-started/typescript.md) to get started. Or, simply type following lines.
   ```sh

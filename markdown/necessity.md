@@ -61,7 +61,9 @@ Let's take a look example below.
 ### Using [cdktf] in TypeScript
 
 ```typescript
-import { ec2, vpc } from '@cdktf/provider-aws';
+import { Instance } from '@cdktf/provider-aws/lib/instance';
+import { Subnet } from '@cdktf/provider-aws/lib/subnet';
+import { Vpc } from '@cdktf/provider-aws/lib/vpc';
 import { App, TerraformOutput, TerraformStack } from 'cdktf';
 import { Construct } from 'constructs';
 
@@ -69,16 +71,16 @@ class MyStack extends TerraformStack {
   constructor(scope: Construct, id: string) {
     super(scope, id);
 
-    const myVpc = new vpc.Vpc(this, 'my-vpc', {
+    const myVpc = new Vpc(this, 'my-vpc', {
       cidrBlock: '10.1.0.0/16',
     });
 
-    const mySubnet = new vpc.Subnet(this, 'my-subnet', {
+    const mySubnet = new Subnet(this, 'my-subnet', {
       vpcId: myVpc.id,
       cidrBlock: '10.1.1.0/24',
     });
 
-    const myEc2Instance = new ec2.Instance(this, 'my-ec2-instance', {
+    const myEc2Instance = new Instance(this, 'my-ec2-instance', {
       subnetId: mySubnet.id,
       ami: 'ami-2757f631',
       instanceType: 't2.micro',
@@ -108,11 +110,13 @@ And that's where the `cdktf-injector` comes in.
 ### Using [cdktf] with `cdktf-injector`
 
 ```typescript
-import { ec2, vpc } from '@cdktf/provider-aws';
+import { Instance } from '@cdktf/provider-aws/lib/instance';
+import { Subnet } from '@cdktf/provider-aws/lib/subnet';
+import { Vpc } from '@cdktf/provider-aws/lib/vpc';
 import { App, TerraformOutput } from 'cdktf';
 import { TerraformInjectorStack } from 'cdktf-injector';
 class MyStack extends TerraformInjectorStack {
-  myEc2Instance = this.provide(ec2.Instance, 'my-ec2-instance', () => ({
+  myEc2Instance = this.provide(Instance, 'my-ec2-instance', () => ({
     subnetId: this.mySubnet.element.id,
     ami: 'ami-2757f631',
     instanceType: 't2.micro',
@@ -127,11 +131,11 @@ class MyStack extends TerraformInjectorStack {
   }));
   */
 
-  mySubnet = this.provide(vpc.Subnet, 'my-subnet', () => ({
+  mySubnet = this.provide(Subnet, 'my-subnet', () => ({
     vpcId: this.myVpc.element.id,
   }));
 
-  myVpc = this.provide(vpc.Vpc, 'my-vpc', () => ({
+  myVpc = this.provide(Vpc, 'my-vpc', () => ({
     cidrBlock: '10.1.0.0/16',
   }));
 }

@@ -109,7 +109,7 @@ You should set a provider for each stack. Syntax for provider is the same as any
 
 ```typescript
 // Set AWS Provider
-import { AwsProvider } from '@cdktf/provider-aws';
+import { AwsProvider } from '@cdktf/provider-aws/lib/provider';
 import { App, S3Backend } from 'cdktf';
 import { TerraformInjectorStack } from 'cdktf-injector';
 class MyStack extends TerraformInjectorStack {
@@ -139,7 +139,9 @@ Let's add some resources.
 ```
 
 ```typescript
-import { AwsProvider } from '@cdktf/provider-aws';
+import { AwsProvider } from '@cdktf/provider-aws/lib/provider';
+import { Subnet } from '@cdktf/provider-aws/lib/subnet';
+import { Vpc } from '@cdktf/provider-aws/lib/vpc';
 import { App, S3Backend } from 'cdktf';
 import { TerraformInjectorStack } from 'cdktf-injector';
 class MyStack extends TerraformInjectorStack {
@@ -153,11 +155,11 @@ class MyStack extends TerraformInjectorStack {
     secretKey: 'your-secret-key',
   }));
 
-  mySubnet = this.provide(vpc.Subnet, 'my-subnet', () => ({
+  mySubnet = this.provide(Subnet, 'my-subnet', () => ({
     vpcId: this.myVpc.element.id,
   }));
 
-  myVpc = this.provide(vpc.Vpc, 'my-vpc', () => ({
+  myVpc = this.provide(Vpc, 'my-vpc', () => ({
     cidrBlock: '10.1.0.0/16',
   }));
 }

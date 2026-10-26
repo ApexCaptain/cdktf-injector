@@ -4,8 +4,6 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile.workspace
-      args:
-        USER_NAME: ${username}
     environment:
       # Timezone
       TZ: 'Asia/Seoul'

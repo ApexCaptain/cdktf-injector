@@ -19,8 +19,9 @@
 |---|---|---|---|
 | 사용자 커밋 후 아카이브 | 특성 테스트 보강 완료. 버그는 고치지 않음 | [특성 테스트](active/2026-10-26-feature-tests.md) | 해결 대기 |
 | 사용자 커밋·2.0.0 배포 후 아카이브 | B1~B4 + `majorVersion: 2` | [주입 버그 B1~B4](active/2026-10-26-injection-bugs-b1-b4.md) | 해결 대기 |
-| 사용자가 정리 작업을 재개 | sync 스크립트, env 권한, pnpm 고정, hook 범위 | [devcontainer·hook](active/2026-10-26-devcontainer-hook-cleanup.md) | 보류 |
-| 사용자가 잡무를 재개 | lock 갱신, `.DS_Store`, README·예제. TS 6 / pnpm 11+는 새 이슈 | [의존성·문서 잡무](active/2026-10-26-deps-and-docs-chores.md) | 보류 |
+| 사용자 커밋 후 아카이브 | sync 스크립트, env 권한, pnpm 고정, hook 범위 | [devcontainer·hook](active/2026-10-26-devcontainer-hook-cleanup.md) | 해결 대기 |
+| 사용자 커밋 후 아카이브 | `.DS_Store`·README·예제 정리. lock은 주간 upgrade | [의존성·문서 잡무](active/2026-10-26-deps-and-docs-chores.md) | 해결 대기 |
+| typedoc·projen이 해당 메이저를 받을 때 | TS 6, pnpm 11+, Actions SHA, ESLint flat | [툴체인 메이저](active/2026-10-26-toolchain-majors.md) | 보류 |
 
 ---
 

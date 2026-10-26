@@ -35,7 +35,9 @@ There are 2 types of injector.
 Here's an example of using `async` injector.
 
 ```typescript
-import { AwsProvider } from '@cdktf/provider-aws';
+import { AwsProvider } from '@cdktf/provider-aws/lib/provider';
+import { Subnet } from '@cdktf/provider-aws/lib/subnet';
+import { Vpc } from '@cdktf/provider-aws/lib/vpc';
 import { App, S3Backend } from 'cdktf';
 // Import 'async' stack instead of normal 'static' stack
 import { TerraformInjectorStackAsync } from 'cdktf-injector';
@@ -52,11 +54,11 @@ class MyStack extends TerraformInjectorStackAsync {
     secretKey: 'your-secret-key',
   }));
 
-  mySubnet = this.provide(vpc.Subnet, 'my-subnet', () => ({
+  mySubnet = this.provide(Subnet, 'my-subnet', () => ({
     vpcId: this.myVpc.element.id,
   }));
 
-  myVpc = this.provide(vpc.Vpc, 'my-vpc', async () => ({
+  myVpc = this.provide(Vpc, 'my-vpc', async () => ({
     cidrBlock: '10.1.0.0/16',
   }));
 }
