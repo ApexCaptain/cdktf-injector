@@ -91,6 +91,11 @@
       "type": "build"
     },
     {
+      "name": "rulesync",
+      "version": "26.0.0",
+      "type": "build"
+    },
+    {
       "name": "ts-jest",
       "type": "build"
     },
@@ -115,7 +120,7 @@
     },
     {
       "name": "cdktf",
-      "version": "^0.20.3",
+      "version": ">=0.20.3 <0.22",
       "type": "peer"
     },
     {

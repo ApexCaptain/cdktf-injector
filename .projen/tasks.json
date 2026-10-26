@@ -376,6 +376,7 @@
             "jest-junit",
             "prettier",
             "projen",
+            "rulesync",
             "ts-jest",
             "ts-node",
             "typedoc-plugin-missing-exports",

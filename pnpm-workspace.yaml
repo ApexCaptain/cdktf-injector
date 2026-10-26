@@ -3,4 +3,6 @@
 onlyBuiltDependencies:
   - "@parcel/watcher"
   - unrs-resolver
+ignoredBuiltDependencies:
+  - tldjs
 strictDepBuilds: true

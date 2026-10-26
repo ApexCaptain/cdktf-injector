@@ -38,6 +38,13 @@ cdktf.out/
 /.pnpm-store
 tmp/
 .superpowers
+/.cursor/rules/
+/.cursor/skills/
+/.claude/rules/
+/.claude/skills/
+/.rulesync.local/
+/rulesync.local.jsonc
+/.github/generated
 /test-reports/
 junit.xml
 /coverage/
@@ -58,4 +65,5 @@ junit.xml
 /dist/
 !/.eslintrc.json
 !/projenrc/tsconfig.json
+!/rulesync.jsonc
 !/.projenrc.ts
