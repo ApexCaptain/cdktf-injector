@@ -50,6 +50,15 @@ const project = new typescript.TypeScriptProject({
       // rulesync → fastmcp → mcp-proxy → pipenet → tldjs. postinstall은
       // public suffix 목록 갱신일 뿐, rulesync generate/doctor에는 필요 없다.
       ignoredBuiltDependencies: ['tldjs'],
+      // Dependabot 열린 알림. 같은 메이저 줄만 패치 하한. 4.x/5.x는 그대로.
+      // rulesync 26.0.0이 @modelcontextprotocol/sdk를 1.31.0에 고정한다.
+      overrides: {
+        '@modelcontextprotocol/sdk': '1.32.2',
+        'flatted@3': '3.4.4',
+        'js-yaml@3': '3.15.2',
+        'brace-expansion@1': '1.1.21',
+        'picomatch@2': '2.3.2',
+      },
     },
   },
   projenVersion: '^0.104.11',
@@ -212,6 +221,11 @@ if (project.eslint) {
     'postinstall',
     'sha',
     'evans',
+    'dependabot',
+    'flatted',
+    'picomatch',
+    'modelcontextprotocol',
+    'sdk',
   ].sort();
 
   const srcWords = ['terraform', 'Getters', 'dep'].sort();
