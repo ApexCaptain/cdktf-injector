@@ -5,7 +5,12 @@
 | **등록일** | 2026-10-26 |
 | **영역** | 개발 워크플로, rulesync skills, npm scripts |
 | **관련 코드** | `.rulesync/skills/generate-commit-message/`, `.rulesync/skills/generate-pull-request/`, `.projenrc.ts` |
-| **상태** | **적용** — 스킬·스크립트·gitignore를 넣음. 커밋은 사용자 승인 후 |
+| **상태** | **해결** — `1.0.141`에 스킬·`git@commit`/`git@pr`이 포함됨 |
+| **해결일** | 2026-10-26 |
+
+## 해결 요약
+
+`.rulesync/skills`와 `pnpm git@commit` / `pnpm git@pr`이 `1.0.141`에 들어갔다.
 
 ## 배경
 
@@ -23,10 +28,11 @@ Nayuntech.IaC는 커밋 메시지와 PR title/body를 `.github/generated/` 파�
 - [x] 커밋 메시지 요청 시 `.github/generated/commit-message.txt`에 쓴다
 - [x] PR 요청 시 title·body 두 파일을 쓴다
 - [x] `package.json`에 `git@commit`, `git@pr`이 있다
-- [ ] 사용자 승인 후 이 변경이 커밋된다
+- [x] 사용자 승인 후 이 변경이 커밋된다
 
 ## 타임라인
 
 | 일시 | 내용 |
 |------|------|
 | 2026-10-26 | 사용자가 Nayuntech와 같은 generated 파일 규칙·스크립트를 요청. 스킬과 `git@*` 스크립트 추가 |
+| 2026-10-26 | `02f2e74` / PR #120 / `1.0.141`에 포함. **해결** |
