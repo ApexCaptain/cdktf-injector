@@ -160,6 +160,7 @@
           "rulesync",
           "signoff",
           "srcdir",
+          "stash",
           "testdir",
           "tldjs",
           "tsconfig",

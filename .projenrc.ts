@@ -163,6 +163,7 @@ if (project.eslint) {
   eslint.addPlugins('spellcheck');
   const projenWords = [
     'javascript',
+    'stash',
     'cdktf',
     'libdir',
     'srcdir',
@@ -290,7 +291,17 @@ generateHuskyHooks({
       'if ! command -v pnpm >/dev/null 2>&1; then',
       '  exit 0',
       'fi',
-      'pnpm exec projen docgen && git add docs',
+      'if ! git diff --cached --name-only -- src typedoc.json | grep -q .; then',
+      '  exit 0',
+      'fi',
+      'if ! git diff --quiet -- src || [ -n "$(git ls-files --others --exclude-standard -- src)" ]; then',
+      '  git stash push --keep-index --quiet -- src',
+      '  pnpm exec projen docgen',
+      '  git add docs',
+      '  git stash pop --quiet',
+      'else',
+      '  pnpm exec projen docgen && git add docs',
+      'fi',
     ].join('\n'),
   },
 });

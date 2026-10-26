@@ -4,7 +4,7 @@
 |------|------|
 | **등록일** | 2026-10-26 |
 | **영역** | `.devcontainer/`, `.husky/pre-commit` |
-| **상태** | **보류** — 툴체인 현대화 최종 리뷰에서 Minor로 미룬 항목 |
+| **상태** | **해결 대기** — 스크립트·hook 정리 완료. 사용자 커밋 후 아카이브 |
 | **트리거** | 사용자가 정리 작업을 재개할 때 |
 
 ## 배경
@@ -23,11 +23,25 @@ Node 24·pnpm 전환은 끝났다. 아래는 동작에는 필수가 아닌 정�
 
 ## 수용 기준
 
-- [ ] 위 항목을 하나씩 고치거나, 의도적으로 남긴다고 본문에 적는다
-- [ ] `.devcontainer/.env`가 스테이징·tarball에 들어가지 않는다
+- [x] 위 항목을 하나씩 고치거나, 의도적으로 남긴다고 본문에 적는다
+- [x] `.devcontainer/.env`가 스테이징·tarball에 들어가지 않는다 (`.devcontainer/.gitignore` + `.npmignore`의 `.devcontainer`)
+
+## 조치
+
+| 항목 | 조치 |
+|------|------|
+| `synchronizeProject.sh` | `set -euo pipefail`, `pnpm i --frozen-lockfile` |
+| `updateContentCommand.sh` | `pnpm@10.33.0` 고정. `parallel` 제거 (apt 패키지에서도 제거) |
+| `initializeCommand.sh` | `umask 077` + `chmod 600` |
+| claude-code | 버전은 고정하지 않음 (CLI가 자주 올라감). 이미 있으면 재설치하지 않음 |
+| projen feature | `devcontainer.json`에서 제거. `pnpm projen`만 사용 |
+| `USER_NAME` | compose build arg 제거. Dockerfile이 쓰지 않음 |
+| `git pull` | `--ff-only` |
+| pre-commit | staged `src/`·`typedoc.json`이 있을 때만 docgen. unstaged `src`가 있으면 `stash --keep-index` |
 
 ## 타임라인
 
 | 일시 | 내용 |
 |------|------|
 | 2026-10-26 | 핸드오프 P4를 이 이슈로 등록 |
+| 2026-10-26 | 위 표대로 정리. claude-code 버전 고정만 의도적으로 남김 |

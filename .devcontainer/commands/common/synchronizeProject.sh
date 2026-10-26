@@ -1,15 +1,19 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
 echo "🔄 Starting synchronization"
 
-if [ "$ENABLE_AUTO_SYNC" = false ]; then
+if [ "${ENABLE_AUTO_SYNC:-true}" = false ]; then
     echo "⏩ Auto sync skipped"
     exit 0
 fi
 
 echo "🔄 Installing Global Packages"
-npm install -g \
-    @anthropic-ai/claude-code
+if ! command -v claude >/dev/null 2>&1; then
+    npm install -g @anthropic-ai/claude-code
+else
+    echo "⏩ claude-code already installed"
+fi
 echo "✅ Installed Global Packages"
 
 echo "🔄 Removing yarn"
@@ -19,7 +23,7 @@ rm -rf "$HOME/.yarn" "$HOME/.yarnrc" "$HOME/.cache/yarn" "$HOME/.cache/node/core
 echo "✅ Removed yarn"
 
 echo "🔄 Installing dependencies"
-pnpm i --no-frozen-lockfile
+pnpm i --frozen-lockfile
 echo "✅ Installed dependencies"
 
 echo "🔄 Initializing Projen"

@@ -12,9 +12,6 @@
         "version": "24"
       },
 
-      // Projen
-      "ghcr.io/devcontainers-extra/features/projen:1": {},
-  
       // Github CLI
       "ghcr.io/devcontainers/features/github-cli:1": {},
   
@@ -23,7 +20,7 @@
   
       // Apt-get Packages
       "ghcr.io/devcontainers-extra/features/apt-get-packages:1": {
-        "packages": "netcat-openbsd, iputils-ping, parallel, ripgrep"
+        "packages": "netcat-openbsd, iputils-ping, ripgrep"
       }
     },
     // Custom
