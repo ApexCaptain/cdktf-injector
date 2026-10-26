@@ -133,6 +133,7 @@
           "editorconfig",
           "entrypoint",
           "eslintrc",
+          "evans",
           "fastmcp",
           "fi",
           "fqn",
@@ -158,6 +159,7 @@
           "repos",
           "rmdir",
           "rulesync",
+          "sha",
           "signoff",
           "srcdir",
           "stash",
@@ -177,6 +179,9 @@
           "msg",
           "readdir",
           "unlink"
+        ],
+        "skipIfMatch": [
+          "[0-9a-f]{40}"
         ]
       }
     ]

@@ -18,20 +18,7 @@
 <p><strong>There are two prerequisites for cdktf-injector</strong></p>
 <ul>
 <li>
-<p><a href="https://www.terraform.io/">Terraform</a> - You need to install <a href="https://www.terraform.io/">terraform</a> on your dev env and it should be accessible on cli path. If you're using <code>devcontainer</code> you may paste following commands to your <code>Dockerfile</code>.</p>
-<pre><code class="docker">...
-
-# Pass terraform version as an argument
-ARG TERRAFORM_VERSION=1.1.7
-
-# Install Terraform
-RUN wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
-    unzip ./terraform_${TERRAFORM_VERSION}_linux_amd64.zip -d /usr/local/bin/ && \
-    rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip
-
-...
-</code><button type="button">Copy</button></pre>
-
+<p><a href="https://www.terraform.io/">Terraform</a> - Terraform must be on your <code>PATH</code>. This repo's devcontainer installs it with the <code>ghcr.io/devcontainers/features/terraform</code> feature, not a <code>wget</code> in a custom Dockerfile. For a local install see the <a href="https://developer.hashicorp.com/terraform/install">Terraform install guide</a>.</p>
 </li>
 <li>
 <p><a href="https://www.terraform.io/cdktf">cdktf</a> - A library for defining <a href="https://www.terraform.io/">Terraform</a> resources using programming constructs. Click <a href="https://github.com/hashicorp/terraform-cdk/blob/main/docs/getting-started/typescript.md">here</a> to get started. Or, simply type following lines.</p>
