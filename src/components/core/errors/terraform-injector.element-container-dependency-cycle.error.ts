@@ -1,4 +1,3 @@
-import termSize from 'term-size';
 import { TerraformInjectorElementContainerClass } from '../../../module';
 
 /** Elements depend on each other in a loop. The message draws the cycle; the last element is usually the culprit. */
@@ -9,6 +8,10 @@ export class TerraformInjectorElementContainerDependencyCycleError extends Error
     up: '▲',
     down: '▼',
   };
+  /** Non-TTY stdout has no `columns`; tiny terminals would make the chunk width non-positive. */
+  private static terminalColumns() {
+    return Math.max(process.stdout.columns ?? 80, 40);
+  }
   private static chunkString(targetString: string | undefined, size: number) {
     if (!targetString) return [];
     return targetString
@@ -22,7 +25,10 @@ export class TerraformInjectorElementContainerDependencyCycleError extends Error
   ) {
     const originalMessage = `There are ${cycledContainers.length} elements trapped in dependency cycle.`;
     const blankLength = 5;
-    const maxWidth = termSize().columns - blankLength - 10;
+    const maxWidth =
+      TerraformInjectorElementContainerDependencyCycleError.terminalColumns() -
+      blankLength -
+      10;
     const arrowBlankLength = 1;
     const arrowRepeat = 2;
     super(

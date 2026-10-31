@@ -265,6 +265,40 @@ describe('dependency resolution (sync)', () => {
       }
     });
 
+    it.each([undefined, 1, 10])(
+      `should build the cycle message when terminal columns is %p`,
+      (columns) => {
+        const descriptor = Object.getOwnPropertyDescriptor(
+          process.stdout,
+          'columns',
+        );
+        Object.defineProperty(process.stdout, 'columns', {
+          value: columns,
+          configurable: true,
+        });
+        try {
+          const holder: Record<string, any> = {};
+          holder.a = stack.provide(MockElement, 'a', () => {
+            holder.b.element;
+            return {};
+          });
+          holder.b = stack.provide(MockElement, 'b', () => {
+            holder.a.element;
+            return {};
+          });
+          expect(() => stack.inject()).toThrow(
+            TerraformInjectorElementContainerDependencyCycleError,
+          );
+        } finally {
+          if (descriptor) {
+            Object.defineProperty(process.stdout, 'columns', descriptor);
+          } else {
+            delete (process.stdout as any).columns;
+          }
+        }
+      },
+    );
+
     it(`should not flag a cycle when two elements share a dependency`, () => {
       const holder: Record<string, any> = {};
       holder.a = stack.provide(MockElement, 'a', () => {

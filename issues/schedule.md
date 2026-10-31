@@ -10,6 +10,7 @@
 
 | 언제 | 할 일 | 이슈 | 상태 |
 |---|---|---|---|
+| 2026-12-01 | TS 7 지원 typedoc 릴리스 확인, 나왔으면 TS 7 착수 검토 | [툴체인 메이저](active/2026-10-26-toolchain-majors.md) | 보류 |
 
 ---
 
@@ -17,8 +18,7 @@
 
 | 트리거 | 할 일 | 이슈 | 상태 |
 |---|---|---|---|
-| 보안 권고 또는 빌드·CI 깨짐 | TS 7, pnpm 11+, ESLint flat | [툴체인 메이저](active/2026-10-26-toolchain-majors.md) | 보류 |
-| 메모리 누수가 실사용에서 문제될 때 | 레지스트리 WeakMap화, term-size 제거 | [인젝터 레지스트리 App 혼선](active/2026-10-26-injector-registry-cross-app.md) | 적용 |
+| 보안 권고 또는 빌드·CI 깨짐 | pnpm 11+, ESLint flat | [툴체인 메이저](active/2026-10-26-toolchain-majors.md) | 보류 |
 
 ---
 

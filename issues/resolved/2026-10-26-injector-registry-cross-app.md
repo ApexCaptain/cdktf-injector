@@ -5,8 +5,8 @@
 | **등록일** | 2026-10-26 |
 | **영역** | core — 인젝터 레지스트리, `inject()` 범위 계산 |
 | **관련 코드** | `src/components/core/constants/terraform-injector.factory.constant.ts` (`injectorMap`), `src/components/core/functions/commit-injection.ts` (`isScopeUnder`, `getInjectorsUnder`), `src/components/core/functions/get-caller.function.ts` |
-| **상태** | **적용** — 범위 계산, 동기 경로 Promise 감지, 늦은 `afterInitElement` 수정 완료. 메모리 누수(전역 Map)·`term-size`만 남음 |
-| **트리거** | 메모리 누수가 실사용에서 문제될 때 (공개 export `injectorMap` 형태가 바뀌므로 유지보수 모드에서는 보류) |
+| **상태** | **해결** — 범위 계산, 동기 경로 Promise, 늦은 `afterInitElement`, `term-size` 수정. 메모리 누수는 수정하지 않기로 결정 |
+| **해결일** | 2026-10-26 |
 
 ## 증상
 
@@ -39,7 +39,7 @@ c.element; // 생성돼 있음 (기대: 미초기화 에러)
 
 ### 패치로 수정: 동기 경로 Promise, 늦은 `afterInitElement`
 
-유지보수 모드 결정([CDKTF upstream 지원 종료](2026-10-26-cdktf-upstream-deprecation.md))으로 메이저가 사실상 없으므로, 아래 둘은 패치로 처리했다.
+유지보수 모드 결정([CDKTF upstream 지원 종료](../resolved/2026-10-26-cdktf-upstream-deprecation.md))으로 메이저가 사실상 없으므로, 아래 둘은 패치로 처리했다.
 
 | 항목 | 이전 | 이후 |
 |------|------|------|
@@ -50,7 +50,13 @@ c.element; // 생성돼 있음 (기대: 미초기화 에러)
 
 테스트: `test/lifecycle.test.ts`(늦은 등록 3건, 동기 Promise 5건), `test/async.test.ts`(비동기 늦은 등록, 대기 중인 중첩 async 인젝터).
 
-## 남은 일
+## 해결 요약
+
+- App 경계·`getCaller`·동기 경로 Promise·늦은 `afterInitElement`는 위 조치대로 수정
+- `term-size` 제거, 아래 "남은 일 처리" 참고
+- 메모리 누수는 수정하지 않기로 결정 (근거는 아래)
+
+## 남은 일 (등록 당시)
 
 | 항목 | 내용 |
 |------|------|
@@ -59,13 +65,28 @@ c.element; // 생성돼 있음 (기대: 미초기화 에러)
 
 이전 "남은 일 (다음 메이저)"에 있던 동기 경로 Promise 무시·늦은 `afterInitElement`는 위에서 패치로 처리했다.
 
+## 남은 일 처리
+
+| 항목 | 결정 | 내용 |
+|------|------|------|
+| `term-size` | 수정 | 의존성 제거. 폭은 `Math.max(process.stdout.columns ?? 80, 40)` (`terraform-injector.element-container-dependency-cycle.error.ts`). 테스트: `test/dependency.test.ts` (columns `undefined`·1·10) |
+| 메모리 | 수정 안 함 | 아래 근거 |
+
+메모리 누수를 고치지 않는 근거:
+
+- cdktf 사용은 `cdktf synth`/`deploy`가 `main.ts`를 한 번 실행하고 프로세스가 끝나는 형태다. 프로세스 종료와 함께 `injectorMap`도 사라진다
+- Jest는 테스트 파일마다 모듈 레지스트리를 새로 만들므로 `injectorMap`도 파일 단위로 초기화된다. 파일 안의 App 수십~수백 개는 체감 문제가 없다
+- 같은 프로세스에서 App을 계속 만드는 경우(watch, 서버 내 synth)만 누적되는데 cdktf에서 흔하지 않고, upstream 아카이브로 새 사용처도 기대하기 어렵다
+- 고치려면 공개 export `injectorMap`(`Map`) 형태가 바뀌어 메이저가 필요하다. 유지보수 모드([CDKTF upstream 지원 종료](../resolved/2026-10-26-cdktf-upstream-deprecation.md))와 맞지 않는다
+- 비파괴 대안(`TerraformInjectorFactory.reset()` 같은 정리 함수)도 요청한 사용처가 없어 넣지 않는다. 실제 요구가 생기면 새 이슈로 연다
+
 ## 수용 기준
 
 - [x] 다른 App의 같은 경로 construct가 `inject()` 범위에 들어가지 않는다
 - [x] 다른 App 요소 의존은 `TerraformInjectorInvalidScopePathError`
 - [x] 회귀 테스트 추가, 전체 테스트 통과
 - [x] 동기 경로 Promise 감지, 늦은 `afterInitElement` 실행
-- [ ] 메모리·`term-size` 처리 또는 별도 이슈로 분리
+- [x] 메모리·`term-size` 처리 또는 별도 이슈로 분리 (`term-size` 제거, 메모리는 수정 안 함으로 결정)
 
 ## 타임라인
 
@@ -74,3 +95,4 @@ c.element; // 생성돼 있음 (기대: 미초기화 에러)
 | 2026-10-26 | 프로젝트 평가 중 임시 테스트로 재현해 등록 |
 | 2026-10-26 | identity 기반 `isScopeUnder`로 수정, `test/registry.test.ts` 추가. 테스트 재구성 중 `getCaller` 오프셋 버그 발견·수정. 125개 테스트 통과 |
 | 2026-10-26 | 유지보수 모드 결정에 따라 동기 경로 Promise 감지·늦은 `afterInitElement`를 패치로 수정. 135개 테스트 통과 |
+| 2026-10-26 | `term-size` 제거, `process.stdout.columns` + 하한 40으로 대체. 메모리 누수는 cdktf 실행 형태(단발 프로세스)·Jest 파일 단위 모듈 초기화를 근거로 수정 안 함 결정. 138개 테스트 통과. 해결 처리, `issues/resolved`로 이동 |

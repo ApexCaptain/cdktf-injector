@@ -71,7 +71,6 @@ const project = new typescript.TypeScriptProject({
   /* ETC */
   depsUpgrade: true,
   depsUpgradeOptions: {
-    exclude: ['term-size'],
     workflow: true,
     workflowOptions: {
       schedule: javascript.UpgradeDependenciesSchedule.WEEKLY,
@@ -98,7 +97,7 @@ const project = new typescript.TypeScriptProject({
     'dependency',
   ],
   npmAccess: javascript.NpmAccess.PUBLIC,
-  deps: ['term-size@2.2.1', 'lodash@^4.18.1'],
+  deps: ['lodash@^4.18.1'],
   devDeps: [
     'cdktf@0.20.3',
     'constructs@^10.5.0', // projen 0.104 peer requirement
@@ -228,7 +227,7 @@ if (project.eslint) {
     'sdk',
   ].sort();
 
-  const srcWords = ['terraform', 'Getters', 'dep'].sort();
+  const srcWords = ['terraform', 'Getters', 'dep', 'stdout'].sort();
 
   const testWords = ['tf'].sort();
 
